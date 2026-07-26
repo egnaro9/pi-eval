@@ -82,10 +82,26 @@ export default function (pi: ExtensionAPI) {
 				return;
 			}
 
+			// ctx.model is a Model OBJECT ({id, provider, name, ...}), not a string,
+			// and it is `Model<any> | undefined`. Stringifying it yielded
+			// "[object Object]" and every task died with "Model not found" -- the
+			// error surfaced correctly, but only because a real run was tried.
+			// `pi -p --model` wants the qualified "provider/id" form: bare "haiku"
+			// resolves to amazon-bedrock and fails.
+			const model = ctx.model;
+			if (!model) {
+				ctx.ui.notify("No model is selected — pick one with /model first.", "error");
+				return;
+			}
+			const modelRef = `${model.provider}/${model.id}`;
+
 			// The fingerprint. Captured BEFORE the run, so a config change midway
-			// cannot be silently attributed to the wrong setup.
+			// cannot be silently attributed to the wrong setup. Stored as fields
+			// rather than the whole Model object, which carries pricing and header
+			// detail that would churn the record for no comparison value.
 			const fingerprint = {
-				model: ctx.model,
+				model: { id: model.id, provider: model.provider, name: model.name },
+				modelRef,
 				thinkingLevel: ctx.thinkingLevel,
 				activeTools: pi.getActiveTools().slice().sort(),
 				suitePath,
@@ -93,7 +109,7 @@ export default function (pi: ExtensionAPI) {
 			};
 
 			ctx.ui.notify(
-				`Running ${tasks.length} tasks on ${String(ctx.model)} — one process each, no shared context.`,
+				`Running ${tasks.length} tasks on ${modelRef} — one process each, no shared context.`,
 				"info",
 			);
 
@@ -104,7 +120,7 @@ export default function (pi: ExtensionAPI) {
 			for (const [i, task] of tasks.entries()) {
 				const r = await pi.exec(
 					"pi",
-					["-p", "--model", String(ctx.model), task.prompt],
+					["-p", "--model", modelRef, task.prompt],
 					{ signal: ctx.signal, timeout: 180_000 },
 				);
 
@@ -170,7 +186,7 @@ export default function (pi: ExtensionAPI) {
 			const pct = ((result.score as number) * 100).toFixed(1);
 			ctx.ui.notify(
 				`${result.passed}/${result.n} passed · score ${pct}% · suite ${String(result.suite_hash)}\n` +
-					`model ${String(ctx.model)} · ${fingerprint.activeTools.length} tools active\n` +
+					`model ${modelRef} · ${fingerprint.activeTools.length} tools active\n` +
 					`saved ${out} — compare two runs with /eval:compare`,
 				(result.failed as number) === 0 ? "info" : "warning",
 			);
