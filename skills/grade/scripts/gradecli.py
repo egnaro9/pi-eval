@@ -122,7 +122,9 @@ def identity(task: Dict[str, Any]) -> str:
 
 
 def cmd_check(args: argparse.Namespace) -> int:
-    spec: Dict[str, Any] = {"grader": args.grader}
+    spec: Dict[str, Any] = {}
+    if args.grader is not None:
+        spec["grader"] = args.grader
     if args.expected is not None:
         spec["expected"] = args.expected
     if args.needles:
@@ -133,6 +135,8 @@ def cmd_check(args: argparse.Namespace) -> int:
         spec["allowed"] = args.allowed
     if args.spec:
         spec.update(json.loads(args.spec))
+    if "grader" not in spec:
+        raise ValueError("no grader: pass --grader, or a --spec containing one")
 
     text = args.text if args.text is not None else sys.stdin.read()
     verdict = build_grader(spec)(grade_input(spec, text))
@@ -238,7 +242,8 @@ def main(argv: List[str] | None = None) -> int:
     sub = p.add_subparsers(dest="cmd", required=True)
 
     c = sub.add_parser("check", help="grade one piece of text")
-    c.add_argument("--grader", required=True, help=f"one of: {', '.join(sorted(BUILDERS))}")
+    c.add_argument("--grader", help=f"one of: {', '.join(sorted(BUILDERS))} "
+                                    "(omit only if --spec carries it)")
     c.add_argument("--text", help="text to grade (default: stdin)")
     c.add_argument("--expected")
     c.add_argument("--needles", nargs="*")

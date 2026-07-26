@@ -256,3 +256,27 @@ def test_compare_labels_runs_by_their_model(tmp_path):
     _, out, _ = run("compare", a, b)
     d = json.loads(out)
     assert d["a"] == "anthropic/opus" and d["b"] == "anthropic/haiku"
+
+
+def test_spec_alone_supplies_the_grader():
+    """--grader was required even when --spec already named one, so every
+    spec-driven call had to repeat itself. A suite builder generating specs
+    programmatically hit this on every task."""
+    code, out, _ = run("check", "--spec", '{"grader":"exact","expected":"42"}', "--text", "42")
+    assert code == 0 and json.loads(out)["passed"] is True
+
+
+def test_neither_grader_nor_spec_is_a_spec_error():
+    """Exit 2, not a crash and not a failed grade — 'you configured this wrong'
+    is a different event from 'the answer was wrong'."""
+    code, _, _ = run("check", "--text", "42")
+    assert code == 2
+
+
+def test_flag_grader_is_overridden_by_spec():
+    """--spec merges OVER the flags for every other field; grader follows the
+    same rule so precedence is not a coin flip."""
+    code, out, _ = run("check", "--grader", "exact",
+                       "--spec", '{"grader":"contains","needles":["cat"]}',
+                       "--text", "the cat sat")
+    assert code == 0 and json.loads(out)["passed"] is True

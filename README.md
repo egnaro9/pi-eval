@@ -131,6 +131,31 @@ after : 86e9205c1519      # one expected value changed; same ids, same prompts
 If two runs have different hashes, they are different suites and the delta between
 them means nothing. There is a test for exactly this.
 
+## A suite that can actually decide
+
+`suites/discriminating-41.json` — 41 tasks, 7 categories, no category over 15%.
+The bundled smoke suite proves the plumbing and can never decide anything: six
+easy tasks tie on every comparison, and ties carry no direction.
+
+Every predicate was verified against **two** answers before admission — a correct
+answer must PASS and a plausible-but-wrong answer must FAIL:
+
+```bash
+python3 skills/grade/scripts/gradecli.py check \
+  --spec '{"grader":"number","expected":78,"which":"last"}' \
+  --text "First leg: 3 x 18 = 54 km. Second leg: 1.5 x 16 = 24 km. Total = 78 km."
+```
+
+That gate is not ceremony. Of 48 authored tasks, **7 were rejected** — an entire
+category's worth — every one because `number` defaults to `which="first"` and a
+worked solution's first number is an *operand*, not the answer. Those predicates
+graded 3 against an expected 78 and failed the correct answer. A one-answer check
+would have shipped all six.
+
+The failure mode a lax predicate causes is worse than a wrong score: a grader that
+cannot fail a wrong answer turns a real difference into a tie, and ties are
+discarded by the sign test. A weak suite does not mismeasure — it goes blind.
+
 ## What it will not do
 
 - **Judge taste.** If the thing you want to check is a matter of opinion, this tool
@@ -146,7 +171,7 @@ them means nothing. There is a test for exactly this.
 python3 -m pytest tests/ -q
 ```
 
-29 tests, none of which re-test a grader — `gradecore` has its own suite. These
+32 tests, none of which re-test a grader — `gradecore` has its own suite. These
 cover the marshalling layer, which is where a thin CLI actually breaks: a mistyped
 grader that silently defaults, an exit code that can't tell "failed" from "couldn't
 run", a hash that misses an edited answer key.
