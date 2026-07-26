@@ -141,6 +141,62 @@ def cmd_check(args: argparse.Namespace) -> int:
     return 0 if verdict.passed else 1
 
 
+def cmd_compare(args: argparse.Namespace) -> int:
+    """Compare two run records task by task.
+
+    Refuses on a suite_hash mismatch. Two runs over different questions produce
+    a delta that means nothing, and reporting it anyway is the exact failure the
+    freeze exists to prevent.
+    """
+    a = json.loads(open(args.run_a).read())
+    b = json.loads(open(args.run_b).read())
+
+    ha, hb = a.get("suite_hash"), b.get("suite_hash")
+    if ha != hb:
+        sys.stderr.write(
+            f"gradecli: these runs used different suites ({ha} vs {hb}).\n"
+            "  The delta between them is meaningless; compare runs of one frozen suite.\n"
+        )
+        return 2
+
+    def scores(rec):
+        return {r["id"]: r["score"] for r in rec["results"]}
+
+    name_a = args.name_a or _label(a, args.run_a)
+    name_b = args.name_b or _label(b, args.run_b)
+
+    r = gc.paired_compare(scores(a), scores(b), alpha=args.alpha)
+    out = {
+        "suite_hash": ha,
+        "a": name_a,
+        "b": name_b,
+        "shared": r.shared,
+        "wins_a": r.wins,
+        "wins_b": r.losses,
+        "ties": r.ties,
+        "informative": r.informative,
+        "p": r.p,
+        "min_p": r.min_p,
+        "alpha": args.alpha,
+        "decisive": r.decisive,
+        "underpowered": r.underpowered,
+        "winner": {"a": name_a, "b": name_b}.get(r.winner or ""),
+        "tasks_needed_for_any_verdict": gc.tasks_needed(args.alpha),
+        "verdict": gc.paired_verdict(r, name_a, name_b),
+        "per_task": [{"id": d.task, "winner": d.winner, "delta": round(d.delta, 6)} for d in r.detail],
+    }
+    json.dump(out, sys.stdout, indent=2)
+    sys.stdout.write("\n")
+    # 0 = a verdict was reached (either direction). 1 = the suite could not decide.
+    # A caller scripting this should be able to branch without parsing.
+    return 0 if r.decisive else 1
+
+
+def _label(rec: Dict[str, Any], path: str) -> str:
+    fp = rec.get("fingerprint") or {}
+    return str(fp.get("modelRef") or fp.get("label") or path)
+
+
 def cmd_run(args: argparse.Namespace) -> int:
     suite = json.loads(open(args.suite).read())
     tasks: List[Dict[str, Any]] = suite["tasks"] if isinstance(suite, dict) else suite
@@ -195,6 +251,14 @@ def main(argv: List[str] | None = None) -> int:
     r.add_argument("suite", help="suite JSON: {tasks:[…]} or a bare list")
     r.add_argument("--answers", help="JSON {task_id: answer} (default: stdin)")
     r.set_defaults(fn=cmd_run)
+
+    c = sub.add_parser("compare", help="paired comparison of two run records")
+    c.add_argument("run_a")
+    c.add_argument("run_b")
+    c.add_argument("--name-a", help="label for run A (default: its model ref)")
+    c.add_argument("--name-b", help="label for run B (default: its model ref)")
+    c.add_argument("--alpha", type=float, default=gc.DEFAULT_ALPHA)
+    c.set_defaults(fn=cmd_compare)
 
     args = p.parse_args(argv)
     try:

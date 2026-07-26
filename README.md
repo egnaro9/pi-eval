@@ -27,8 +27,8 @@ LLM is just another model output you cannot reproduce: run it twice, get two
 answers, and now a "regression" might be the judge having a bad day. Every grade
 here is a pure predicate over a string, so it reproduces exactly.
 
-This package ships the grader. The comparison — run a frozen suite across two
-configs and report whether the difference is real — is next.
+This package ships both halves: `/eval` grades a config, `/eval:compare` decides
+whether two configs actually differ.
 
 ## Install
 
@@ -74,6 +74,40 @@ events and the third is not a bad answer.
 Returns per-task verdicts plus `n`, `passed`, `failed`, a mean `score` and a
 `suite_hash`.
 
+## `/eval` and `/eval:compare`
+
+```
+/eval                      run the frozen suite against the loaded config
+/eval:compare              paired sign test on the two most recent runs
+```
+
+`/eval` runs each task in its own `pi -p` process — a suite run inside your
+session would let task N-1's conversation contaminate task N — grades it
+deterministically, and writes a record with a **config fingerprint**: model,
+thinking level, active tools, suite hash. A score with no record of what produced
+it cannot be compared to anything later.
+
+`/eval:compare` is the part a leaderboard skips. Ties are discarded, what remains
+is an exact sign test, and **it refuses to name a winner when too few tasks
+separated the configs for any split to reach significance**:
+
+```
+Only 1 task separated anthropic/claude-opus-4-8 and anthropic/claude-haiku-4-5.
+Even a clean sweep of 1 could not clear p<0.05, so this suite cannot decide
+between them — that is a limit of the suite, not a finding about the configs.
+```
+
+"Cannot tell" and "the same" are different findings. Most tooling collapses them.
+It also tells you the bar: **6 informative tasks** is the floor at α=0.05, because
+a clean sweep of 5 gives p=0.0625.
+
+If two runs used different suites it refuses outright rather than reporting a
+delta that means nothing.
+
+The arithmetic lives in `gradecore.paired`, cross-checked against
+never-touch-ai's `harness_core.js` across 14 splits — identical to 1e-12. One
+implementation, two surfaces.
+
 ## Fourteen graders
 
 Scalar/text — `exact`, `exact_cs`, `contains`, `regex`, `one_of`, `number`.
@@ -112,7 +146,7 @@ them means nothing. There is a test for exactly this.
 python3 -m pytest tests/ -q
 ```
 
-25 tests, none of which re-test a grader — `gradecore` has its own suite. These
+29 tests, none of which re-test a grader — `gradecore` has its own suite. These
 cover the marshalling layer, which is where a thin CLI actually breaks: a mistyped
 grader that silently defaults, an exit code that can't tell "failed" from "couldn't
 run", a hash that misses an edited answer key.

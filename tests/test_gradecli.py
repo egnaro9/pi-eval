@@ -200,3 +200,59 @@ def test_every_grader_is_reachable_from_json(spec, text):
                          "--spec", json.dumps(spec))
     assert code in (0, 1), err          # ran; pass/fail is the grader's business
     assert json.loads(out)["grader_id"]
+
+
+# ---------------------------------------------------------------------------
+# COMPARE. The verdict has to distinguish "cannot tell" from "the same", and
+# has to refuse outright when the two runs answered different questions.
+# ---------------------------------------------------------------------------
+def _run_record(tmp_path, name, scores, suite_hash="abc123", model="m/x"):
+    rec = {
+        "suite_hash": suite_hash,
+        "fingerprint": {"modelRef": model},
+        "n": len(scores), "passed": sum(1 for s in scores.values() if s == 1.0),
+        "failed": sum(1 for s in scores.values() if s != 1.0),
+        "score": sum(scores.values()) / len(scores),
+        "results": [{"id": k, "passed": v == 1.0, "score": v,
+                     "severity": "none", "detail": "", "grader_id": "x"}
+                    for k, v in scores.items()],
+    }
+    return write(tmp_path, name, rec)
+
+
+def test_compare_refuses_when_the_suites_differ(tmp_path):
+    a = _run_record(tmp_path, "a.json", {"t": 1.0}, suite_hash="aaa")
+    b = _run_record(tmp_path, "b.json", {"t": 0.0}, suite_hash="bbb")
+    code, _, err = run("compare", a, b)
+    assert code == 2
+    assert "different suites" in err
+
+
+def test_compare_reports_underpowered_rather_than_a_winner(tmp_path):
+    # 1 informative task. A naive tool says "A wins 1-0".
+    a = _run_record(tmp_path, "a.json", {"t1": 1.0, "t2": 1.0}, model="m/a")
+    b = _run_record(tmp_path, "b.json", {"t1": 0.0, "t2": 1.0}, model="m/b")
+    code, out, _ = run("compare", a, b)
+    d = json.loads(out)
+    assert code == 1                    # no verdict reached
+    assert d["underpowered"] is True
+    assert d["winner"] is None
+    assert "cannot decide" in d["verdict"]
+    assert d["tasks_needed_for_any_verdict"] == 6
+
+
+def test_compare_calls_a_real_win(tmp_path):
+    a = _run_record(tmp_path, "a.json", {f"t{i}": 1.0 for i in range(8)}, model="m/a")
+    b = _run_record(tmp_path, "b.json", {f"t{i}": 0.0 for i in range(8)}, model="m/b")
+    code, out, _ = run("compare", a, b)
+    d = json.loads(out)
+    assert code == 0
+    assert d["decisive"] is True and d["winner"] == "m/a"
+
+
+def test_compare_labels_runs_by_their_model(tmp_path):
+    a = _run_record(tmp_path, "a.json", {"t": 1.0}, model="anthropic/opus")
+    b = _run_record(tmp_path, "b.json", {"t": 0.0}, model="anthropic/haiku")
+    _, out, _ = run("compare", a, b)
+    d = json.loads(out)
+    assert d["a"] == "anthropic/opus" and d["b"] == "anthropic/haiku"

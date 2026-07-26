@@ -25,7 +25,7 @@
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -190,6 +190,79 @@ export default function (pi: ExtensionAPI) {
 					`saved ${out} — compare two runs with /eval:compare`,
 				(result.failed as number) === 0 ? "info" : "warning",
 			);
+		},
+	});
+
+	// -----------------------------------------------------------------------
+	// /eval:compare — the part a leaderboard skips.
+	//
+	// Two runs are compared TASK BY TASK, ties discarded, and the result is an
+	// exact sign test. The verdict refuses to call a winner when the number of
+	// tasks that actually separated the configs is too small for ANY split to
+	// reach significance -- "cannot tell" and "the same" are different findings.
+	//
+	// The arithmetic lives in gradecore (paired.py), cross-checked against
+	// never-touch-ai's harness_core.js to 1e-12. Reimplementing it here would
+	// have been the second copy of an exact test, which is how two surfaces end
+	// up disagreeing about what "better" means.
+	// -----------------------------------------------------------------------
+	pi.registerCommand("eval:compare", {
+		description: "Paired sign test between two runs — says so when the suite cannot decide",
+
+		handler: async (args, ctx) => {
+			const [argA, argB] = args.trim().split(/\s+/).filter(Boolean);
+
+			let a = argA;
+			let b = argB;
+			if (!a || !b) {
+				// Default to the two most recent runs, newest first.
+				if (!existsSync(RUN_DIR)) {
+					ctx.ui.notify("No runs yet — /eval writes one each time it grades.", "error");
+					return;
+				}
+				const runs = readdirSync(RUN_DIR).filter((f) => f.endsWith(".json")).sort().reverse();
+				if (runs.length < 2) {
+					ctx.ui.notify(
+						`Only ${runs.length} run recorded. Change something — the model, an extension, a prompt template — and /eval again.`,
+						"error",
+					);
+					return;
+				}
+				a = join(RUN_DIR, runs[0]);
+				b = join(RUN_DIR, runs[1]);
+			}
+
+			const res = await pi.exec("python3", [GRADECLI, "compare", a, b], {
+				signal: ctx.signal,
+				timeout: 30_000,
+			});
+
+			// exit 2 is a refusal (mismatched suites), not a verdict.
+			if (res.code === 2) {
+				ctx.ui.notify(res.stderr.trim(), "error");
+				return;
+			}
+
+			let out: Record<string, unknown>;
+			try {
+				out = JSON.parse(res.stdout);
+			} catch {
+				ctx.ui.notify(`comparison failed: ${res.stdout.slice(0, 200)}`, "error");
+				return;
+			}
+
+			const lines = [
+				String(out.verdict),
+				"",
+				`${out.a}  vs  ${out.b}`,
+				`${out.wins_a}–${out.wins_b} on ${out.informative} informative task(s), ${out.ties} tied · p=${Number(out.p).toFixed(3)}`,
+			];
+			if (out.underpowered) {
+				lines.push(
+					`This suite needs ${out.tasks_needed_for_any_verdict} tasks that disagree before any result can reach p<${out.alpha}.`,
+				);
+			}
+			ctx.ui.notify(lines.join("\n"), out.decisive ? "info" : "warning");
 		},
 	});
 }
