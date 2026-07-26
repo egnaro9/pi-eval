@@ -7,11 +7,13 @@ a score change means the output moved, not the judge.**
 pi install git:github.com/egnaro9/pi-eval
 ```
 
-Adds a `grade` skill. Pi's model can now check an answer instead of judging it:
+Adds a `grade` skill. Pi's model can now check an answer instead of judging it — the
+script is bundled inside the skill and invoked relative to it, so nothing has to land
+on your PATH:
 
 ```bash
-gradecli check --grader exact --expected "42" --text "42"
-gradecli run suite.json --answers answers.json
+./scripts/gradecli.py check --grader exact --expected "42" --text "42"
+./scripts/gradecli.py run suite.json --answers answers.json
 ```
 
 ## Why
@@ -49,8 +51,8 @@ byte-identical `suite_hash` between those two is the whole point.
 **One answer:**
 
 ```bash
-gradecli check --grader contains --needles error timeout --text "$OUTPUT"
-echo "$ANSWER" | gradecli check --grader must_refuse
+./scripts/gradecli.py check --grader contains --needles error timeout --text "$OUTPUT"
+echo "$ANSWER" | ./scripts/gradecli.py check --grader must_refuse
 ```
 
 Exit `0` passed · `1` failed · `2` the spec was wrong. Those are three different
@@ -66,7 +68,7 @@ events and the third is not a bad answer.
 ```
 
 ```bash
-gradecli run suite.json --answers answers.json
+./scripts/gradecli.py run suite.json --answers answers.json
 ```
 
 Returns per-task verdicts plus `n`, `passed`, `failed`, a mean `score` and a

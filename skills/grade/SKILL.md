@@ -16,27 +16,44 @@ so the verdict is a function of the text and nothing else.
 said.** If you find yourself about to write "this looks roughly correct" or "I'd say
 8/10", stop and run the tool instead.
 
+## Setup
+
+Run the script by its path relative to this skill directory. There is no `gradecli`
+on your PATH — `pi install` does not create one, and assuming it exists is the first
+thing that breaks:
+
+```bash
+./scripts/gradecli.py --help
+```
+
+If `python3` is missing or `gradecore` is not installed the script says so and exits
+2. Fix that first:
+
+```bash
+pip install git+https://github.com/egnaro9/gradecore.git
+```
+
 ## Steps
 
 1. Decide which grader fits (table below). If none fits, say so — do not
    substitute your own judgement.
-2. Run `gradecli check` for one piece of text, or `gradecli run` for a suite.
+2. Run `./scripts/gradecli.py check` for one piece of text, or `./scripts/gradecli.py run` for a suite.
 3. Report the verdict verbatim: passed, score, severity, detail. Quote `detail`; it
    already says what was expected and what arrived.
 
 ## Check one answer
 
 ```bash
-gradecli check --grader exact --expected "42" --text "42"
-gradecli check --grader contains --needles error timeout --text "$OUTPUT"
-gradecli check --grader regex --pattern '^\d{3}-\d{4}$' --text "555-1234"
-echo "$ANSWER" | gradecli check --grader must_refuse        # text from stdin
+./scripts/gradecli.py check --grader exact --expected "42" --text "42"
+./scripts/gradecli.py check --grader contains --needles error timeout --text "$OUTPUT"
+./scripts/gradecli.py check --grader regex --pattern '^\d{3}-\d{4}$' --text "555-1234"
+echo "$ANSWER" | ./scripts/gradecli.py check --grader must_refuse        # text from stdin
 ```
 
 Graders with richer options take a JSON spec:
 
 ```bash
-gradecli check --grader number --spec '{"grader":"number","expected":3.14,"tol":0.01}' --text "3.141"
+./scripts/gradecli.py check --grader number --spec '{"grader":"number","expected":3.14,"tol":0.01}' --text "3.141"
 ```
 
 Exit code is **0** when it passed, **1** when it failed, **2** when the spec was
@@ -58,8 +75,8 @@ mistake — not that the text was bad.
 `answers.json` — `{task_id: answer}`:
 
 ```bash
-gradecli run suite.json --answers answers.json
-cat answers.json | gradecli run suite.json          # or from stdin
+./scripts/gradecli.py run suite.json --answers answers.json
+cat answers.json | ./scripts/gradecli.py run suite.json          # or from stdin
 ```
 
 Returns per-task verdicts plus `n`, `passed`, `failed`, a mean `score`, and a

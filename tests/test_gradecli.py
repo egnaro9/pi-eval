@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pytest
 
-BIN = Path(__file__).resolve().parents[1] / "bin" / "gradecli.py"
+BIN = Path(__file__).resolve().parents[1] / "skills" / "grade" / "scripts" / "gradecli.py"
 
 
 def run(*args: str, stdin: str | None = None):

@@ -10,4 +10,4 @@ gradecli = "gradecli:main"
 
 [tool.setuptools]
 py-modules = ["gradecli"]
-package-dir = {"" = "bin"}
+package-dir = {"" = "skills/grade/scripts"}

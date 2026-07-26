@@ -1,13 +1,28 @@
 {
   "name": "pi-eval",
   "version": "0.1.0",
-  "description": "Deterministic grading for pi. Fixed predicates, no LLM judge — so a score change means the output moved, not the judge.",
-  "keywords": ["pi-package", "pi", "agent", "evaluation", "grading", "testing"],
+  "description": "Deterministic grading for pi. Fixed predicates, no LLM judge \u2014 so a score change means the output moved, not the judge.",
+  "keywords": [
+    "pi-package",
+    "pi",
+    "agent",
+    "evaluation",
+    "grading",
+    "testing"
+  ],
   "license": "MIT",
   "author": "Erik Hill (https://egnaro9.github.io)",
-  "repository": { "type": "git", "url": "git+https://github.com/egnaro9/pi-eval.git" },
-  "pi": {
-    "skills": ["./skills"]
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/egnaro9/pi-eval.git"
   },
-  "files": ["skills", "bin", "README.md"]
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  },
+  "files": [
+    "skills",
+    "README.md"
+  ]
 }
