@@ -169,8 +169,53 @@ def cmd_compare(args: argparse.Namespace) -> int:
     name_a = args.name_a or _label(a, args.run_a)
     name_b = args.name_b or _label(b, args.run_b)
 
+    # Repeated measures when extra repetitions are supplied on BOTH sides. One
+    # run per config cannot distinguish a real difference from a config
+    # disagreeing with itself, so this is not a cosmetic option.
+    reps_a = [a] + [_load_matching(p, ha) for p in args.rep_a]
+    reps_b = [b] + [_load_matching(p, ha) for p in args.rep_b]
+    if len(reps_a) > 1 and len(reps_b) > 1:
+        rr = gc.repeated_compare([scores(x) for x in reps_a],
+                                 [scores(x) for x in reps_b], alpha=args.alpha)
+        r = rr.paired
+        json.dump({
+            "suite_hash": ha,
+            "mode": "repeated",
+            "a": name_a, "b": name_b,
+            "reps_a": rr.reps_a, "reps_b": rr.reps_b,
+            "shared": rr.shared,
+            "wins_a": rr.wins, "wins_b": rr.losses,
+            "ties": rr.ties,
+            "unstable": rr.unstable,
+            "informative": r.informative,
+            "p": r.p, "min_p": r.min_p, "alpha": args.alpha,
+            "decisive": r.decisive,
+            "underpowered": r.underpowered,
+            "winner": {"a": name_a, "b": name_b}.get(r.winner or ""),
+            "noise_floor_a": gc.noise_floor([scores(x) for x in reps_a]),
+            "noise_floor_b": gc.noise_floor([scores(x) for x in reps_b]),
+            "tasks_needed_for_any_verdict": gc.tasks_needed(args.alpha),
+            "verdict": gc.repeated_verdict(rr, name_a, name_b),
+            "per_task": [
+                {"id": d.task, "verdict": d.verdict,
+                 "rate_a": d.rate_a, "rate_b": d.rate_b}
+                for d in rr.detail if d.verdict != "tie"
+            ],
+        }, sys.stdout, indent=2)
+        sys.stdout.write("\n")
+        return 0 if r.decisive else 1
+
+    if args.rep_a or args.rep_b:
+        sys.stderr.write(
+            "gradecli: repetitions were given for only one config. Repeated "
+            "measures needs >=2 runs on BOTH sides — otherwise the stable side "
+            "is assumed stable, which is the assumption this mode exists to "
+            "remove. Falling back to a single-run paired comparison.\n"
+        )
+
     r = gc.paired_compare(scores(a), scores(b), alpha=args.alpha)
     out = {
+        "mode": "single",
         "suite_hash": ha,
         "a": name_a,
         "b": name_b,
@@ -194,6 +239,19 @@ def cmd_compare(args: argparse.Namespace) -> int:
     # 0 = a verdict was reached (either direction). 1 = the suite could not decide.
     # A caller scripting this should be able to branch without parsing.
     return 0 if r.decisive else 1
+
+
+def _load_matching(path: str, suite_hash: Any) -> Dict[str, Any]:
+    """Load a repetition, refusing one that graded a different suite.
+
+    A repetition over different questions is not a repetition.
+    """
+    rec = json.loads(open(path).read())
+    if rec.get("suite_hash") != suite_hash:
+        raise ValueError(
+            f"repetition {path} used suite {rec.get('suite_hash')}, not {suite_hash}"
+        )
+    return rec
 
 
 def _label(rec: Dict[str, Any], path: str) -> str:
@@ -263,6 +321,11 @@ def main(argv: List[str] | None = None) -> int:
     c.add_argument("--name-a", help="label for run A (default: its model ref)")
     c.add_argument("--name-b", help="label for run B (default: its model ref)")
     c.add_argument("--alpha", type=float, default=gc.DEFAULT_ALPHA)
+    c.add_argument("--rep-a", nargs="*", default=[], metavar="RUN",
+                   help="additional repetitions of A; with >=1 on BOTH sides the "
+                        "comparison switches to repeated measures and discards "
+                        "tasks a config is not self-consistent on")
+    c.add_argument("--rep-b", nargs="*", default=[], metavar="RUN")
     c.set_defaults(fn=cmd_compare)
 
     args = p.parse_args(argv)
