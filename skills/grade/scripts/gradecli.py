@@ -196,6 +196,9 @@ def cmd_compare(args: argparse.Namespace) -> int:
             "noise_floor_b": gc.noise_floor([scores(x) for x in reps_b]),
             "tasks_needed_for_any_verdict": gc.tasks_needed(args.alpha),
             "verdict": gc.repeated_verdict(rr, name_a, name_b),
+            "spend_a": _spend(args.meta_a),
+            "spend_b": _spend(args.meta_b),
+            "cost_ratio_a_over_b": _ratio(_spend(args.meta_a), _spend(args.meta_b)),
             "per_task": [
                 {"id": d.task, "verdict": d.verdict,
                  "rate_a": d.rate_a, "rate_b": d.rate_b}
@@ -232,6 +235,9 @@ def cmd_compare(args: argparse.Namespace) -> int:
         "winner": {"a": name_a, "b": name_b}.get(r.winner or ""),
         "tasks_needed_for_any_verdict": gc.tasks_needed(args.alpha),
         "verdict": gc.paired_verdict(r, name_a, name_b),
+        "spend_a": _spend(args.meta_a),
+        "spend_b": _spend(args.meta_b),
+        "cost_ratio_a_over_b": _ratio(_spend(args.meta_a), _spend(args.meta_b)),
         "per_task": [{"id": d.task, "winner": d.winner, "delta": round(d.delta, 6)} for d in r.detail],
     }
     json.dump(out, sys.stdout, indent=2)
@@ -239,6 +245,48 @@ def cmd_compare(args: argparse.Namespace) -> int:
     # 0 = a verdict was reached (either direction). 1 = the suite could not decide.
     # A caller scripting this should be able to branch without parsing.
     return 0 if r.decisive else 1
+
+
+def _ratio(a: Dict[str, Any] | None, b: Dict[str, Any] | None) -> float | None:
+    """A/B cost ratio, or None when either side was not measured.
+
+    A ratio against an unmeasured or zero-cost side is not a number worth
+    printing; it would read as a real comparison.
+    """
+    if not a or not b or not b.get("cost_usd"):
+        return None
+    return round(a["cost_usd"] / b["cost_usd"], 3)
+
+
+def _spend(paths: List[str]) -> Dict[str, Any] | None:
+    """Total token spend across sweep meta sidecars.
+
+    Returns None rather than zeros when no sidecar was supplied — a missing cost
+    record is "not measured", and reporting it as $0.00 would make the cheaper
+    config look free.
+    """
+    if not paths:
+        return None
+    tot = {"input": 0, "output": 0, "reasoning": 0, "total_tokens": 0, "cost_usd": 0.0}
+    reasoning_seen = False
+    runs = 0
+    for p in paths:
+        u = (json.loads(open(p).read()) or {}).get("usage_total")
+        if not u:
+            continue
+        runs += 1
+        for k in ("input", "output", "total_tokens"):
+            tot[k] += u.get(k) or 0
+        tot["cost_usd"] += u.get("cost_usd") or 0.0
+        if u.get("reasoning") is not None:
+            reasoning_seen = True
+            tot["reasoning"] += u["reasoning"]
+    if not runs:
+        return None
+    tot["reasoning"] = tot["reasoning"] if reasoning_seen else None
+    tot["cost_usd"] = round(tot["cost_usd"], 6)
+    tot["runs"] = runs
+    return tot
 
 
 def _load_matching(path: str, suite_hash: Any) -> Dict[str, Any]:
@@ -326,6 +374,10 @@ def main(argv: List[str] | None = None) -> int:
                         "comparison switches to repeated measures and discards "
                         "tasks a config is not self-consistent on")
     c.add_argument("--rep-b", nargs="*", default=[], metavar="RUN")
+    c.add_argument("--meta-a", nargs="*", default=[], metavar="META",
+                   help="sweep .meta.json sidecars for A; adds spend to the verdict so "
+                        "'did it help' and 'did it just cost more' are answered together")
+    c.add_argument("--meta-b", nargs="*", default=[], metavar="META")
     c.set_defaults(fn=cmd_compare)
 
     args = p.parse_args(argv)

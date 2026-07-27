@@ -280,3 +280,52 @@ def test_flag_grader_is_overridden_by_spec():
                        "--spec", '{"grader":"contains","needles":["cat"]}',
                        "--text", "the cat sat")
     assert code == 0 and json.loads(out)["passed"] is True
+
+
+# ---------------------------------------------------------------------------
+# compare --meta-*: cost alongside the verdict
+#
+# The README asks whether a config change helped "or just cost more". A verdict
+# with no spend attached can only answer the first half.
+# ---------------------------------------------------------------------------
+
+def _meta(tmp_path, name, cost, tokens=1000):
+    return write(tmp_path, name, {"usage_total": {
+        "input": tokens, "output": tokens, "reasoning": None,
+        "total_tokens": tokens * 2, "cost_usd": cost}})
+
+
+def test_compare_reports_spend_and_ratio(tmp_path):
+    suite = write(tmp_path, "s.json", {"tasks": [
+        {"id": "t1", "prompt": "p", "grader": "exact", "expected": "a"},
+        {"id": "t2", "prompt": "p", "grader": "exact", "expected": "b"}]})
+    ra = write(tmp_path, "a.json", {"suite_hash": "h", "results": [
+        {"id": "t1", "score": 1.0}, {"id": "t2", "score": 1.0}]})
+    rb = write(tmp_path, "b.json", {"suite_hash": "h", "results": [
+        {"id": "t1", "score": 1.0}, {"id": "t2", "score": 0.0}]})
+    code, out, _ = run("compare", ra, rb,
+                       "--meta-a", _meta(tmp_path, "ma.json", 0.30),
+                       "--meta-b", _meta(tmp_path, "mb.json", 0.10))
+    d = json.loads(out)
+    assert d["spend_a"]["cost_usd"] == 0.3
+    assert d["cost_ratio_a_over_b"] == 3.0       # A won, and cost 3x to do it
+    assert suite  # suite unused by compare; kept to document the shape
+
+
+def test_unmeasured_cost_is_null_not_zero(tmp_path):
+    # Reporting an unsupplied sidecar as $0.00 would make the config look free.
+    ra = write(tmp_path, "a.json", {"suite_hash": "h", "results": [{"id": "t", "score": 1.0}]})
+    rb = write(tmp_path, "b.json", {"suite_hash": "h", "results": [{"id": "t", "score": 0.0}]})
+    code, out, _ = run("compare", ra, rb)
+    d = json.loads(out)
+    assert d["spend_a"] is None and d["spend_b"] is None
+    assert d["cost_ratio_a_over_b"] is None
+
+
+def test_ratio_is_withheld_when_only_one_side_is_measured(tmp_path):
+    ra = write(tmp_path, "a.json", {"suite_hash": "h", "results": [{"id": "t", "score": 1.0}]})
+    rb = write(tmp_path, "b.json", {"suite_hash": "h", "results": [{"id": "t", "score": 0.0}]})
+    code, out, _ = run("compare", ra, rb, "--meta-a", _meta(tmp_path, "ma.json", 0.30))
+    d = json.loads(out)
+    assert d["spend_a"]["cost_usd"] == 0.3
+    assert d["cost_ratio_a_over_b"] is None      # a ratio against nothing is not a comparison
