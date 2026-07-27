@@ -32,6 +32,16 @@ here is a pure predicate over a string, so it reproduces exactly.
 This package ships both halves: `/eval` grades a config, `/eval:compare` decides
 whether two configs actually differ.
 
+## Updating
+
+```bash
+pi update git:github.com/egnaro9/pi-eval
+```
+
+Then **`/reload` inside Pi**. Extensions are loaded once at session start, so an
+update to the files leaves a running session executing the previous version — and
+the only visible symptom is output that disagrees with the code on disk.
+
 ## Install
 
 Needs `python3` and `gradecore`:
