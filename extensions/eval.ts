@@ -43,6 +43,39 @@ interface Task {
 }
 
 const RUN_DIR = ".pi-eval/runs";
+
+/**
+ * Group run records by the CONFIG that produced them, preserving input order.
+ *
+ * Running /eval three times without changing anything is not three configs, it
+ * is three measurements of one — and those repetitions are what make it possible
+ * to tell a real difference from a config disagreeing with itself. Runs of
+ * different suites are never pooled: the suite hash is part of the key, because
+ * a delta across different questions means nothing.
+ *
+ * Pure and exported so the keying can be tested without a Pi session; the bug
+ * this guards against (two configs silently pooled as repetitions of one) would
+ * be invisible in the output.
+ */
+export function groupRunsByConfig(
+	records: Array<{ path: string; record: Record<string, any> | null }>,
+): string[][] {
+	const groups = new Map<string, string[]>();
+	for (const { path, record } of records) {
+		if (!record) continue; // a half-written record is not a measurement
+		const fp = record.fingerprint ?? {};
+		const key = JSON.stringify({
+			modelRef: fp.modelRef ?? null,
+			thinkingLevel: fp.thinkingLevel ?? null,
+			activeTools: fp.activeTools ?? null,
+			suite: record.suite_hash ?? null,
+		});
+		const list = groups.get(key);
+		if (list) list.push(path);
+		else groups.set(key, [path]);
+	}
+	return [...groups.values()];
+}
 const DEFAULT_SUITE = "eval-suite.json";
 
 function loadSuite(path: string): Task[] {
@@ -214,25 +247,66 @@ export default function (pi: ExtensionAPI) {
 
 			let a = argA;
 			let b = argB;
+			let repA: string[] = [];
+			let repB: string[] = [];
+
 			if (!a || !b) {
-				// Default to the two most recent runs, newest first.
 				if (!existsSync(RUN_DIR)) {
 					ctx.ui.notify("No runs yet — /eval writes one each time it grades.", "error");
 					return;
 				}
-				const runs = readdirSync(RUN_DIR).filter((f) => f.endsWith(".json")).sort().reverse();
-				if (runs.length < 2) {
+				// Group every recorded run by its CONFIG, newest first. Running /eval
+				// three times without changing anything is not three configs, it is
+				// three measurements of one — and those repetitions are what make it
+				// possible to tell a real difference from a config disagreeing with
+				// itself. Grouping here means the user gets repeated measures by
+				// running /eval more times, with no flag to discover.
+				const files = readdirSync(RUN_DIR)
+					.filter((f) => f.endsWith(".json"))
+					.sort()
+					.reverse()
+					.map((f) => join(RUN_DIR, f));
+
+				const configs = groupRunsByConfig(
+					files.map((path) => {
+						try {
+							return { path, record: JSON.parse(readFileSync(path, "utf8")) };
+						} catch {
+							return { path, record: null };
+						}
+					}),
+				);
+				if (configs.length < 2) {
+					const n = configs[0]?.length ?? 0;
 					ctx.ui.notify(
-						`Only ${runs.length} run recorded. Change something — the model, an extension, a prompt template — and /eval again.`,
+						`Only one configuration has been measured (${n} run${n === 1 ? "" : "s"}). ` +
+							"Change something — the model, the thinking level, an extension — and /eval again.",
 						"error",
 					);
 					return;
 				}
-				a = join(RUN_DIR, runs[0]);
-				b = join(RUN_DIR, runs[1]);
+
+				[a, ...repA] = configs[0];
+				[b, ...repB] = configs[1];
+
+				if (repA.length && !repB.length) repA = [];
+				if (repB.length && !repA.length) repB = [];
+				if (!repA.length || !repB.length) {
+					ctx.ui.notify(
+						"Comparing single runs. Run /eval a few more times on each config — " +
+							"with two or more per side this switches to repeated measures and can " +
+							"discard tasks a config is not self-consistent on.",
+						"warning",
+					);
+				}
 			}
 
-			const res = await pi.exec("python3", [GRADECLI, "compare", a, b], {
+			const argv = [GRADECLI, "compare", a, b];
+			if (repA.length && repB.length) {
+				argv.push("--rep-a", ...repA, "--rep-b", ...repB);
+			}
+
+			const res = await pi.exec("python3", argv, {
 				signal: ctx.signal,
 				timeout: 30_000,
 			});
@@ -255,8 +329,21 @@ export default function (pi: ExtensionAPI) {
 				String(out.verdict),
 				"",
 				`${out.a}  vs  ${out.b}`,
-				`${out.wins_a}–${out.wins_b} on ${out.informative} informative task(s), ${out.ties} tied · p=${Number(out.p).toFixed(3)}`,
 			];
+			if (out.mode === "repeated") {
+				lines.push(
+					`${out.reps_a}x vs ${out.reps_b}x · ${out.wins_a}\u2013${out.wins_b} on ${out.informative} informative task(s), ` +
+						`${out.ties} tied, ${out.unstable} unstable · p=${Number(out.p).toFixed(3)}`,
+					// The floor a finding has to clear. Printing the verdict without it
+					// invites reading a within-config wobble as a between-config result.
+					`noise floor: ${Number(out.noise_floor_a).toFixed(2)} vs ${Number(out.noise_floor_b).toFixed(2)} ` +
+						`informative task(s) from each config compared with ITSELF`,
+				);
+			} else {
+				lines.push(
+					`${out.wins_a}\u2013${out.wins_b} on ${out.informative} informative task(s), ${out.ties} tied · p=${Number(out.p).toFixed(3)}`,
+				);
+			}
 			if (out.underpowered) {
 				lines.push(
 					`This suite needs ${out.tasks_needed_for_any_verdict} tasks that disagree before any result can reach p<${out.alpha}.`,

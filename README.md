@@ -87,7 +87,13 @@ deterministically, and writes a record with a **config fingerprint**: model,
 thinking level, active tools, suite hash. A score with no record of what produced
 it cannot be compared to anything later.
 
-`/eval:compare` is the part a leaderboard skips. Ties are discarded, what remains
+`/eval:compare` groups every recorded run by its config — model, thinking level,
+active tools, suite hash — so running `/eval` three times without changing
+anything is read as three *measurements of one config*, not three configs. With
+two or more per side it switches to repeated measures automatically. There is no
+flag to discover; you get it by running `/eval` more times.
+
+It is the part a leaderboard skips. Ties are discarded, what remains
 is an exact sign test, and **it refuses to name a winner when too few tasks
 separated the configs for any split to reach significance**:
 
@@ -149,6 +155,10 @@ It refuses to record a missing **or truncated** response as an answer. A reply c
 off at the output-token cap is an infrastructure failure wearing the costume of a
 result: `"Asta"` for a task expecting `"Astana"` grades as a model that got the
 capital wrong, and the sign test counts that as a directional loss.
+
+Cost is recorded by `tools/sweep.mjs`, not by `/eval` — `/eval` shells out to
+`pi -p` per task, which returns text and no usage. Comparisons run through the
+extension report accuracy only; the spend numbers below come from sweeps.
 
 ## Measure the noise floor before you believe a difference
 
