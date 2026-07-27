@@ -10,7 +10,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { extractAnswer } from "../tools/sweep.mjs";
+import { extractAnswer } from "../tools/extract-answer.mjs";
 
 /** Minimal stand-in for a settled AgentSession. */
 const session = (stopReason, text, content) => ({
