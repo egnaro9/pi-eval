@@ -1,0 +1,863 @@
+{
+  "sweep_version": 1,
+  "model_requested": "anthropic/claude-haiku-4-5",
+  "model": "anthropic/claude-haiku-4-5",
+  "model_provider": "anthropic",
+  "model_id": "claude-haiku-4-5",
+  "model_api": "anthropic-messages",
+  "thinking_level": "medium",
+  "tools_requested": "all disabled (noTools: all)",
+  "tools_observed": [],
+  "suite": "/Users/lonimua/pi-eval/suites/mined-pool.json",
+  "suite_task_count": 59,
+  "tasks_attempted": 59,
+  "limit": null,
+  "concurrency": 3,
+  "timeout_ms": null,
+  "cwd": "/var/folders/7m/gwmrvwj50g5gw31_rnfpb0gr0000gn/T/pi-eval-sweep-pGwADL",
+  "answers_path": "/Users/lonimua/pi-eval/runs/mined/haiku-4-5-r2.json",
+  "started_at": "2026-07-27T02:17:53.594Z",
+  "finished_at": "2026-07-27T02:18:49.553Z",
+  "wall_ms": 55959,
+  "answered": 59,
+  "errored": 0,
+  "errored_ids": [],
+  "latency_ms_median": 2146,
+  "latency_ms_max": 16599,
+  "usage_total": {
+    "tasks_with_usage": 59,
+    "input": 34455,
+    "output": 16970,
+    "reasoning": 16299,
+    "total_tokens": 51425,
+    "cost_usd": 0.119305
+  },
+  "tasks": [
+    {
+      "id": "excluded-list-price-per-box",
+      "ok": true,
+      "latency_ms": 2006,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 583,
+        "output": 163,
+        "reasoning": 157,
+        "total_tokens": 746,
+        "cost_usd": 0.001398
+      }
+    },
+    {
+      "id": "excluded-pretax-food-subtotal",
+      "ok": true,
+      "latency_ms": 1542,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 591,
+        "output": 120,
+        "reasoning": 111,
+        "total_tokens": 711,
+        "cost_usd": 0.001191
+      }
+    },
+    {
+      "id": "excluded-new-customer-promo-price",
+      "ok": true,
+      "latency_ms": 2459,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 596,
+        "output": 215,
+        "reasoning": 208,
+        "total_tokens": 811,
+        "cost_usd": 0.001671
+      }
+    },
+    {
+      "id": "excluded-water-rate-before-increase",
+      "ok": true,
+      "latency_ms": 2858,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 621,
+        "output": 300,
+        "reasoning": 293,
+        "total_tokens": 921,
+        "cost_usd": 0.002121
+      }
+    },
+    {
+      "id": "excluded-nonrefundable-registration-fee",
+      "ok": true,
+      "latency_ms": 2294,
+      "stop_reason": "stop",
+      "answer_chars": 3,
+      "usage": {
+        "input": 603,
+        "output": 211,
+        "reasoning": 204,
+        "total_tokens": 814,
+        "cost_usd": 0.0016580000000000002
+      }
+    },
+    {
+      "id": "excluded-discount-on-parts-not-labor",
+      "ok": true,
+      "latency_ms": 2594,
+      "stop_reason": "stop",
+      "answer_chars": 3,
+      "usage": {
+        "input": 593,
+        "output": 152,
+        "reasoning": 146,
+        "total_tokens": 745,
+        "cost_usd": 0.001353
+      }
+    },
+    {
+      "id": "excluded-autopay-credit-other-tenant",
+      "ok": true,
+      "latency_ms": 1945,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 589,
+        "output": 207,
+        "reasoning": 201,
+        "total_tokens": 796,
+        "cost_usd": 0.001624
+      }
+    },
+    {
+      "id": "excluded-merchandise-subtotal-shipping",
+      "ok": true,
+      "latency_ms": 1398,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 572,
+        "output": 116,
+        "reasoning": 108,
+        "total_tokens": 688,
+        "cost_usd": 0.001152
+      }
+    },
+    {
+      "id": "excluded-evening-parking-surcharge",
+      "ok": true,
+      "latency_ms": 1970,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 608,
+        "output": 223,
+        "reasoning": 215,
+        "total_tokens": 831,
+        "cost_usd": 0.0017230000000000001
+      }
+    },
+    {
+      "id": "excluded-first-year-fee-waiver",
+      "ok": true,
+      "latency_ms": 2275,
+      "stop_reason": "stop",
+      "answer_chars": 3,
+      "usage": {
+        "input": 600,
+        "output": 297,
+        "reasoning": 291,
+        "total_tokens": 897,
+        "cost_usd": 0.002085
+      }
+    },
+    {
+      "id": "excluded-rent-before-amendment",
+      "ok": true,
+      "latency_ms": 2354,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 589,
+        "output": 310,
+        "reasoning": 303,
+        "total_tokens": 899,
+        "cost_usd": 0.0021390000000000003
+      }
+    },
+    {
+      "id": "excluded-employee-discount-other-store",
+      "ok": true,
+      "latency_ms": 1372,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 611,
+        "output": 159,
+        "reasoning": 151,
+        "total_tokens": 770,
+        "cost_usd": 0.0014060000000000001
+      }
+    },
+    {
+      "id": "excluded-activation-fee-second-bill",
+      "ok": true,
+      "latency_ms": 5087,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 603,
+        "output": 189,
+        "reasoning": 183,
+        "total_tokens": 792,
+        "cost_usd": 0.0015480000000000001
+      }
+    },
+    {
+      "id": "excluded-lower-list-price-store",
+      "ok": true,
+      "latency_ms": 1774,
+      "stop_reason": "stop",
+      "answer_chars": 1,
+      "usage": {
+        "input": 585,
+        "output": 136,
+        "reasoning": 129,
+        "total_tokens": 721,
+        "cost_usd": 0.001265
+      }
+    },
+    {
+      "id": "excluded-coupon-produce-only",
+      "ok": true,
+      "latency_ms": 1586,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 591,
+        "output": 127,
+        "reasoning": 119,
+        "total_tokens": 718,
+        "cost_usd": 0.001226
+      }
+    },
+    {
+      "id": "rule-leap-2000-in-window",
+      "ok": true,
+      "latency_ms": 5951,
+      "stop_reason": "stop",
+      "answer_chars": 540,
+      "usage": {
+        "input": 560,
+        "output": 1009,
+        "reasoning": 761,
+        "total_tokens": 1569,
+        "cost_usd": 0.005605
+      }
+    },
+    {
+      "id": "rule-feb-2100-span",
+      "ok": true,
+      "latency_ms": 2790,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 543,
+        "output": 334,
+        "reasoning": 327,
+        "total_tokens": 877,
+        "cost_usd": 0.002213
+      }
+    },
+    {
+      "id": "rule-leapfeb-mondays",
+      "ok": true,
+      "latency_ms": 2624,
+      "stop_reason": "stop",
+      "answer_chars": 1,
+      "usage": {
+        "input": 539,
+        "output": 267,
+        "reasoning": 260,
+        "total_tokens": 806,
+        "cost_usd": 0.001874
+      }
+    },
+    {
+      "id": "rule-july-sept-day-count",
+      "ok": true,
+      "latency_ms": 1863,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 544,
+        "output": 127,
+        "reasoning": 120,
+        "total_tokens": 671,
+        "cost_usd": 0.001179
+      }
+    },
+    {
+      "id": "rule-chapter-page-count",
+      "ok": true,
+      "latency_ms": 1784,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 564,
+        "output": 235,
+        "reasoning": 228,
+        "total_tokens": 799,
+        "cost_usd": 0.001739
+      }
+    },
+    {
+      "id": "rule-ticket-serial-count",
+      "ok": true,
+      "latency_ms": 2599,
+      "stop_reason": "stop",
+      "answer_chars": 3,
+      "usage": {
+        "input": 551,
+        "output": 169,
+        "reasoning": 163,
+        "total_tokens": 720,
+        "cost_usd": 0.001396
+      }
+    },
+    {
+      "id": "rule-strictly-between-multiples",
+      "ok": true,
+      "latency_ms": 2540,
+      "stop_reason": "stop",
+      "answer_chars": 1,
+      "usage": {
+        "input": 550,
+        "output": 320,
+        "reasoning": 313,
+        "total_tokens": 870,
+        "cost_usd": 0.00215
+      }
+    },
+    {
+      "id": "rule-banker-rounding-sum",
+      "ok": true,
+      "latency_ms": 3107,
+      "stop_reason": "stop",
+      "answer_chars": 1,
+      "usage": {
+        "input": 553,
+        "output": 327,
+        "reasoning": 321,
+        "total_tokens": 880,
+        "cost_usd": 0.0021880000000000003
+      }
+    },
+    {
+      "id": "rule-nonoverlapping-count",
+      "ok": true,
+      "latency_ms": 2524,
+      "stop_reason": "stop",
+      "answer_chars": 1,
+      "usage": {
+        "input": 541,
+        "output": 305,
+        "reasoning": 298,
+        "total_tokens": 846,
+        "cost_usd": 0.002066
+      }
+    },
+    {
+      "id": "rule-zero-indexed-weekday",
+      "ok": true,
+      "latency_ms": 2146,
+      "stop_reason": "stop",
+      "answer_chars": 1,
+      "usage": {
+        "input": 563,
+        "output": 207,
+        "reasoning": 200,
+        "total_tokens": 770,
+        "cost_usd": 0.001598
+      }
+    },
+    {
+      "id": "rule-lexicographic-sort-last",
+      "ok": true,
+      "latency_ms": 5776,
+      "stop_reason": "stop",
+      "answer_chars": 1,
+      "usage": {
+        "input": 558,
+        "output": 601,
+        "reasoning": 595,
+        "total_tokens": 1159,
+        "cost_usd": 0.003563
+      }
+    },
+    {
+      "id": "rule-ordinal-suffix-teen",
+      "ok": true,
+      "latency_ms": 16599,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 547,
+        "output": 1929,
+        "reasoning": 1921,
+        "total_tokens": 2476,
+        "cost_usd": 0.010192000000000001
+      }
+    },
+    {
+      "id": "rule-roman-subtractive",
+      "ok": true,
+      "latency_ms": 7241,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 560,
+        "output": 199,
+        "reasoning": 190,
+        "total_tokens": 759,
+        "cost_usd": 0.001555
+      }
+    },
+    {
+      "id": "rule-skipped-floor-number",
+      "ok": true,
+      "latency_ms": 4400,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 573,
+        "output": 417,
+        "reasoning": 410,
+        "total_tokens": 990,
+        "cost_usd": 0.0026579999999999998
+      }
+    },
+    {
+      "id": "per-lease-latest-end",
+      "ok": true,
+      "latency_ms": 2423,
+      "stop_reason": "stop",
+      "answer_chars": 8,
+      "usage": {
+        "input": 616,
+        "output": 298,
+        "reasoning": 289,
+        "total_tokens": 914,
+        "cost_usd": 0.0021060000000000002
+      }
+    },
+    {
+      "id": "per-pack-lowest-unit-price",
+      "ok": true,
+      "latency_ms": 2188,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 593,
+        "output": 211,
+        "reasoning": 202,
+        "total_tokens": 804,
+        "cost_usd": 0.0016480000000000002
+      }
+    },
+    {
+      "id": "per-route-least-total-time",
+      "ok": true,
+      "latency_ms": 1718,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 671,
+        "output": 298,
+        "reasoning": 289,
+        "total_tokens": 969,
+        "cost_usd": 0.002161
+      }
+    },
+    {
+      "id": "per-margin-percent-highest",
+      "ok": true,
+      "latency_ms": 1994,
+      "stop_reason": "stop",
+      "answer_chars": 6,
+      "usage": {
+        "input": 592,
+        "output": 246,
+        "reasoning": 238,
+        "total_tokens": 838,
+        "cost_usd": 0.0018220000000000003
+      }
+    },
+    {
+      "id": "per-timetrial-last-finisher",
+      "ok": true,
+      "latency_ms": 1842,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 618,
+        "output": 234,
+        "reasoning": 227,
+        "total_tokens": 852,
+        "cost_usd": 0.001788
+      }
+    },
+    {
+      "id": "per-device-longest-runtime",
+      "ok": true,
+      "latency_ms": 1354,
+      "stop_reason": "stop",
+      "answer_chars": 7,
+      "usage": {
+        "input": 616,
+        "output": 171,
+        "reasoning": 161,
+        "total_tokens": 787,
+        "cost_usd": 0.001471
+      }
+    },
+    {
+      "id": "per-trip-cheapest-fuel",
+      "ok": true,
+      "latency_ms": 2202,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 632,
+        "output": 314,
+        "reasoning": 305,
+        "total_tokens": 946,
+        "cost_usd": 0.002202
+      }
+    },
+    {
+      "id": "per-loan-most-interest",
+      "ok": true,
+      "latency_ms": 1260,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 634,
+        "output": 143,
+        "reasoning": 134,
+        "total_tokens": 777,
+        "cost_usd": 0.001349
+      }
+    },
+    {
+      "id": "per-field-highest-yield",
+      "ok": true,
+      "latency_ms": 3357,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 598,
+        "output": 132,
+        "reasoning": 125,
+        "total_tokens": 730,
+        "cost_usd": 0.001258
+      }
+    },
+    {
+      "id": "per-shipment-latest-arrival",
+      "ok": true,
+      "latency_ms": 1322,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 592,
+        "output": 200,
+        "reasoning": 193,
+        "total_tokens": 792,
+        "cost_usd": 0.001592
+      }
+    },
+    {
+      "id": "per-jar-cost-per-serving",
+      "ok": true,
+      "latency_ms": 1721,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 592,
+        "output": 161,
+        "reasoning": 153,
+        "total_tokens": 753,
+        "cost_usd": 0.001397
+      }
+    },
+    {
+      "id": "per-plot-largest-area",
+      "ok": true,
+      "latency_ms": 1353,
+      "stop_reason": "stop",
+      "answer_chars": 3,
+      "usage": {
+        "input": 602,
+        "output": 139,
+        "reasoning": 133,
+        "total_tokens": 741,
+        "cost_usd": 0.001297
+      }
+    },
+    {
+      "id": "per-player-points-per-game",
+      "ok": true,
+      "latency_ms": 1751,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 586,
+        "output": 224,
+        "reasoning": 215,
+        "total_tokens": 810,
+        "cost_usd": 0.001706
+      }
+    },
+    {
+      "id": "per-cartridge-cost-per-page",
+      "ok": true,
+      "latency_ms": 1184,
+      "stop_reason": "stop",
+      "answer_chars": 6,
+      "usage": {
+        "input": 593,
+        "output": 181,
+        "reasoning": 173,
+        "total_tokens": 774,
+        "cost_usd": 0.0014980000000000002
+      }
+    },
+    {
+      "id": "per-alloy-highest-density",
+      "ok": true,
+      "latency_ms": 1648,
+      "stop_reason": "stop",
+      "answer_chars": 8,
+      "usage": {
+        "input": 602,
+        "output": 231,
+        "reasoning": 221,
+        "total_tokens": 833,
+        "cost_usd": 0.0017569999999999999
+      }
+    },
+    {
+      "id": "true-troy-ounce-heavier",
+      "ok": true,
+      "latency_ms": 2080,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 575,
+        "output": 242,
+        "reasoning": 236,
+        "total_tokens": 817,
+        "cost_usd": 0.0017850000000000001
+      }
+    },
+    {
+      "id": "true-metric-tonne-vs-long-ton",
+      "ok": true,
+      "latency_ms": 1969,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 561,
+        "output": 256,
+        "reasoning": 250,
+        "total_tokens": 817,
+        "cost_usd": 0.0018410000000000002
+      }
+    },
+    {
+      "id": "true-farther-north-milder-winter",
+      "ok": true,
+      "latency_ms": 3079,
+      "stop_reason": "stop",
+      "answer_chars": 8,
+      "usage": {
+        "input": 570,
+        "output": 295,
+        "reasoning": 289,
+        "total_tokens": 865,
+        "cost_usd": 0.002045
+      }
+    },
+    {
+      "id": "true-lead-ball-in-mercury",
+      "ok": true,
+      "latency_ms": 1848,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 572,
+        "output": 192,
+        "reasoning": 186,
+        "total_tokens": 764,
+        "cost_usd": 0.0015320000000000002
+      }
+    },
+    {
+      "id": "true-sun-versus-moon-pull",
+      "ok": true,
+      "latency_ms": 3583,
+      "stop_reason": "stop",
+      "answer_chars": 3,
+      "usage": {
+        "input": 568,
+        "output": 323,
+        "reasoning": 316,
+        "total_tokens": 891,
+        "cost_usd": 0.002183
+      }
+    },
+    {
+      "id": "true-universal-donor-receives",
+      "ok": true,
+      "latency_ms": 8273,
+      "stop_reason": "stop",
+      "answer_chars": 1,
+      "usage": {
+        "input": 593,
+        "output": 937,
+        "reasoning": 930,
+        "total_tokens": 1530,
+        "cost_usd": 0.005278000000000001
+      }
+    },
+    {
+      "id": "true-round-trip-average-speed",
+      "ok": true,
+      "latency_ms": 2233,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 583,
+        "output": 244,
+        "reasoning": 237,
+        "total_tokens": 827,
+        "cost_usd": 0.0018030000000000001
+      }
+    },
+    {
+      "id": "true-fund-zero-average-return",
+      "ok": true,
+      "latency_ms": 2097,
+      "stop_reason": "stop",
+      "answer_chars": 3,
+      "usage": {
+        "input": 588,
+        "output": 185,
+        "reasoning": 179,
+        "total_tokens": 773,
+        "cost_usd": 0.001513
+      }
+    },
+    {
+      "id": "true-negative-twenty-degrees",
+      "ok": true,
+      "latency_ms": 2109,
+      "stop_reason": "stop",
+      "answer_chars": 10,
+      "usage": {
+        "input": 579,
+        "output": 285,
+        "reasoning": 276,
+        "total_tokens": 864,
+        "cost_usd": 0.002004
+      }
+    },
+    {
+      "id": "true-high-altitude-boiled-egg",
+      "ok": true,
+      "latency_ms": 4913,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 599,
+        "output": 318,
+        "reasoning": 312,
+        "total_tokens": 917,
+        "cost_usd": 0.002189
+      }
+    },
+    {
+      "id": "true-xbox-generation-order",
+      "ok": true,
+      "latency_ms": 1907,
+      "stop_reason": "stop",
+      "answer_chars": 3,
+      "usage": {
+        "input": 550,
+        "output": 202,
+        "reasoning": 196,
+        "total_tokens": 752,
+        "cost_usd": 0.00156
+      }
+    },
+    {
+      "id": "true-nineteen-hundred-century",
+      "ok": true,
+      "latency_ms": 1598,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 567,
+        "output": 173,
+        "reasoning": 166,
+        "total_tokens": 740,
+        "cost_usd": 0.0014320000000000001
+      }
+    },
+    {
+      "id": "true-megabit-megabyte-download",
+      "ok": true,
+      "latency_ms": 3229,
+      "stop_reason": "stop",
+      "answer_chars": 1,
+      "usage": {
+        "input": 606,
+        "output": 387,
+        "reasoning": 380,
+        "total_tokens": 993,
+        "cost_usd": 0.002541
+      }
+    },
+    {
+      "id": "true-parallel-resistor-pair",
+      "ok": true,
+      "latency_ms": 1859,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 573,
+        "output": 225,
+        "reasoning": 218,
+        "total_tokens": 798,
+        "cost_usd": 0.001698
+      }
+    },
+    {
+      "id": "true-larger-area-fewer-people",
+      "ok": true,
+      "latency_ms": 2604,
+      "stop_reason": "stop",
+      "answer_chars": 10,
+      "usage": {
+        "input": 553,
+        "output": 152,
+        "reasoning": 144,
+        "total_tokens": 705,
+        "cost_usd": 0.001313
+      }
+    }
+  ]
+}

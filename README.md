@@ -207,6 +207,42 @@ shorter term can still expire last; the imperial *gallon* is larger but the impe
 a capability ranking, and a suite made of them measures something other than what a
 leaderboard claims to.
 
+## "Cannot decide" and "indistinguishable" are different findings
+
+Pooling more tasks moved the model comparison across the power threshold, and the
+verdict changed category rather than degree:
+
+```
+100 tasks   informative 4   min_p 0.125   "this suite CANNOT DECIDE between them"
+159 tasks   informative 8   min_p 0.008   "INDISTINGUISHABLE on this suite"
+            haiku 7 · sonnet 1 · 138 tied · 13 unstable · p=0.070
+```
+
+At 100 tasks no split of the data could have reached significance, so reporting a
+tie would have been a claim the data could not support. At 159 a clean sweep of 8
+would give p=0.008 — the suite can now answer the question. It answered *not
+significantly different*, with Haiku leading 7 to 1.
+
+Suggestive. Not significant. Two more informative tasks in the same direction and
+it would be, which is exactly why the number to watch is `min_p` and not the
+p-value alone.
+
+The extra 59 tasks were **mined, not authored for difficulty**. A pool written to
+be hard yielded 3 discriminators from 59. A pool targeting only the four shapes
+that had empirically separated the models — an excluded transformation sitting
+next to the answer, a known rule whose exception lands inside the count, a
+per-item comparison where the biggest single column is the wrong row, and a
+*true* premise pointing the wrong way — more than doubled the non-tie rate,
+12 of 59 against 9 of 100.
+
+**The binding constraint is no longer difficulty. It is stability.** 13 of 159
+tasks were discarded because a config disagreed with itself, and nearly all of
+them are tasks where Haiku is 3/3 and Sonnet lands 1/3 or 2/3. Those are real
+differences that this tool deliberately refuses to count, because the rule that
+keeps it from reporting noise as signal also throws away signal that is noisy.
+That trade is the conservative one on purpose, and it is the next thing to
+improve — with more repetitions, not more tasks.
+
 ## The result the tool was built for
 
 Same 100 tasks, same model, one config change. `claude-haiku-4-5`, three

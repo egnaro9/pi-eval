@@ -1,0 +1,483 @@
+{
+  "suite_hash": "86e9226af4d5",
+  "schema_version": "gradecore-v1",
+  "gradecore_version": "0.9.0",
+  "n": 59,
+  "passed": 58,
+  "failed": 1,
+  "score": 0.983051,
+  "results": [
+    {
+      "id": "excluded-list-price-per-box",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 28.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-pretax-food-subtotal",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 44.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-new-customer-promo-price",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 48.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-water-rate-before-increase",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 80.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-nonrefundable-registration-fee",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 340.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-discount-on-parts-not-labor",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 308.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-autopay-credit-other-tenant",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 90.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-merchandise-subtotal-shipping",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 30.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-evening-parking-surcharge",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 12.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-first-year-fee-waiver",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 124.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-rent-before-amendment",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 2900.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-employee-discount-other-store",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 50.88 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-activation-fee-second-bill",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 40.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "excluded-lower-list-price-store",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['B']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "excluded-coupon-produce-only",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 13.6 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "rule-leap-2000-in-window",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 7.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "rule-feb-2100-span",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 29.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "rule-leapfeb-mondays",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 5.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "rule-july-sept-day-count",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 92.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "rule-chapter-page-count",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 43.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "rule-ticket-serial-count",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 757.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "rule-strictly-between-multiples",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 7.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "rule-banker-rounding-sum",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 8.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "rule-nonoverlapping-count",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 3.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "rule-zero-indexed-weekday",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 3.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "rule-lexicographic-sort-last",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected '9', got '9'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "rule-ordinal-suffix-teen",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected '813th', got '813th'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "rule-roman-subtractive",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'XCIX', got 'XCIX'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "rule-skipped-floor-number",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 21.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "per-lease-latest-end",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Bellrose', got 'Bellrose'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "per-pack-lowest-unit-price",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Birch', got 'Birch'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "per-route-least-total-time",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['Heron', 'Route Heron']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "per-margin-percent-highest",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Kettle', got 'Kettle'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "per-timetrial-last-finisher",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Pavel', got 'Pavel'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "per-device-longest-runtime",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Drifter', got 'Drifter'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "per-trip-cheapest-fuel",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Lark', got 'Lark'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "per-loan-most-interest",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Dune', got 'Dune'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "per-field-highest-yield",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 40.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "per-shipment-latest-arrival",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['Vale', 'Order Vale']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "per-jar-cost-per-serving",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Cove', got 'Cove'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "per-plot-largest-area",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 720.0 (\u00b10.0, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "per-player-points-per-game",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Juno', got 'Juno'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "per-cartridge-cost-per-page",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Quartz', got 'Quartz'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "per-alloy-highest-density",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Cerulite', got 'Cerulite'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "true-troy-ounce-heavier",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['troy', 'Troy', 'troy ounce']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "true-metric-tonne-vs-long-ton",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['long', 'Long', 'long ton']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "true-farther-north-milder-winter",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['Montreal', 'montreal', 'Montr\u00e9al']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "true-lead-ball-in-mercury",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['float', 'Float', 'floats']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "true-sun-versus-moon-pull",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['Sun', 'sun', 'the Sun']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "true-universal-donor-receives",
+      "passed": false,
+      "score": 0.0,
+      "severity": "med",
+      "detail": "expected 1.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "true-round-trip-average-speed",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 40.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "true-fund-zero-average-return",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 750.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "true-negative-twenty-degrees",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['Fahrenheit', 'fahrenheit', 'F']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "true-high-altitude-boiled-egg",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['more', 'More', 'longer']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "true-xbox-generation-order",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['One', 'one', 'Xbox One']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "true-nineteen-hundred-century",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 19.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "true-megabit-megabyte-download",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 8.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "true-parallel-resistor-pair",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 50.0 (\u00b10.01, first, last_line)",
+      "grader_id": "number"
+    },
+    {
+      "id": "true-larger-area-fewer-people",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['Uzbekistan', 'uzbekistan']",
+      "grader_id": "one_of"
+    }
+  ]
+}
