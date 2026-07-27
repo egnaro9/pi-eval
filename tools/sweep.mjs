@@ -234,7 +234,11 @@ export function extractAnswer(session) {
 	if (typeof text !== "string" || text.trim() === "") {
 		throw new Error("assistant produced no text");
 	}
-	return { text, stopReason };
+	// Usage is what makes "did that help, or did it just cost more?" answerable.
+	// A config change that buys +1 task for 3x the tokens is a bad trade, and a
+	// score-only report cannot show that. `reasoning` is a SUBSET of `output`,
+	// not an addition to it (pi-ai types.d.ts:258).
+	return { text, stopReason, usage: last.usage };
 }
 
 // ---------------------------------------------------------------------------
@@ -287,11 +291,20 @@ async function runTask(task, ctx) {
 			await settled;
 		}
 
-		const { text, stopReason } = extractAnswer(session);
+		const { text, stopReason, usage } = extractAnswer(session);
 		record.ok = true;
 		record.answer = text;
 		record.stop_reason = stopReason;
 		record.answer_chars = text.length;
+		if (usage) {
+			record.usage = {
+				input: usage.input,
+				output: usage.output,
+				reasoning: usage.reasoning ?? null,
+				total_tokens: usage.totalTokens,
+				cost_usd: usage.cost?.total ?? null,
+			};
+		}
 	} catch (err) {
 		record.error = err instanceof Error ? err.message : String(err);
 	} finally {
@@ -452,6 +465,7 @@ async function main(argv) {
 		if (record.ok) {
 			entry.stop_reason = record.stop_reason;
 			entry.answer_chars = record.answer_chars;
+			if (record.usage) entry.usage = record.usage;
 		} else {
 			entry.error = record.error;
 			if (record.stop_reason) entry.stop_reason = record.stop_reason;
@@ -490,6 +504,22 @@ async function main(argv) {
 		errored_ids: failedIds,
 		latency_ms_median: latencies.length ? latencies[Math.floor((latencies.length - 1) / 2)] : null,
 		latency_ms_max: latencies.length ? latencies[latencies.length - 1] : null,
+		// Totals over ANSWERED tasks only. A task that errored produced no answer,
+		// so folding its partial spend into a per-answer cost would understate what
+		// each usable result actually cost.
+		usage_total: (() => {
+			const u = taskMeta.filter((t) => t.usage).map((t) => t.usage);
+			if (!u.length) return null;
+			const sum = (k) => u.reduce((n, x) => n + (x[k] ?? 0), 0);
+			return {
+				tasks_with_usage: u.length,
+				input: sum("input"),
+				output: sum("output"),
+				reasoning: u.some((x) => x.reasoning !== null) ? sum("reasoning") : null,
+				total_tokens: sum("total_tokens"),
+				cost_usd: Number(sum("cost_usd").toFixed(6)),
+			};
+		})(),
 		tasks: taskMeta,
 	};
 
