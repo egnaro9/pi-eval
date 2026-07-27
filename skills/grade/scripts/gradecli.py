@@ -179,11 +179,14 @@ def cmd_compare(args: argparse.Namespace) -> int:
     reps_b = [b] + [_load_matching(p, ha) for p in args.rep_b]
     if len(reps_a) > 1 and len(reps_b) > 1:
         rr = gc.repeated_compare([scores(x) for x in reps_a],
-                                 [scores(x) for x in reps_b], alpha=args.alpha)
+                                 [scores(x) for x in reps_b], alpha=args.alpha,
+                                 stability=args.stability, rate_margin=args.rate_margin)
         r = rr.paired
         json.dump({
             "suite_hash": ha,
             "mode": "repeated",
+            "stability": args.stability,
+            "rate_margin": args.rate_margin if args.stability == "rate" else None,
             "a": name_a, "b": name_b,
             "reps_a": rr.reps_a, "reps_b": rr.reps_b,
             "shared": rr.shared,
@@ -381,6 +384,11 @@ def main(argv: List[str] | None = None) -> int:
                    help="sweep .meta.json sidecars for A; adds spend to the verdict so "
                         "'did it help' and 'did it just cost more' are answered together")
     c.add_argument("--meta-b", nargs="*", default=[], metavar="META")
+    c.add_argument("--stability", choices=["strict", "rate"], default="strict",
+                   help="strict (default) discards any task a config is not "
+                        "self-consistent on; rate counts a task when the pass rates "
+                        "differ by --rate-margin. Weaker, and the output says which ran.")
+    c.add_argument("--rate-margin", type=float, default=0.5)
     c.set_defaults(fn=cmd_compare)
 
     args = p.parse_args(argv)

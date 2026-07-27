@@ -237,11 +237,45 @@ per-item comparison where the biggest single column is the wrong row, and a
 
 **The binding constraint is no longer difficulty. It is stability.** 13 of 159
 tasks were discarded because a config disagreed with itself, and nearly all of
-them are tasks where Haiku is 3/3 and Sonnet lands 1/3 or 2/3. Those are real
-differences that this tool deliberately refuses to count, because the rule that
-keeps it from reporting noise as signal also throws away signal that is noisy.
-That trade is the conservative one on purpose, and it is the next thing to
-improve — with more repetitions, not more tasks.
+them are Haiku at 3/3 against Sonnet at 1/3 or 2/3 — real differences the tool
+refuses to count.
+
+I first wrote here that this was fixable "with more repetitions". That is
+backwards, and the data says so. Every extra repetition is another chance to
+observe disagreement, so the discard count RISES:
+
+```
+2 reps   ~8.7 discarded   ~10.3 informative
+3 reps    13  discarded      8  informative
+```
+
+In the limit the strict rule throws away every genuinely stochastic task. More
+measurement cannot fix it. Only a different rule can.
+
+### Two rules, two answers — and why the headline is the weaker one
+
+`--stability rate` counts a task when the two pass rates differ by at least a
+margin, self-consistent or not. On the same runs:
+
+```
+strict   7–1    informative 8    p=0.070    not significant
+rate    13–2    informative 15   p=0.0074   significant
+```
+
+**Treat `strict` as the result.** Not because it is more sophisticated — it is
+less — but because of the order these happened in. I ran strict, got p=0.070,
+and then built the rule that returns p=0.0074.
+
+The rate rule was motivated by a measured property of the strict one, found
+before I checked whether it changed any verdict. That is true and it is also
+exactly what everyone who p-hacks believes about themselves. The margin is a
+judgement call, it was chosen by me, and a threshold picked by the person who
+wants a result is not a test.
+
+So both numbers are here, the output records which rule produced it, and the
+significant one is labelled as the one that needs independent confirmation on
+data it did not help select. That is the honest state of it, and the tool exists
+to report honest states rather than publishable ones.
 
 ## The result the tool was built for
 
