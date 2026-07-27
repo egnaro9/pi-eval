@@ -20,12 +20,48 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CLI = ROOT / "skills" / "grade" / "scripts" / "gradecli.py"
 DOCS = [ROOT / "skills" / "grade" / "SKILL.md", ROOT / "README.md"]
+PATH_DOCS = [ROOT / "runs" / "README.md"]
 
 # Any single-line JSON object literal MENTIONING a grader — including suite-task
 # examples, where "grader" is not the first key. An extractor that only matched
 # specs starting with "grader" found 2 of them and reported success, which is
 # exactly the false confidence this script exists to prevent.
 OBJ = re.compile(r'\{[^{}\n]*"grader"[^{}\n]*\}')
+
+
+# A path inside a fenced command, including shell brace expansion:
+#   runs/think/ll-high-r{2,3}.graded.json  ->  two real files
+PATHISH = re.compile(r"(?<![\w/.-])((?:runs|suites|tools|skills|extensions|tests)/[\w./{},*-]+)")
+
+
+def expand_braces(token: str) -> list[str]:
+    m = re.search(r"\{([^{}]*)\}", token)
+    if not m:
+        return [token]
+    out = []
+    for part in m.group(1).split(","):
+        out.extend(expand_braces(token[: m.start()] + part + token[m.end():]))
+    return out
+
+
+def check_paths() -> list[str]:
+    """Every file a documented command names must exist.
+
+    runs/README.md promises that each published number can be regenerated. A run
+    file that gets renamed turns that promise into a command that errors, and
+    nothing else in this repo would notice.
+    """
+    missing = []
+    for doc in PATH_DOCS:
+        if not doc.exists():
+            continue
+        for raw in PATHISH.findall(doc.read_text()):
+            for path in expand_braces(raw):
+                if "*" in path or "<" in path:
+                    continue  # a placeholder, not a claim
+                if not (ROOT / path).exists():
+                    missing.append(f"{doc.name}: {path}")
+    return missing
 
 
 def main() -> int:
@@ -53,11 +89,16 @@ def main() -> int:
 
     for name, raw, err in bad:
         print(f"{name}: unbuildable spec {raw}\n    {err}", file=sys.stderr)
-    print(f"checked {checked} documented grader spec(s), {len(bad)} unbuildable")
+    missing = check_paths()
+    for m in missing:
+        print(f"missing file referenced by a documented command: {m}", file=sys.stderr)
+
+    print(f"checked {checked} documented grader spec(s), {len(bad)} unbuildable; "
+          f"{len(missing)} missing path(s)")
     if checked == 0:
         print("no specs found — the extractor is probably broken", file=sys.stderr)
         return 2
-    return 1 if bad else 0
+    return 1 if (bad or missing) else 0
 
 
 if __name__ == "__main__":
