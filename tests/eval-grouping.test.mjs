@@ -73,3 +73,36 @@ test("records missing a fingerprint group together rather than crashing", () => 
 	const g = groupRunsByConfig(rows(["a", { suite_hash: "abc123" }], ["b", { suite_hash: "abc123" }]));
 	assert.deepEqual(g, [["a", "b"]]);
 });
+
+
+// ---------------------------------------------------------------------------
+// A source-level check, on purpose: the invariant it guards is security-shaped
+// and the call site is inside a Pi session that cannot be unit-tested here.
+//
+// Demonstrated exploitable before the fix. Same prompt, same model:
+//   pi -p            -> "PINEAPPLE-7731"   (it opened the file)
+//   pi -p --no-tools -> could not
+// Every suite in this repo ships its own answer key, so a task answered by
+// reading the suite scores full marks and looks like the best answer there is.
+// ---------------------------------------------------------------------------
+
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+const SRC = readFileSync(
+	join(dirname(fileURLToPath(import.meta.url)), "..", "extensions", "eval.ts"),
+	"utf8",
+);
+
+test("/eval spawns every task with --no-tools", () => {
+	const call = SRC.match(/\[\s*"-p"[^\]]*\]/s);
+	assert.ok(call, "could not find the pi -p argv in eval.ts");
+	assert.match(call[0], /"--no-tools"/,
+		"a task must not be able to answer by reading the suite file");
+});
+
+test("the run summary does not report session tools as the task's tools", () => {
+	// It printed "4 tools active" for runs whose tasks had none.
+	assert.doesNotMatch(SRC, /activeTools\.length\} tools active/);
+});

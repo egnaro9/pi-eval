@@ -136,7 +136,13 @@ export default function (pi: ExtensionAPI) {
 				model: { id: model.id, provider: model.provider, name: model.name },
 				modelRef,
 				thinkingLevel: ctx.thinkingLevel,
-				activeTools: pi.getActiveTools().slice().sort(),
+				// The tools available to each TASK, which is what affects a score — not
+				// this session's tools. Each task runs in its own `pi -p --no-tools`
+				// process. Recording the session's toolset here read as though the tasks
+				// had them, and the run summary printed "4 tools active" for runs where
+				// the tasks had none.
+				taskTools: [] as string[],
+				sessionTools: pi.getActiveTools().slice().sort(),
 				suitePath,
 				taskCount: tasks.length,
 			};
@@ -153,7 +159,12 @@ export default function (pi: ExtensionAPI) {
 			for (const [i, task] of tasks.entries()) {
 				const r = await pi.exec(
 					"pi",
-					["-p", "--model", modelRef, task.prompt],
+					// --no-tools is not optional. Every suite file in this repo contains
+					// its own answer key, and `pi -p` enables read/bash/edit/write by
+					// default — so without this a task can be answered by opening the
+					// suite instead of by reasoning, and that answer looks like the best
+					// one. tools/sweep.mjs asserts the same invariant at runtime.
+					["-p", "--no-tools", "--model", modelRef, task.prompt],
 					{ signal: ctx.signal, timeout: 180_000 },
 				);
 
@@ -219,7 +230,7 @@ export default function (pi: ExtensionAPI) {
 			const pct = ((result.score as number) * 100).toFixed(1);
 			ctx.ui.notify(
 				`${result.passed}/${result.n} passed · score ${pct}% · suite ${String(result.suite_hash)}\n` +
-					`model ${modelRef} · ${fingerprint.activeTools.length} tools active\n` +
+					`model ${modelRef} · tools disabled for every task\n` +
 					`saved ${out} — compare two runs with /eval:compare`,
 				(result.failed as number) === 0 ? "info" : "warning",
 			);
