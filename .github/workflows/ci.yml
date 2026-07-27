@@ -1,0 +1,49 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Two runtimes because this package straddles two: a Python CLI over gradecore,
+# and TypeScript/ESM that Pi loads. A break in either half breaks the package.
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install pytest git+https://github.com/egnaro9/gradecore.git
+      - run: python -m pytest tests/ -q
+
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install --omit=dev
+      # Node 22 strips the types; no build step, which is also how Pi loads it.
+      - run: node --test tests/*.test.mjs
+      - run: node --check tools/sweep.mjs
+
+  docs:
+    runs-on: ubuntu-latest
+    # Every JSON grader spec printed in SKILL.md must actually build a grader.
+    # The last time this doc drifted, every documented command was
+    # "command not found", and only installing into a real Pi found it.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install git+https://github.com/egnaro9/gradecore.git
+      - name: every documented grader spec must be constructible
+        run: python tools/check_docs.py
