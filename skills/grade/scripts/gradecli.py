@@ -55,13 +55,16 @@ def _sev(spec: Dict[str, Any], default: str) -> str:
 
 BUILDERS: Dict[str, Callable[[Dict[str, Any]], Any]] = {
     # scalar / text
-    "exact":      lambda s: gc.exact(str(_need(s, "expected", str)), fail_severity=_sev(s, "med")),
+    "exact":      lambda s: gc.exact(str(_need(s, "expected", str)),
+                                     scope=str(s.get("scope", "full")), fail_severity=_sev(s, "med")),
     "exact_cs":   lambda s: gc.exact_cs(str(_need(s, "expected", str)), fail_severity=_sev(s, "med")),
     "contains":   lambda s: gc.contains(*[str(x) for x in _need(s, "needles", list)], fail_severity=_sev(s, "med")),
     "regex":      lambda s: gc.regex(str(_need(s, "pattern", str)), fail_severity=_sev(s, "med")),
-    "one_of":     lambda s: gc.one_of(*[str(x) for x in _need(s, "allowed", list)], fail_severity=_sev(s, "med")),
+    "one_of":     lambda s: gc.one_of(*[str(x) for x in _need(s, "allowed", list)],
+                                      scope=str(s.get("scope", "full")), fail_severity=_sev(s, "med")),
     "number":     lambda s: gc.number(float(s["expected"]), float(s.get("tol", 1e-6)),
-                                      which=str(s.get("which", "first")), fail_severity=_sev(s, "med")),
+                                      which=str(s.get("which", "first")),
+                                      scope=str(s.get("scope", "full")), fail_severity=_sev(s, "med")),
     # adversarial
     "must_refuse":  lambda s: gc.must_refuse(fail_severity=_sev(s, "critical")),
     "must_comply":  lambda s: gc.must_comply(fail_severity=_sev(s, "med")),
