@@ -131,30 +131,88 @@ after : 86e9205c1519      # one expected value changed; same ids, same prompts
 If two runs have different hashes, they are different suites and the delta between
 them means nothing. There is a test for exactly this.
 
-## A suite that can actually decide
-
-`suites/discriminating-41.json` — 41 tasks, 7 categories, no category over 15%.
-The bundled smoke suite proves the plumbing and can never decide anything: six
-easy tasks tie on every comparison, and ties carry no direction.
-
-Every predicate was verified against **two** answers before admission — a correct
-answer must PASS and a plausible-but-wrong answer must FAIL:
+## Headless sweeps
 
 ```bash
-python3 skills/grade/scripts/gradecli.py check \
-  --spec '{"grader":"number","expected":78,"which":"last"}' \
-  --text "First leg: 3 x 18 = 54 km. Second leg: 1.5 x 16 = 24 km. Total = 78 km."
+node tools/sweep.mjs --suite suites/combined-100.json \
+                     --model anthropic/claude-haiku-4-5 \
+                     --out runs/haiku.json
 ```
 
-That gate is not ceremony. Of 48 authored tasks, **7 were rejected** — an entire
-category's worth — every one because `number` defaults to `which="first"` and a
-worked solution's first number is an *operand*, not the answer. Those predicates
-graded 3 against an expected 78 and failed the correct answer. A one-answer check
-would have shipped all six.
+Fresh in-memory session per task, so task N-1 cannot contaminate task N. Tools are
+disabled and the assertion is checked at runtime with `getActiveToolNames()`, not
+assumed — the suite file with every expected value is *in this repo*, so a model
+with a read tool could answer by looking up the key, and that answer would look
+like the best one.
 
-The failure mode a lax predicate causes is worse than a wrong score: a grader that
-cannot fail a wrong answer turns a real difference into a tie, and ties are
-discarded by the sign test. A weak suite does not mismeasure — it goes blind.
+It refuses to record a missing **or truncated** response as an answer. A reply cut
+off at the output-token cap is an infrastructure failure wearing the costume of a
+result: `"Asta"` for a task expecting `"Astana"` grades as a model that got the
+capital wrong, and the sign test counts that as a directional loss.
+
+## Measure the noise floor before you believe a difference
+
+```bash
+python3 skills/grade/scripts/gradecli.py compare A.json B.json \
+  --rep-a A2.json A3.json --rep-b B2.json B3.json
+```
+
+With repetitions on both sides this switches to repeated measures, and applies one
+rule: **a task where a config disagrees with itself carries no direction, and is
+discarded exactly like a tie.**
+
+That rule is not theoretical. Running claude-haiku-4-5 three times against the same
+100 tasks and comparing those runs *to each other* yields 2.0 "informative" tasks
+from within-model variance alone. Any real finding has to clear that. The output
+reports both configs' noise floors next to the verdict so a reader can see the bar.
+
+It refuses to enter repeated mode with repetitions on only one side — assuming the
+unrepeated config is stable is precisely the assumption the mode removes.
+
+## What running it actually found
+
+Three suites, three repetitions per config, `claude-haiku-4-5` vs `claude-sonnet-4-6`:
+
+```
+haiku   98 98 98 /100     noise floor 2.00
+sonnet  95 96 96 /100     noise floor 0.67
+
+haiku wins 3 · sonnet wins 1 · 92 tied · 4 unstable
+informative 4 · min_p 0.125 · VERDICT: this suite cannot decide
+```
+
+Two results worth the electricity:
+
+**The suite cannot separate two models a leaderboard would happily rank.** 92 of 100
+tasks tie. Six informative tasks are needed at α=0.05 and there are four, so no split
+of this data could reach significance — which the tool says out loud instead of
+reporting a tie.
+
+**Haiku beats Sonnet here, 3 wins to 1.** Not a bug. All three keys were re-derived
+by hand: 1900 is not a leap year (Sonnet counts it); a warranty starting later with a
+shorter term can still expire last; the imperial *gallon* is larger but the imperial
+*fluid ounce* is smaller, 160 to the gallon against 128. Narrow trap questions are not
+a capability ranking, and a suite made of them measures something other than what a
+leaderboard claims to.
+
+## The gate that admits a task, and the one it cannot replace
+
+Every task is admitted only if a correct answer PASSES its predicate and a
+plausible-but-wrong answer FAILS it. Of 48 authored tasks, 7 were rejected — six for
+one cause: `number` defaults to `which="first"`, so a worked solution's first number
+is an *operand*. Those graded 3 against an expected 78 and failed the correct answer.
+
+Then a task shipped anyway with `expected=52.34` when the answer was 52.33.
+
+The gate verifies the **predicate**. It cannot verify the **answer key** — because the
+same author wrote the key *and* the known-good answer used to check it, and the same
+arithmetic slip was in both. Two independent-looking checks, one shared error, zero
+detection. Both models got it right and were scored wrong.
+
+The fix is a third gate: an agent derives each answer from the **prompt alone**, never
+shown the author's value, and disagreement kills the task. The predicate is then run
+against the *independently derived* answer — grading the author's would be circular,
+since it may have been reverse-engineered from the predicate.
 
 ## What it will not do
 
@@ -168,10 +226,11 @@ discarded by the sign test. A weak suite does not mismeasure — it goes blind.
 ## Tests
 
 ```bash
-python3 -m pytest tests/ -q
+python3 -m pytest tests/ -q      # 32 — the marshalling layer
+node --test tests/sweep.test.mjs #  6 — the sweep runner
 ```
 
-32 tests, none of which re-test a grader — `gradecore` has its own suite. These
+The Python tests re-test no grader — `gradecore` has its own suite. These
 cover the marshalling layer, which is where a thin CLI actually breaks: a mistyped
 grader that silently defaults, an exit code that can't tell "failed" from "couldn't
 run", a hash that misses an edited answer key.
