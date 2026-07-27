@@ -273,12 +273,22 @@ def test_neither_grader_nor_spec_is_a_spec_error():
     assert code == 2
 
 
-def test_flag_grader_is_overridden_by_spec():
-    """--spec merges OVER the flags for every other field; grader follows the
-    same rule so precedence is not a coin flip."""
-    code, out, _ = run("check", "--grader", "exact",
-                       "--spec", '{"grader":"contains","needles":["cat"]}',
-                       "--text", "the cat sat")
+def test_a_spec_that_conflicts_with_a_flag_is_a_usage_error():
+    """--spec used to merge silently OVER a shortcut flag, so
+    `--expected 42 --spec '{"expected":"7"}'` graded against 7 and said nothing.
+    That is a plausible score that means nothing — the exact failure this tool
+    exists to prevent — so a conflict is exit 2, not a precedence rule."""
+    code, _, err = run("check", "--grader", "exact", "--expected", "42",
+                       "--spec", '{"expected":"7"}', "--text", "42")
+    assert code == 2
+    assert "expected" in err
+
+
+def test_a_spec_that_only_ADDS_to_the_flags_is_fine():
+    """Non-conflicting merge is the normal path and must keep working."""
+    code, out, _ = run("check", "--grader", "number",
+                       "--spec", '{"expected":78,"which":"last"}',
+                       "--text", "3 x 18 = 54, plus 24, total 78")
     assert code == 0 and json.loads(out)["passed"] is True
 
 

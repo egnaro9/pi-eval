@@ -137,7 +137,18 @@ def cmd_check(args: argparse.Namespace) -> int:
     if args.allowed:
         spec["allowed"] = args.allowed
     if args.spec:
-        spec.update(json.loads(args.spec))
+        override = json.loads(args.spec)
+        # --spec merging OVER a shortcut flag meant `--expected 42 --spec
+        # '{"expected":"7"}'` graded against 7 and said nothing. That is the same
+        # "plausible score that means nothing" this tool exists to prevent, so a
+        # conflict is a usage error rather than a silent precedence rule.
+        clashes = sorted(k for k, v in override.items() if k in spec and spec[k] != v)
+        if clashes:
+            raise ValueError(
+                f"--spec conflicts with flag(s) {clashes}: pass one or the other, "
+                "not both with different values",
+            )
+        spec.update(override)
     if "grader" not in spec:
         raise ValueError("no grader: pass --grader, or a --spec containing one")
 
@@ -150,6 +161,13 @@ def cmd_check(args: argparse.Namespace) -> int:
 
 def cmd_compare(args: argparse.Namespace) -> int:
     """Compare two run records task by task.
+
+    alpha is fixed at 0.05 and is deliberately NOT a flag. On this repo's own
+    headline data, --alpha 0.10 turned "Indistinguishable on this suite" into
+    "is better: won 7, lost 1" at an identical p=0.070 — same runs, same
+    arithmetic, one flag. A significance threshold the reader can dial after
+    seeing the result is not a threshold. gradecore keeps alpha= as a library
+    parameter for callers who genuinely need another field's convention.
 
     Refuses on a suite_hash mismatch. Two runs over different questions produce
     a delta that means nothing, and reporting it anyway is the exact failure the
@@ -179,14 +197,14 @@ def cmd_compare(args: argparse.Namespace) -> int:
     reps_b = [b] + [_load_matching(p, ha) for p in args.rep_b]
     if len(reps_a) > 1 and len(reps_b) > 1:
         rr = gc.repeated_compare([scores(x) for x in reps_a],
-                                 [scores(x) for x in reps_b], alpha=args.alpha,
-                                 stability=args.stability, rate_margin=args.rate_margin)
+                                 [scores(x) for x in reps_b], alpha=gc.DEFAULT_ALPHA,
+                                 stability=args.stability, rate_margin=gc.DEFAULT_RATE_MARGIN)
         r = rr.paired
         json.dump({
             "suite_hash": ha,
             "mode": "repeated",
             "stability": args.stability,
-            "rate_margin": args.rate_margin if args.stability == "rate" else None,
+            "rate_margin": gc.DEFAULT_RATE_MARGIN if args.stability == "rate" else None,
             "a": name_a, "b": name_b,
             "reps_a": rr.reps_a, "reps_b": rr.reps_b,
             "shared": rr.shared,
@@ -194,13 +212,13 @@ def cmd_compare(args: argparse.Namespace) -> int:
             "ties": rr.ties,
             "unstable": rr.unstable,
             "informative": r.informative,
-            "p": r.p, "min_p": r.min_p, "alpha": args.alpha,
+            "p": r.p, "min_p": r.min_p, "alpha": gc.DEFAULT_ALPHA,
             "decisive": r.decisive,
             "underpowered": r.underpowered,
             "winner": {"a": name_a, "b": name_b}.get(r.winner or ""),
             "noise_floor_a": gc.noise_floor([scores(x) for x in reps_a]),
             "noise_floor_b": gc.noise_floor([scores(x) for x in reps_b]),
-            "tasks_needed_for_any_verdict": gc.tasks_needed(args.alpha),
+            "tasks_needed_for_any_verdict": gc.tasks_needed(gc.DEFAULT_ALPHA),
             "verdict": gc.repeated_verdict(rr, name_a, name_b),
             "spend_a": _spend(args.meta_a),
             "spend_b": _spend(args.meta_b),
@@ -222,7 +240,7 @@ def cmd_compare(args: argparse.Namespace) -> int:
             "remove. Falling back to a single-run paired comparison.\n"
         )
 
-    r = gc.paired_compare(scores(a), scores(b), alpha=args.alpha)
+    r = gc.paired_compare(scores(a), scores(b), alpha=gc.DEFAULT_ALPHA)
     out = {
         "mode": "single",
         "suite_hash": ha,
@@ -235,11 +253,11 @@ def cmd_compare(args: argparse.Namespace) -> int:
         "informative": r.informative,
         "p": r.p,
         "min_p": r.min_p,
-        "alpha": args.alpha,
+        "alpha": gc.DEFAULT_ALPHA,
         "decisive": r.decisive,
         "underpowered": r.underpowered,
         "winner": {"a": name_a, "b": name_b}.get(r.winner or ""),
-        "tasks_needed_for_any_verdict": gc.tasks_needed(args.alpha),
+        "tasks_needed_for_any_verdict": gc.tasks_needed(gc.DEFAULT_ALPHA),
         "verdict": gc.paired_verdict(r, name_a, name_b),
         "spend_a": _spend(args.meta_a),
         "spend_b": _spend(args.meta_b),
@@ -374,7 +392,6 @@ def main(argv: List[str] | None = None) -> int:
     c.add_argument("run_b")
     c.add_argument("--name-a", help="label for run A (default: its model ref)")
     c.add_argument("--name-b", help="label for run B (default: its model ref)")
-    c.add_argument("--alpha", type=float, default=gc.DEFAULT_ALPHA)
     c.add_argument("--rep-a", nargs="*", default=[], metavar="RUN",
                    help="additional repetitions of A; with >=1 on BOTH sides the "
                         "comparison switches to repeated measures and discards "
@@ -388,13 +405,12 @@ def main(argv: List[str] | None = None) -> int:
                    help="strict (default) discards any task a config is not "
                         "self-consistent on; rate counts a task when the pass rates "
                         "differ by --rate-margin. Weaker, and the output says which ran.")
-    c.add_argument("--rate-margin", type=float, default=0.5)
     c.set_defaults(fn=cmd_compare)
 
     args = p.parse_args(argv)
     try:
         return args.fn(args)
-    except (ValueError, KeyError) as e:
+    except (ValueError, KeyError, OSError) as e:
         sys.stderr.write(f"gradecli: {e}\n")
         return 2
 

@@ -42,6 +42,11 @@ analysed **only** on the new data:
 - Models: `anthropic/claude-haiku-4-5`, `anthropic/claude-sonnet-4-6`.
 - Thinking: default (medium), asserted by sweep preflight.
 - `rate_margin`: **0.5**, unchanged. Not to be tuned after seeing the result.
+  *(Amended after the analysis: `--rate-margin` was removed from the CLI entirely,
+  along with `--alpha`, because a threshold a reader can dial after seeing the
+  result is not a threshold. The registered VALUE did not change — it is now
+  gradecore's `DEFAULT_RATE_MARGIN`, which is still 0.5. Recorded here rather than
+  edited away, per the last line of this file.)*
 - Analysis: reps 4–6 alone. No pooling with 1–3 for the replication test.
 - No task edits between now and the analysis.
 

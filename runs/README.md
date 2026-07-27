@@ -19,16 +19,28 @@ catch.
 
 | dir | what it is |
 |---|---|
-| `noise/` | haiku ×3 on `discriminating-41` — the first noise-floor measurement |
+| `noise/` | haiku ×3 **and sonnet ×3** on `discriminating-41` — the first noise-floor measurement |
 | `pool/` | haiku, sonnet ×3 on `hard-pool-59` — the pool authored to be hard |
 | `cfg/` | haiku, sonnet ×3 on `combined-100`, both scorings (`ll-` = `last_line`) |
 | `think/` | haiku `thinking=high` vs `off` ×3 on `combined-100` — the decisive result |
 | `mined/` | haiku, sonnet ×3 on `mined-pool` — tasks mined from shapes that worked |
 | `all/` | haiku, sonnet on `combined-159`; reps 1–3 pooled, reps 4–6 the replication |
 
-`*.json` is a flat `{task_id: answer}` map. `*.json.meta.json` is the run
+`*.json` is a flat `{task_id: answer}` map. `<name>.json.meta.json` is the run
 provenance — model, thinking level, **observed** active tools, per-task latency
 and token usage. `*.graded.json` is gradecli's verdict record.
+
+## How `all/` was assembled — read this before trusting the pooled result
+
+`all/{haiku,sonnet}-r{1,2,3}.json` are **not sweeps**. Each is an exact dict merge
+of the matching `cfg/` file (100 tasks) with the matching `mined/` file (59), which
+is why they carry no `.meta.json`. Reps **4–6** (`all/rep{4,5,6}-*.json`) are fresh
+159-task sweeps and do have one.
+
+So the README's "pooling all six repetitions made it worse" compares three assembled
+repetitions against three fresh ones. Merging is sound — every task runs in its own
+session, so which sweep a task ran in cannot affect its answer — but a reader should
+be told, not left to infer it from a missing sidecar.
 
 ## Reproducing each claim
 

@@ -12,19 +12,27 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CLI = ROOT / "skills" / "grade" / "scripts" / "gradecli.py"
 SUITE = ROOT / "suites" / "combined-159.json"
 REPS = (4, 5, 6)
-MARGIN = 0.5
+# rate_margin is gradecore's DEFAULT_RATE_MARGIN (0.5). It was a gradecli flag when
+# this was registered; the flag was removed because a threshold the reader can dial
+# after seeing the result is not a threshold. The registered VALUE is unchanged.
 MODELS = {"haiku": "haiku-4-5", "sonnet": "sonnet-4-6"}
 
 
 def grade(model: str, rep: int) -> Path:
     ans = ROOT / "runs" / "all" / f"rep{rep}-{MODELS[model]}.json"
-    out = ROOT / "runs" / "all" / f"rep{rep}-{model}.graded.json"
+    # Write regenerated grades to a temp dir. Grading in place would restamp six
+    # tracked files with the current gradecore_version, so merely RUNNING the
+    # replication would dirty the evidence it exists to check.
+    tmp = Path(tempfile.gettempdir()) / "pi-eval-replicate"
+    tmp.mkdir(exist_ok=True)
+    out = tmp / f"rep{rep}-{model}.graded.json"
     r = subprocess.run([sys.executable, str(CLI), "run", str(SUITE), "--answers", str(ans)],
                        capture_output=True, text=True)
     if r.returncode == 2:
@@ -38,7 +46,7 @@ def compare(rule: str) -> dict:
     b = [str(grade("sonnet", i)) for i in REPS]
     argv = [sys.executable, str(CLI), "compare", a[0], b[0],
             "--rep-a", *a[1:], "--rep-b", *b[1:],
-            "--stability", rule, "--rate-margin", str(MARGIN),
+            "--stability", rule,
             "--name-a", "haiku-4-5", "--name-b", "sonnet-4-6"]
     r = subprocess.run(argv, capture_output=True, text=True)
     if r.returncode == 2:

@@ -20,7 +20,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CLI = ROOT / "skills" / "grade" / "scripts" / "gradecli.py"
 DOCS = [ROOT / "skills" / "grade" / "SKILL.md", ROOT / "README.md"]
-PATH_DOCS = [ROOT / "runs" / "README.md"]
+PATH_DOCS = [ROOT / "runs" / "README.md", ROOT / "README.md",
+             ROOT / "FINDINGS.md", ROOT / "suites" / "README.md"]
 
 # Any single-line JSON object literal MENTIONING a grader — including suite-task
 # examples, where "grader" is not the first key. An extractor that only matched
@@ -31,7 +32,7 @@ OBJ = re.compile(r'\{[^{}\n]*"grader"[^{}\n]*\}')
 
 # A path inside a fenced command, including shell brace expansion:
 #   runs/think/ll-high-r{2,3}.graded.json  ->  two real files
-PATHISH = re.compile(r"(?<![\w/.-])((?:runs|suites|tools|skills|extensions|tests)/[\w./{},*-]+)")
+PATHISH = re.compile(r"(?<![\w/.-])((?:runs|suites|tools|skills|extensions|tests|scripts)/[\w./{},*-]+)")
 
 
 def expand_braces(token: str) -> list[str]:
@@ -42,6 +43,11 @@ def expand_braces(token: str) -> list[str]:
     for part in m.group(1).split(","):
         out.extend(expand_braces(token[: m.start()] + part + token[m.end():]))
     return out
+
+
+# A path that a command WRITES is not a claim that the file exists — it is the
+# opposite. Anything following --out or a shell redirect is an output.
+OUTPUT_CONTEXT = re.compile(r"(?:--out|--answers-out|>)\s+\S*$")
 
 
 def check_paths() -> list[str]:
@@ -55,7 +61,13 @@ def check_paths() -> list[str]:
     for doc in PATH_DOCS:
         if not doc.exists():
             continue
-        for raw in PATHISH.findall(doc.read_text()):
+        text = doc.read_text()
+        for m in PATHISH.finditer(text):
+            raw = m.group(1)
+            # Look at what precedes this path on its own line.
+            line_start = text.rfind("\n", 0, m.start()) + 1
+            if OUTPUT_CONTEXT.search(text[line_start:m.start()]):
+                continue
             for path in expand_braces(raw):
                 if "*" in path or "<" in path:
                     continue  # a placeholder, not a claim

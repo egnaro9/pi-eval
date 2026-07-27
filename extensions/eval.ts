@@ -250,6 +250,19 @@ export default function (pi: ExtensionAPI) {
 			let repA: string[] = [];
 			let repB: string[] = [];
 
+			// One path used to fall through to auto-discovery, silently comparing two
+			// runs the user never named — and since the output labels runs by config
+			// rather than by filename, nothing in the result revealed the substitution.
+			if (argA && !argB) {
+				ctx.ui.notify(
+					"/eval:compare takes two run files, or none.\n" +
+						"  /eval:compare                    compare the two most recent configs\n" +
+						"  /eval:compare <runA> <runB>      compare these two",
+					"error",
+				);
+				return;
+			}
+
 			if (!a || !b) {
 				if (!existsSync(RUN_DIR)) {
 					ctx.ui.notify("No runs yet — /eval writes one each time it grades.", "error");

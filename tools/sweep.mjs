@@ -4,7 +4,7 @@
  *
  *   node tools/sweep.mjs --suite suites/discriminating-41.json \
  *                        --model anthropic/claude-haiku-4-5 \
- *                        --out runs/haiku.json
+ *                        --out runs/my-run.json
  *
  * Optional: --limit N   run only the first N tasks (cheap smoke test)
  *           --concurrency N   parallel tasks (default 1)
@@ -14,7 +14,6 @@
  *                             user has to know to write is how single-run
  *                             comparisons get published.
  *           --thinking LEVEL  thinking level passed to model resolution
- *           --cwd DIR         session discovery root (default: a fresh temp dir)
  *           --timeout MS      per-task wall clock; 0 = off (default)
  *
  * Writes two files:
@@ -66,7 +65,7 @@ const SWEEP_VERSION = 1;
 /** Path shown in the printed next-step commands, relative to the repo root. */
 const GRADECLI_HINT = "skills/grade/scripts/gradecli.py";
 const USAGE = `usage: node tools/sweep.mjs --suite <suite.json> --model <provider/id> --out <answers.json>
-              [--limit N] [--concurrency N] [--reps N] [--thinking LEVEL] [--cwd DIR] [--timeout MS]`;
+              [--limit N] [--concurrency N] [--reps N] [--thinking LEVEL] [--timeout MS]`;
 
 const log = (line) => process.stderr.write(`${line}\n`);
 
@@ -90,7 +89,6 @@ const KNOWN_FLAGS = new Set([
 	"concurrency",
 	"reps",
 	"thinking",
-	"cwd",
 	"timeout",
 	"help",
 ]);
@@ -333,19 +331,13 @@ async function main(argv) {
 
 	// Session discovery root. Default to an empty temp dir so the repo's own
 	// AGENTS.md / skills / extensions cannot leak into an eval prompt.
-	let cwd;
-	if (flags.cwd === undefined) {
-		cwd = await mkdtemp(join(tmpdir(), "pi-eval-sweep-"));
-		tempCwd = cwd; // cleaned up by runCli, on the error path too
-	} else {
-		if (flags.cwd === "true") throw new UsageError("--cwd needs a directory");
-		cwd = resolve(flags.cwd);
-		const info = await stat(cwd).catch(() => null);
-		if (!info?.isDirectory()) throw new UsageError(`--cwd ${cwd} is not a directory`);
-	}
+	// Session discovery root is always a fresh temp dir. There is no --cwd flag: its
+	// only function would be to switch off the guarantee that this repo — which
+	// contains the suite file with every expected value in it — cannot leak into an
+	// eval prompt through AGENTS.md, a skill, or an extension.
+	const cwd = await mkdtemp(join(tmpdir(), "pi-eval-sweep-"));
+	tempCwd = cwd; // cleaned up by runCli, on the error path too
 
-	// An explicit --thinking wins over anything the pattern carried.
-	const requestedThinking = flags.thinking ?? resolved.thinkingLevel;
 	const ctx = { cwd, model, modelRuntime, thinkingLevel: requestedThinking, timeoutMs };
 
 	// Preflight: build one throwaway session and prove tools really are off before
