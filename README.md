@@ -258,30 +258,63 @@ observe disagreement, so the discard count RISES:
 In the limit the strict rule throws away every genuinely stochastic task. More
 measurement cannot fix it. Only a different rule can.
 
-### Two rules, two answers — and why the headline is the weaker one
+### Two rules disagreed, so I pre-registered a replication
 
-`--stability rate` counts a task when the two pass rates differ by at least a
-margin, self-consistent or not. On the same runs:
+On reps 1–3 the two stability rules gave different answers, and the weaker one
+gave the significant result:
 
 ```
 strict   7–1    informative 8    p=0.070    not significant
 rate    13–2    informative 15   p=0.0074   significant
 ```
 
-**Treat `strict` as the result.** Not because it is more sophisticated — it is
-less — but because of the order these happened in. I ran strict, got p=0.070,
-and then built the rule that returns p=0.0074.
+I ran strict, got p=0.070, and *then* built the rule returning p=0.0074. Its
+motivation was independent — a measured property of the strict rule — and I found
+that before checking whether it moved a verdict. That is also exactly what
+everyone who p-hacks believes about themselves.
 
-The rate rule was motivated by a measured property of the strict one, found
-before I checked whether it changed any verdict. That is true and it is also
-exactly what everyone who p-hacks believes about themselves. The margin is a
-judgement call, it was chosen by me, and a threshold picked by the person who
-wants a result is not a test.
+So the prediction, the refutation conditions, and the fixed parameters went into
+[`runs/PREREGISTRATION.md`](runs/PREREGISTRATION.md) **before** reps 4–6 existed,
+and the analysis into [`tools/replicate.py`](tools/replicate.py) while the sweeps
+were still running — a pre-registration that leaves the analysis to be written
+afterwards only relocates the discretion.
 
-So both numbers are here, the output records which rule produced it, and the
-significant one is labelled as the one that needs independent confirmation on
-data it did not help select. That is the honest state of it, and the tool exists
-to report honest states rather than publishable ones.
+```
+reps 4–6, fresh data, analysed alone
+  strict   9–1    informative 10   p=0.0215   decisive
+  rate    11–2    informative 13   p=0.0225   decisive
+
+  HELD    rate favours haiku significantly
+  FAILED  strict does NOT reach significance      <- too conservative
+  HELD    strict discards >= 10 tasks
+```
+
+Prediction 2 failed by being wrong in the stronger direction: `strict`, the rule
+I trust, reached significance on data it had never seen. Per the pre-registration
+I say the prediction was too conservative rather than claiming I called it.
+
+Both windows point the same way. **On this suite, Haiku 4.5 beats Sonnet 4.6** —
+and that is a claim about this suite, which is made of trap questions, not a
+capability ranking. A suite built to catch specific slips measures susceptibility
+to those slips.
+
+### Pooling all six repetitions made it WORSE
+
+```
+                            rule     w–l   unstable  informative      p
+reps 4–6 (pre-registered)   strict   9–1      13         10        0.0215  decisive
+reps 1–6 pooled             strict   7–1      17          8        0.0703  not
+```
+
+Twice the data, less power. Every extra repetition is another chance to observe
+a within-config disagreement, and the strict rule discards the task when it does
+— so discards climbed from 13 to 17 and informative tasks fell from 10 to 8.
+
+This is the clearest statement of the trade the rule makes. It will never report
+noise as signal, and the price is that it grows blinder the harder you look. If
+you take one thing from this repo, take that: **a conservative rule is not a free
+choice, and the cost is measurable.** `--stability rate` is the other end of it,
+and the output always records which rule produced a number.
 
 ## The result the tool was built for
 
