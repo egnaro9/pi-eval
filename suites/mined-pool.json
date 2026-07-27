@@ -1,0 +1,555 @@
+{
+ "name": "mined-pool",
+ "version": 1,
+ "description": "Mined, not authored-for-difficulty. Only the four task families that EMPIRICALLY produced stable discriminators, seeded with the four shapes that worked. Every predicate gated on an independently re-derived key; every answer-style task scoped to last_line so a config that narrates more is not scored as less accurate.",
+ "tasks": [
+  {
+   "id": "excluded-list-price-per-box",
+   "category": "excluded-transformation",
+   "prompt": "A hardware catalog sells deck screws only by the case. A case contains 4 identical boxes and has a list price of $112.00. All deck screws are 25% off this month under a promotional sale. What is the LIST price of a single box, before any promotional discount? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 28,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-pretax-food-subtotal",
+   "category": "excluded-transformation",
+   "prompt": "A restaurant bill lists two entrees at $18.50 each and one dessert at $7.00. An 8% sales tax and an automatic 18% gratuity are each computed on the food subtotal and added at the bottom of the check. What is the food subtotal, before tax and gratuity? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 44,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-new-customer-promo-price",
+   "category": "excluded-transformation",
+   "prompt": "A streaming service charges $16 per month for its standard plan. New customers pay a promotional $6 per month for their first six months. Dana has been subscribed continuously for two years on the standard plan. Dana's roommate signed up last week and is paying the $6 promotional rate. How much will Dana pay in total for the next three months? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 48,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-water-rate-before-increase",
+   "category": "excluded-transformation",
+   "prompt": "A city water utility charges $3.20 per hundred cubic feet. On July 1 the rate rises to $3.60 per hundred cubic feet. A household's bill covers usage from May 1 through June 30, totaling 25 hundred cubic feet. The meter was read on July 3 and the bill was issued July 5. The utility charges the rate in effect during the usage period. What is the charge on that bill, in dollars? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 80,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-nonrefundable-registration-fee",
+   "category": "excluded-transformation",
+   "prompt": "A workshop charges a $340 ticket price plus a $28 registration fee, both billed at signup. The registration fee is non-refundable under any circumstances. The ticket price is fully refundable for cancellations made at least 14 days before the event. Priya cancels 20 days before the event. How many dollars is Priya refunded? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 340,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-discount-on-parts-not-labor",
+   "category": "excluded-transformation",
+   "prompt": "An auto shop invoice has two lines: labor of 3.5 hours billed at $88.00 per hour, and parts totaling $215.00. The shop is currently running a 20% discount on PARTS only; labor is billed at the full rate. What is the labor charge on this invoice, in dollars? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 308,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-autopay-credit-other-tenant",
+   "category": "excluded-transformation",
+   "prompt": "Two roommates split a $180.00 monthly utility bill evenly, half each. The landlord grants a 15% autopay credit, applied only to the share of a tenant who is enrolled in autopay. Rosa is enrolled; Tomas is not. How much does Tomas owe for this bill? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 90,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-merchandise-subtotal-shipping",
+   "category": "excluded-transformation",
+   "prompt": "An online order contains 3 notebooks at $6.25 each and one pen set at $11.25. Shipping is a flat $7.99 and is added at checkout. What is the merchandise subtotal, excluding shipping? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 30,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-evening-parking-surcharge",
+   "category": "excluded-transformation",
+   "prompt": "A parking garage charges $4.00 per hour. A flat $3.00 evening surcharge is added to any session that is still in progress after 6:00 p.m. A car enters at 1:00 p.m. on a weekday and leaves at 4:00 p.m. the same day. What is the total charge for that session, in dollars? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 12,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-first-year-fee-waiver",
+   "category": "excluded-transformation",
+   "prompt": "A credit card charges a $95.00 annual fee, waived for the first year only. Cardholders also pay a $29.00 annual fee for each authorized user, which is never waived. Jordan is now in the third year of holding this card and has exactly one authorized user. How much will Jordan be billed in fees this year, in dollars? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 124,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-rent-before-amendment",
+   "category": "excluded-transformation",
+   "prompt": "A lease sets rent at $1,450.00 per month. An amendment signed on August 15 raises the rent to $1,595.00 per month, effective October 1. Rent is due on the first of each month. What is the total rent due for August and September combined, in dollars? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 2900,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-employee-discount-other-store",
+   "category": "excluded-transformation",
+   "prompt": "A bookstore chain gives its employees 30% off purchases made at any of the chain's own stores. Marcus works for the chain. On a day off he buys a $48.00 hardcover at an independent bookshop across town that is not part of the chain and does not honor the chain's employee discount. Sales tax of 6% applies to the purchase. How much does Marcus pay in total, in dollars? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 50.88,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-activation-fee-second-bill",
+   "category": "excluded-transformation",
+   "prompt": "A phone plan bills $30.00 per month for service. A one-time $45.00 activation fee appears on the first bill only. At the start of the second month the customer adds a $10.00 per month international calling add-on, which is billed every month from then on. What is the total on the customer's SECOND monthly bill, in dollars? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 40,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-lower-list-price-store",
+   "category": "excluded-transformation",
+   "prompt": "Two stores stock the identical toaster. Store A's shelf tag lists it at $54.00, and today Store A is taking 20% off everything at the register. Store B's shelf tag lists it at $46.00 and Store B has no promotion running. Which store has the lower LIST price? Answer with only the single letter, A or B.",
+   "grader": "one_of",
+   "allowed": [
+    "B"
+   ],
+   "scope": "last_line"
+  },
+  {
+   "id": "excluded-coupon-produce-only",
+   "category": "excluded-transformation",
+   "prompt": "A store coupon takes $5.00 off produce only; it applies to no other department. A shopper's cart contains produce totaling $22.40, dairy totaling $9.60, and bread totaling $4.00. What is the total for the items the coupon does NOT apply to, in dollars? Reply with only the number, no currency symbol or units.",
+   "grader": "number",
+   "expected": 13.6,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-leap-2000-in-window",
+   "category": "rule-with-exception",
+   "prompt": "How many leap years are there from 1985 through 2015, inclusive of both years?\n\nShow your work, then end your reply with a final line of exactly this form, and nothing after it:\nANSWER: <value>",
+   "grader": "number",
+   "expected": 7,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-feb-2100-span",
+   "category": "rule-with-exception",
+   "prompt": "In the year 2100, how many days are there from February 1 to March 1, counting both of those dates? Reply with only the number.",
+   "grader": "number",
+   "expected": 29,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-leapfeb-mondays",
+   "category": "rule-with-exception",
+   "prompt": "In a leap year, February 1 falls on a Monday. How many Mondays does that February contain? Reply with only the number.",
+   "grader": "number",
+   "expected": 5,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-july-sept-day-count",
+   "category": "rule-with-exception",
+   "prompt": "How many days are there in total from July 1 through September 30 of the same year, counting both of those endpoint dates? Reply with only the number.",
+   "grader": "number",
+   "expected": 92,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-chapter-page-count",
+   "category": "rule-with-exception",
+   "prompt": "In a printed book, Chapter 7 begins on page 148 and Chapter 8 begins on page 191. The chapters run consecutively with no blank or inserted pages between them. How many pages long is Chapter 7? Reply with only the number.",
+   "grader": "number",
+   "expected": 43,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-ticket-serial-count",
+   "category": "rule-with-exception",
+   "prompt": "A charity raffle issues tickets with consecutive serial numbers running from 447 to 1203, including both 447 and 1203. How many tickets is that? Reply with only the number.",
+   "grader": "number",
+   "expected": 757,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-strictly-between-multiples",
+   "category": "rule-with-exception",
+   "prompt": "How many multiples of 6 lie strictly between 12 and 60? Strictly between means that 12 and 60 themselves do not count. Reply with only the number.",
+   "grader": "number",
+   "expected": 7,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-banker-rounding-sum",
+   "category": "rule-with-exception",
+   "prompt": "In Python 3, what is the value of round(0.5) + round(1.5) + round(2.5) + round(3.5)? Reply with only the number.",
+   "grader": "number",
+   "expected": 8,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-nonoverlapping-count",
+   "category": "rule-with-exception",
+   "prompt": "In Python 3, s = 'a' * 7. What integer does s.count('aa') return? Reply with only the number.",
+   "grader": "number",
+   "expected": 3,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-zero-indexed-weekday",
+   "category": "rule-with-exception",
+   "prompt": "Python's datetime.date.weekday() returns 0 for Monday. January 1, 2026 fell on a Thursday. What integer does date(2026, 1, 1).weekday() return? Reply with only the number.",
+   "grader": "number",
+   "expected": 3,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-lexicographic-sort-last",
+   "category": "rule-with-exception",
+   "prompt": "In Python 3, sorted(['9', '10', '100', '20']) is called on that list of strings. Which element is LAST in the returned list? Reply with only that value, with no quotes and nothing else.",
+   "grader": "exact",
+   "expected": "9",
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-ordinal-suffix-teen",
+   "category": "rule-with-exception",
+   "prompt": "Write the number 813 as an English ordinal: the digits followed by the correct two-letter suffix, in the style of 5th. Reply with only the single word.",
+   "grader": "exact",
+   "expected": "813th",
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-roman-subtractive",
+   "category": "rule-with-exception",
+   "prompt": "Write the number 99 in Roman numerals, using the standard rules in which a subtractive prefix may only be I before V or X, X before L or C, or C before D or M. Reply with only the single word.",
+   "grader": "exact",
+   "expected": "XCIX",
+   "scope": "last_line"
+  },
+  {
+   "id": "rule-skipped-floor-number",
+   "category": "rule-with-exception",
+   "prompt": "A tower has exactly 20 actual above-ground floors. They are numbered from the bottom up, starting at 1 and increasing by one each floor, except that the number 13 is skipped entirely and never appears. What number is displayed on the topmost floor? Reply with only the number.",
+   "grader": "number",
+   "expected": 21,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "per-lease-latest-end",
+   "category": "per-item-not-aggregate",
+   "prompt": "Four tenants signed office leases. Each lease began on July 1 of the year shown and runs for exactly the number of years shown.\n\nAshwood \u2014 began 2019, 8-year term\nBellrose \u2014 began 2023, 5-year term\nCamden \u2014 began 2014, 13-year term\nDunmore \u2014 began 2021, 6-year term\n\nWhich tenant's lease is the last one to end? Reply with only the single word.",
+   "grader": "exact",
+   "expected": "Bellrose",
+   "scope": "last_line"
+  },
+  {
+   "id": "per-pack-lowest-unit-price",
+   "category": "per-item-not-aggregate",
+   "prompt": "A shop sells the same coffee in four bag sizes:\n\nAlder \u2014 12 oz for $9.00\nBirch \u2014 20 oz for $14.00\nCedar \u2014 32 oz for $24.00\nDogwood \u2014 40 oz for $30.00\n\nWhich bag has the lowest price per ounce? Reply with only the single word.",
+   "grader": "exact",
+   "expected": "Birch",
+   "scope": "last_line"
+  },
+  {
+   "id": "per-route-least-total-time",
+   "category": "per-item-not-aggregate",
+   "prompt": "Four delivery routes, each driven in two legs at a steady speed:\n\nFalcon \u2014 leg 1: 70 miles at 70 mph; leg 2: 30 miles at 30 mph\nHeron \u2014 leg 1: 60 miles at 60 mph; leg 2: 20 miles at 40 mph\nOsprey \u2014 leg 1: 25 miles at 50 mph; leg 2: 60 miles at 40 mph\nWren \u2014 leg 1: 45 miles at 45 mph; leg 2: 24 miles at 24 mph\n\nIgnore stops. Which route takes the least total driving time? Reply with only the single word.",
+   "grader": "one_of",
+   "allowed": [
+    "Heron",
+    "Route Heron"
+   ],
+   "scope": "last_line"
+  },
+  {
+   "id": "per-margin-percent-highest",
+   "category": "per-item-not-aggregate",
+   "prompt": "Store items, with what the store pays and what it charges:\n\nLantern \u2014 cost $60, sells for $100\nMirror \u2014 cost $12, sells for $20\nKettle \u2014 cost $10, sells for $25\nBasin \u2014 cost $36, sells for $45\n\nWhich item has the highest profit as a percentage of its selling price? Reply with only the single word.",
+   "grader": "exact",
+   "expected": "Kettle",
+   "scope": "last_line"
+  },
+  {
+   "id": "per-timetrial-last-finisher",
+   "category": "per-item-not-aggregate",
+   "prompt": "Riders in a time trial start at staggered times and are timed individually:\n\nNora \u2014 started 9:00, took 1 h 50 min\nPavel \u2014 started 9:20, took 1 h 35 min\nQuinn \u2014 started 9:40, took 1 h 10 min\nRhea \u2014 started 10:05, took 45 min\n\nWho crossed the finish line last, by clock time? Reply with only the single word.",
+   "grader": "exact",
+   "expected": "Pavel",
+   "scope": "last_line"
+  },
+  {
+   "id": "per-device-longest-runtime",
+   "category": "per-item-not-aggregate",
+   "prompt": "Four devices, each drawing a steady current:\n\nBeacon \u2014 3000 mAh battery, draws 500 mA\nChime \u2014 4000 mAh battery, draws 800 mA\nDrifter \u2014 2400 mAh battery, draws 300 mA\nEmber \u2014 5000 mAh battery, draws 1000 mA\n\nWhich device runs the longest on a full charge? Reply with only the single word.",
+   "grader": "exact",
+   "expected": "Drifter",
+   "scope": "last_line"
+  },
+  {
+   "id": "per-trip-cheapest-fuel",
+   "category": "per-item-not-aggregate",
+   "prompt": "Four cars will each make the same 300-mile trip. Each takes a different grade of fuel:\n\nComet \u2014 40 miles per gallon, fuel costs $6.00 per gallon\nDart \u2014 30 mpg, fuel $4.00 per gallon\nLark \u2014 25 mpg, fuel $3.00 per gallon\nVireo \u2014 20 mpg, fuel $2.50 per gallon\n\nWhich car spends the least on fuel for the trip? Reply with only the single word.",
+   "grader": "exact",
+   "expected": "Lark",
+   "scope": "last_line"
+  },
+  {
+   "id": "per-loan-most-interest",
+   "category": "per-item-not-aggregate",
+   "prompt": "Four simple-interest loans (no compounding); interest = principal \u00d7 annual rate \u00d7 years:\n\nAspen \u2014 $8,000 at 2% per year for 1 year\nFern \u2014 $1,000 at 10% per year for 2 years\nQuill \u2014 $2,000 at 3% per year for 6 years\nDune \u2014 $4,000 at 6% per year for 2 years\n\nWhich loan accrues the most total interest over its full term? Reply with only the single word.",
+   "grader": "exact",
+   "expected": "Dune",
+   "scope": "last_line"
+  },
+  {
+   "id": "per-field-highest-yield",
+   "category": "per-item-not-aggregate",
+   "prompt": "Last season's harvest:\n\nHollow \u2014 900 bushels from 30 acres\nRidge \u2014 1,200 bushels from 50 acres\nMarsh \u2014 700 bushels from 20 acres\nKiln \u2014 1,000 bushels from 25 acres\n\nWhat is the highest yield per acre among these fields, in bushels per acre? Reply with only the number.",
+   "grader": "number",
+   "expected": 40,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "per-shipment-latest-arrival",
+   "category": "per-item-not-aggregate",
+   "prompt": "Four orders, all shipping in September:\n\nSable \u2014 shipped September 1, 14 days in transit\nVale \u2014 shipped September 9, 8 days in transit\nThorn \u2014 shipped September 12, 4 days in transit\nWick \u2014 shipped September 3, 11 days in transit\n\nWhich order arrives last? Reply with only the single word.",
+   "grader": "one_of",
+   "allowed": [
+    "Vale",
+    "Order Vale"
+   ],
+   "scope": "last_line"
+  },
+  {
+   "id": "per-jar-cost-per-serving",
+   "category": "per-item-not-aggregate",
+   "prompt": "Four jars of the same soup:\n\nAmber \u2014 $3.00, 2 servings per jar\nBrine \u2014 $12.00, 10 servings\nCove \u2014 $8.00, 8 servings\nDelta \u2014 $15.00, 12 servings\n\nWhich jar costs the least per serving? Reply with only the single word.",
+   "grader": "exact",
+   "expected": "Cove",
+   "scope": "last_line"
+  },
+  {
+   "id": "per-plot-largest-area",
+   "category": "per-item-not-aggregate",
+   "prompt": "Four rectangular plots:\n\nQuarry \u2014 70 m of road frontage, 9 m deep\nBramble \u2014 30 m frontage, 24 m deep\nCinder \u2014 50 m frontage, 13 m deep\nDrift \u2014 20 m frontage, 33 m deep\n\nWhat is the area of the largest plot, in square metres? Reply with only the number.",
+   "grader": "number",
+   "expected": 720,
+   "tol": 0,
+   "scope": "last_line"
+  },
+  {
+   "id": "per-player-points-per-game",
+   "category": "per-item-not-aggregate",
+   "prompt": "Season totals:\n\nIves \u2014 360 points in 24 games\nJuno \u2014 216 points in 12 games\nKade \u2014 132 points in 11 games\nLior \u2014 400 points in 25 games\n\nWhich player averaged the most points per game? Reply with only the single word.",
+   "grader": "exact",
+   "expected": "Juno",
+   "scope": "last_line"
+  },
+  {
+   "id": "per-cartridge-cost-per-page",
+   "category": "per-item-not-aggregate",
+   "prompt": "Four printer cartridges:\n\nOnyx \u2014 $120, rated for 8,000 pages\nPearl \u2014 $25, rated for 1,000 pages\nQuartz \u2014 $60, rated for 5,000 pages\nSlate \u2014 $36, rated for 2,000 pages\n\nWhich cartridge costs the least per page? Reply with only the single word.",
+   "grader": "exact",
+   "expected": "Quartz",
+   "scope": "last_line"
+  },
+  {
+   "id": "per-alloy-highest-density",
+   "category": "per-item-not-aggregate",
+   "prompt": "Four alloy samples (density = mass \u00f7 volume):\n\nNickelite \u2014 400 g, 50 cm\u00b3\nBoralite \u2014 96 g, 12 cm\u00b3\nCerulite \u2014 270 g, 27 cm\u00b3\nDuralite \u2014 315 g, 35 cm\u00b3\n\nWhich sample is the densest? Reply with only the single word.",
+   "grader": "exact",
+   "expected": "Cerulite",
+   "scope": "last_line"
+  },
+  {
+   "id": "true-troy-ounce-heavier",
+   "category": "true-premise-wrong-direction",
+   "prompt": "A troy pound weighs LESS than an ordinary (avoirdupois) pound: about 373 grams versus about 454 grams. Which is heavier, one troy ounce or one avoirdupois ounce? Reply with only the single word: troy or avoirdupois.",
+   "grader": "one_of",
+   "allowed": [
+    "troy",
+    "Troy",
+    "troy ounce"
+   ],
+   "scope": "last_line"
+  },
+  {
+   "id": "true-metric-tonne-vs-long-ton",
+   "category": "true-premise-wrong-direction",
+   "prompt": "A metric tonne (1,000 kg) is heavier than a US short ton (2,000 pounds). Which is heavier, a metric tonne or a British long ton? Reply with only the single word: metric or long.",
+   "grader": "one_of",
+   "allowed": [
+    "long",
+    "Long",
+    "long ton"
+   ],
+   "scope": "last_line"
+  },
+  {
+   "id": "true-farther-north-milder-winter",
+   "category": "true-premise-wrong-direction",
+   "prompt": "London, England lies about six degrees of latitude farther north than Montreal, Canada (roughly 51.5 N versus 45.5 N). Which of the two cities has the colder winter, judged by average January temperature? Reply with only the single word: London or Montreal.",
+   "grader": "one_of",
+   "allowed": [
+    "Montreal",
+    "montreal",
+    "Montr\u00e9al"
+   ],
+   "scope": "last_line"
+  },
+  {
+   "id": "true-lead-ball-in-mercury",
+   "category": "true-premise-wrong-direction",
+   "prompt": "Lead is about eleven times as dense as water, and a solid lead ball dropped into a bucket of water sinks straight to the bottom. That same solid lead ball is lowered into a pool of liquid mercury at room temperature. Does it sink or float? Reply with only the single word: sink or float.",
+   "grader": "one_of",
+   "allowed": [
+    "float",
+    "Float",
+    "floats"
+   ],
+   "scope": "last_line"
+  },
+  {
+   "id": "true-sun-versus-moon-pull",
+   "category": "true-premise-wrong-direction",
+   "prompt": "The Moon is the main driver of Earth's ocean tides: its tidal effect on Earth is more than twice the Sun's. Which body exerts the greater total gravitational FORCE on the Earth, the Sun or the Moon? Reply with only the single word: Sun or Moon.",
+   "grader": "one_of",
+   "allowed": [
+    "Sun",
+    "sun",
+    "the Sun"
+   ],
+   "scope": "last_line"
+  },
+  {
+   "id": "true-universal-donor-receives",
+   "category": "true-premise-wrong-direction",
+   "prompt": "A person with O-negative blood is called a universal red-cell donor: their red blood cells can be transfused into a patient of any of the eight standard ABO/Rh blood types. Now consider a patient who is O-negative. Of those same eight blood types, how many can safely supply red blood cells to that patient? Reply with only the number, with no units or symbols.",
+   "grader": "number",
+   "expected": 1,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "true-round-trip-average-speed",
+   "category": "true-premise-wrong-direction",
+   "prompt": "A van drives 60 miles out at a steady 30 mph, then the same 60 miles back at a steady 60 mph. The two speeds average 45 mph. What is the van's average speed, in mph, over the whole 120-mile round trip? Reply with only the number, with no units or symbols.",
+   "grader": "number",
+   "expected": 40,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "true-fund-zero-average-return",
+   "category": "true-premise-wrong-direction",
+   "prompt": "A fund gained exactly 50% in year one and lost exactly 50% in year two, so its two annual returns average out to 0%. An investor put $1,000 in at the start of year one and touched nothing after that. In dollars, what is the position worth at the end of year two? Reply with only the number, with no units or symbols.",
+   "grader": "number",
+   "expected": 750,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "true-negative-twenty-degrees",
+   "category": "true-premise-wrong-direction",
+   "prompt": "One degree of change on the Celsius scale is larger than one degree of change on the Fahrenheit scale: a 1 C change equals a 1.8 F change. Which is the colder temperature, -20 C or -20 F? Reply with only the single word: Celsius or Fahrenheit.",
+   "grader": "one_of",
+   "allowed": [
+    "Fahrenheit",
+    "fahrenheit",
+    "F"
+   ],
+   "scope": "last_line"
+  },
+  {
+   "id": "true-high-altitude-boiled-egg",
+   "category": "true-premise-wrong-direction",
+   "prompt": "At 3,000 metres elevation water boils at about 90 C instead of 100 C, so a pot of water there comes to a rolling boil sooner than the same pot at sea level. An egg is dropped into that rolling boil. Compared with sea level, does the egg take MORE time or LESS time to reach the same doneness? Reply with only the single word: more or less.",
+   "grader": "one_of",
+   "allowed": [
+    "more",
+    "More",
+    "longer"
+   ],
+   "scope": "last_line"
+  },
+  {
+   "id": "true-xbox-generation-order",
+   "category": "true-premise-wrong-direction",
+   "prompt": "The Xbox 360's model name contains a far larger number than the Xbox One's. Which of the two consoles was released later? Reply with only the single word: 360 or One.",
+   "grader": "one_of",
+   "allowed": [
+    "One",
+    "one",
+    "Xbox One"
+   ],
+   "scope": "last_line"
+  },
+  {
+   "id": "true-nineteen-hundred-century",
+   "category": "true-premise-wrong-direction",
+   "prompt": "By the standard convention the 20th century ran from January 1, 1901 through December 31, 2000. Under that same convention, which numbered century does the year 1900 belong to? Reply with only the number, with no units or symbols.",
+   "grader": "number",
+   "expected": 19,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "true-megabit-megabyte-download",
+   "category": "true-premise-wrong-direction",
+   "prompt": "A file is 100 megabytes and the connection is rated 100 megabits per second: both figures are the same number, 100. Assume 1 byte = 8 bits, decimal units (1 MB = 10^6 bytes, 1 Mb = 10^6 bits), and no protocol overhead. How many seconds does the download take? Reply with only the number, with no units or symbols.",
+   "grader": "number",
+   "expected": 8,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "true-parallel-resistor-pair",
+   "category": "true-premise-wrong-direction",
+   "prompt": "Two 100-ohm resistors wired in SERIES have a combined resistance of 200 ohms. Those same two 100-ohm resistors are instead wired in PARALLEL. What is their combined resistance, in ohms? Reply with only the number, with no units or symbols.",
+   "grader": "number",
+   "expected": 50,
+   "tol": 0.01,
+   "scope": "last_line"
+  },
+  {
+   "id": "true-larger-area-fewer-people",
+   "category": "true-premise-wrong-direction",
+   "prompt": "Kazakhstan is the largest country in Central Asia; its land area is roughly six times Uzbekistan's. Which of the two countries has the larger population? Reply with only the single word: Kazakhstan or Uzbekistan.",
+   "grader": "one_of",
+   "allowed": [
+    "Uzbekistan",
+    "uzbekistan"
+   ],
+   "scope": "last_line"
+  }
+ ]
+}
