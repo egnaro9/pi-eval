@@ -195,6 +195,49 @@ shorter term can still expire last; the imperial *gallon* is larger but the impe
 a capability ranking, and a suite made of them measures something other than what a
 leaderboard claims to.
 
+## The result the tool was built for
+
+Same 100 tasks, same model, one config change. `claude-haiku-4-5`, three
+repetitions each, `thinking=high` against `thinking=off`:
+
+```
+thinking=high  won 8, lost 0, 81 tied, 11 unstable    p=0.008
+               364,287 tokens (142,727 reasoning)     $1.107
+thinking=off                                          $0.445
+                                       COST RATIO     2.49x
+noise floor    high 2.0        off 5.33
+```
+
+**This is the same suite that cannot separate Haiku 4.5 from Sonnet 4.6.** It was
+never broken — there was nothing there to find. Given a difference that exists, it
+finds it at p=0.008 and prices it.
+
+Two of the eight wins do not survive inspection, and the honest number is the one
+after they are removed. `thinking=off` answers in prose instead of thinking first,
+so on `boundary-31st-weekday` it worked through the arithmetic and concluded
+"Friday" — correct — and `exact` scored the whole reply. On
+`boundary-overlapping-atat` it listed matches at positions 0, 2, 4, 6 and answered
+"4" — correct — and `which="first"` took the 0. **The model was right both times.**
+
+Turning thinking off changes output *verbosity*, and verbosity interacts with
+position-sensitive graders. Anyone comparing thinking levels will hit this, and it
+inflates the apparent accuracy gap.
+
+Dropping both: **6 wins, 0 losses, p=0.031. Still decisive.**
+
+The remaining six are real. On the Feb-29 count it listed 1892, 1896, 1904, 1908
+and then answered 5. On the warranty table it computed 2023-09-10 plus 36 months
+as 2025-09-10 and picked the wrong item.
+
+The stability number deserves as much attention as the win count: `thinking=off`
+has a noise floor of **5.33 against high's 2.0**, and this comparison threw out 11
+unstable tasks where the model-vs-model one threw out 4. Turning thinking off does
+not just cost accuracy — it makes the same config answer the same question
+differently run to run.
+
+So: **+6 tasks per 100 and less than half the variance, for 2.5x the money.** That
+is a decision someone can actually make. A score without the cost beside it is not.
+
 ## The gate that admits a task, and the one it cannot replace
 
 Every task is admitted only if a correct answer PASSES its predicate and a

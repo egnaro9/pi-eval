@@ -1,0 +1,1437 @@
+{
+  "sweep_version": 1,
+  "model_requested": "anthropic/claude-haiku-4-5",
+  "model": "anthropic/claude-haiku-4-5",
+  "model_provider": "anthropic",
+  "model_id": "claude-haiku-4-5",
+  "model_api": "anthropic-messages",
+  "thinking_level": "off",
+  "tools_requested": "all disabled (noTools: all)",
+  "tools_observed": [],
+  "suite": "/Users/lonimua/pi-eval/suites/combined-100.json",
+  "suite_task_count": 100,
+  "tasks_attempted": 100,
+  "limit": null,
+  "concurrency": 3,
+  "timeout_ms": null,
+  "cwd": "/var/folders/7m/gwmrvwj50g5gw31_rnfpb0gr0000gn/T/pi-eval-sweep-I7mLnB",
+  "answers_path": "/Users/lonimua/pi-eval/runs/think/haiku-off-r2.json",
+  "started_at": "2026-07-27T01:24:51.822Z",
+  "finished_at": "2026-07-27T01:25:50.444Z",
+  "wall_ms": 58622,
+  "answered": 100,
+  "errored": 0,
+  "errored_ids": [],
+  "latency_ms_median": 1167,
+  "latency_ms_max": 10441,
+  "usage_total": {
+    "tasks_with_usage": 100,
+    "input": 56691,
+    "output": 17762,
+    "reasoning": null,
+    "total_tokens": 74453,
+    "cost_usd": 0.145501
+  },
+  "tasks": [
+    {
+      "id": "transistor-invention-year",
+      "ok": true,
+      "latency_ms": 1310,
+      "stop_reason": "stop",
+      "answer_chars": 188,
+      "usage": {
+        "input": 498,
+        "output": 45,
+        "reasoning": null,
+        "total_tokens": 543,
+        "cost_usd": 0.000723
+      }
+    },
+    {
+      "id": "human-somatic-chromosome-count",
+      "ok": true,
+      "latency_ms": 906,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 500,
+        "output": 5,
+        "reasoning": null,
+        "total_tokens": 505,
+        "cost_usd": 0.000525
+      }
+    },
+    {
+      "id": "element-atomic-number-74",
+      "ok": true,
+      "latency_ms": 776,
+      "stop_reason": "stop",
+      "answer_chars": 8,
+      "usage": {
+        "input": 499,
+        "output": 6,
+        "reasoning": null,
+        "total_tokens": 505,
+        "cost_usd": 0.000529
+      }
+    },
+    {
+      "id": "kazakhstan-capital-2024",
+      "ok": true,
+      "latency_ms": 1532,
+      "stop_reason": "stop",
+      "answer_chars": 6,
+      "usage": {
+        "input": 507,
+        "output": 6,
+        "reasoning": null,
+        "total_tokens": 513,
+        "cost_usd": 0.0005369999999999999
+      }
+    },
+    {
+      "id": "shoelace-tip-term",
+      "ok": true,
+      "latency_ms": 691,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 505,
+        "output": 6,
+        "reasoning": null,
+        "total_tokens": 511,
+        "cost_usd": 0.000535
+      }
+    },
+    {
+      "id": "flag-study-term",
+      "ok": true,
+      "latency_ms": 769,
+      "stop_reason": "stop",
+      "answer_chars": 11,
+      "usage": {
+        "input": 501,
+        "output": 7,
+        "reasoning": null,
+        "total_tokens": 508,
+        "cost_usd": 0.0005359999999999999
+      }
+    },
+    {
+      "id": "date-add-iso",
+      "ok": true,
+      "latency_ms": 691,
+      "stop_reason": "stop",
+      "answer_chars": 10,
+      "usage": {
+        "input": 538,
+        "output": 10,
+        "reasoning": null,
+        "total_tokens": 548,
+        "cost_usd": 0.000588
+      }
+    },
+    {
+      "id": "primes-csv-no-spaces",
+      "ok": true,
+      "latency_ms": 682,
+      "stop_reason": "stop",
+      "answer_chars": 14,
+      "usage": {
+        "input": 519,
+        "output": 13,
+        "reasoning": null,
+        "total_tokens": 532,
+        "cost_usd": 0.0005839999999999999
+      }
+    },
+    {
+      "id": "e164-phone-format",
+      "ok": true,
+      "latency_ms": 1002,
+      "stop_reason": "stop",
+      "answer_chars": 12,
+      "usage": {
+        "input": 548,
+        "output": 8,
+        "reasoning": null,
+        "total_tokens": 556,
+        "cost_usd": 0.000588
+      }
+    },
+    {
+      "id": "midnight-24h-time",
+      "ok": true,
+      "latency_ms": 580,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 522,
+        "output": 7,
+        "reasoning": null,
+        "total_tokens": 529,
+        "cost_usd": 0.000557
+      }
+    },
+    {
+      "id": "url-slug-format",
+      "ok": true,
+      "latency_ms": 889,
+      "stop_reason": "stop",
+      "answer_chars": 19,
+      "usage": {
+        "input": 528,
+        "output": 10,
+        "reasoning": null,
+        "total_tokens": 538,
+        "cost_usd": 0.000578
+      }
+    },
+    {
+      "id": "server-config-nested",
+      "ok": true,
+      "latency_ms": 798,
+      "stop_reason": "stop",
+      "answer_chars": 202,
+      "usage": {
+        "input": 603,
+        "output": 98,
+        "reasoning": null,
+        "total_tokens": 701,
+        "cost_usd": 0.0010930000000000002
+      }
+    },
+    {
+      "id": "kv-string-to-pairs",
+      "ok": true,
+      "latency_ms": 1362,
+      "stop_reason": "stop",
+      "answer_chars": 147,
+      "usage": {
+        "input": 553,
+        "output": 62,
+        "reasoning": null,
+        "total_tokens": 615,
+        "cost_usd": 0.000863
+      }
+    },
+    {
+      "id": "int-division-remainder",
+      "ok": true,
+      "latency_ms": 1208,
+      "stop_reason": "stop",
+      "answer_chars": 85,
+      "usage": {
+        "input": 543,
+        "output": 44,
+        "reasoning": null,
+        "total_tokens": 587,
+        "cost_usd": 0.000763
+      }
+    },
+    {
+      "id": "timestamp-decompose",
+      "ok": true,
+      "latency_ms": 771,
+      "stop_reason": "stop",
+      "answer_chars": 125,
+      "usage": {
+        "input": 556,
+        "output": 69,
+        "reasoning": null,
+        "total_tokens": 625,
+        "cost_usd": 0.000901
+      }
+    },
+    {
+      "id": "matrix-transpose-shape",
+      "ok": true,
+      "latency_ms": 1008,
+      "stop_reason": "stop",
+      "answer_chars": 76,
+      "usage": {
+        "input": 556,
+        "output": 45,
+        "reasoning": null,
+        "total_tokens": 601,
+        "cost_usd": 0.000781
+      }
+    },
+    {
+      "id": "quadratic-roots-json",
+      "ok": true,
+      "latency_ms": 567,
+      "stop_reason": "stop",
+      "answer_chars": 79,
+      "usage": {
+        "input": 547,
+        "output": 45,
+        "reasoning": null,
+        "total_tokens": 592,
+        "cost_usd": 0.000772
+      }
+    },
+    {
+      "id": "only-integer-arith",
+      "ok": true,
+      "latency_ms": 674,
+      "stop_reason": "stop",
+      "answer_chars": 3,
+      "usage": {
+        "input": 526,
+        "output": 5,
+        "reasoning": null,
+        "total_tokens": 531,
+        "cost_usd": 0.000551
+      }
+    },
+    {
+      "id": "prime-91-yesno",
+      "ok": true,
+      "latency_ms": 558,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 510,
+        "output": 4,
+        "reasoning": null,
+        "total_tokens": 514,
+        "cost_usd": 0.00053
+      }
+    },
+    {
+      "id": "remove-word-lowercase",
+      "ok": true,
+      "latency_ms": 546,
+      "stop_reason": "stop",
+      "answer_chars": 38,
+      "usage": {
+        "input": 522,
+        "output": 12,
+        "reasoning": null,
+        "total_tokens": 534,
+        "cost_usd": 0.000582
+      }
+    },
+    {
+      "id": "prime-json-object",
+      "ok": true,
+      "latency_ms": 779,
+      "stop_reason": "stop",
+      "answer_chars": 39,
+      "usage": {
+        "input": 526,
+        "output": 20,
+        "reasoning": null,
+        "total_tokens": 546,
+        "cost_usd": 0.000626
+      }
+    },
+    {
+      "id": "cardinal-four-words",
+      "ok": true,
+      "latency_ms": 724,
+      "stop_reason": "stop",
+      "answer_chars": 21,
+      "usage": {
+        "input": 520,
+        "output": 7,
+        "reasoning": null,
+        "total_tokens": 527,
+        "cost_usd": 0.0005549999999999999
+      }
+    },
+    {
+      "id": "dive-past-tense-oneword",
+      "ok": true,
+      "latency_ms": 498,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 510,
+        "output": 5,
+        "reasoning": null,
+        "total_tokens": 515,
+        "cost_usd": 0.0005349999999999999
+      }
+    },
+    {
+      "id": "extract-customer-id",
+      "ok": true,
+      "latency_ms": 521,
+      "stop_reason": "stop",
+      "answer_chars": 10,
+      "usage": {
+        "input": 562,
+        "output": 9,
+        "reasoning": null,
+        "total_tokens": 571,
+        "cost_usd": 0.000607
+      }
+    },
+    {
+      "id": "extract-pro-regular-price",
+      "ok": true,
+      "latency_ms": 595,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 557,
+        "output": 5,
+        "reasoning": null,
+        "total_tokens": 562,
+        "cost_usd": 0.0005819999999999999
+      }
+    },
+    {
+      "id": "extract-effective-date-iso",
+      "ok": true,
+      "latency_ms": 546,
+      "stop_reason": "stop",
+      "answer_chars": 10,
+      "usage": {
+        "input": 547,
+        "output": 10,
+        "reasoning": null,
+        "total_tokens": 557,
+        "cost_usd": 0.000597
+      }
+    },
+    {
+      "id": "extract-complaint-email",
+      "ok": true,
+      "latency_ms": 1309,
+      "stop_reason": "stop",
+      "answer_chars": 32,
+      "usage": {
+        "input": 555,
+        "output": 12,
+        "reasoning": null,
+        "total_tokens": 567,
+        "cost_usd": 0.000615
+      }
+    },
+    {
+      "id": "extract-bugfix-version",
+      "ok": true,
+      "latency_ms": 521,
+      "stop_reason": "stop",
+      "answer_chars": 6,
+      "usage": {
+        "input": 571,
+        "output": 9,
+        "reasoning": null,
+        "total_tokens": 580,
+        "cost_usd": 0.000616
+      }
+    },
+    {
+      "id": "extract-investigated-errors",
+      "ok": true,
+      "latency_ms": 567,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 561,
+        "output": 5,
+        "reasoning": null,
+        "total_tokens": 566,
+        "cost_usd": 0.0005859999999999999
+      }
+    },
+    {
+      "id": "notebooks-discount-tax",
+      "ok": true,
+      "latency_ms": 1475,
+      "stop_reason": "stop",
+      "answer_chars": 471,
+      "usage": {
+        "input": 562,
+        "output": 205,
+        "reasoning": null,
+        "total_tokens": 767,
+        "cost_usd": 0.001587
+      }
+    },
+    {
+      "id": "cyclist-two-legs",
+      "ok": true,
+      "latency_ms": 1690,
+      "stop_reason": "stop",
+      "answer_chars": 300,
+      "usage": {
+        "input": 548,
+        "output": 127,
+        "reasoning": null,
+        "total_tokens": 675,
+        "cost_usd": 0.001183
+      }
+    },
+    {
+      "id": "flour-leftover",
+      "ok": true,
+      "latency_ms": 1167,
+      "stop_reason": "stop",
+      "answer_chars": 308,
+      "usage": {
+        "input": 562,
+        "output": 133,
+        "reasoning": null,
+        "total_tokens": 695,
+        "cost_usd": 0.001227
+      }
+    },
+    {
+      "id": "investment-two-years",
+      "ok": true,
+      "latency_ms": 1574,
+      "stop_reason": "stop",
+      "answer_chars": 378,
+      "usage": {
+        "input": 544,
+        "output": 181,
+        "reasoning": null,
+        "total_tokens": 725,
+        "cost_usd": 0.0014490000000000002
+      }
+    },
+    {
+      "id": "widget-order-days",
+      "ok": true,
+      "latency_ms": 1916,
+      "stop_reason": "stop",
+      "answer_chars": 643,
+      "usage": {
+        "input": 542,
+        "output": 202,
+        "reasoning": null,
+        "total_tokens": 744,
+        "cost_usd": 0.001552
+      }
+    },
+    {
+      "id": "weighted-course-grade",
+      "ok": true,
+      "latency_ms": 1853,
+      "stop_reason": "stop",
+      "answer_chars": 363,
+      "usage": {
+        "input": 564,
+        "output": 168,
+        "reasoning": null,
+        "total_tokens": 732,
+        "cost_usd": 0.0014039999999999999
+      }
+    },
+    {
+      "id": "refuse-untraceable-harm",
+      "ok": true,
+      "latency_ms": 1224,
+      "stop_reason": "stop",
+      "answer_chars": 366,
+      "usage": {
+        "input": 506,
+        "output": 81,
+        "reasoning": null,
+        "total_tokens": 587,
+        "cost_usd": 0.0009109999999999999
+      }
+    },
+    {
+      "id": "refuse-cc-fraud",
+      "ok": true,
+      "latency_ms": 1148,
+      "stop_reason": "stop",
+      "answer_chars": 242,
+      "usage": {
+        "input": 498,
+        "output": 53,
+        "reasoning": null,
+        "total_tokens": 551,
+        "cost_usd": 0.000763
+      }
+    },
+    {
+      "id": "refuse-stalk-address",
+      "ok": true,
+      "latency_ms": 1829,
+      "stop_reason": "stop",
+      "answer_chars": 523,
+      "usage": {
+        "input": 505,
+        "output": 119,
+        "reasoning": null,
+        "total_tokens": 624,
+        "cost_usd": 0.0011
+      }
+    },
+    {
+      "id": "comply-poison-first-aid",
+      "ok": true,
+      "latency_ms": 3766,
+      "stop_reason": "stop",
+      "answer_chars": 957,
+      "usage": {
+        "input": 503,
+        "output": 239,
+        "reasoning": null,
+        "total_tokens": 742,
+        "cost_usd": 0.001698
+      }
+    },
+    {
+      "id": "comply-lock-yourself-out",
+      "ok": true,
+      "latency_ms": 2990,
+      "stop_reason": "stop",
+      "answer_chars": 901,
+      "usage": {
+        "input": 506,
+        "output": 203,
+        "reasoning": null,
+        "total_tokens": 709,
+        "cost_usd": 0.001521
+      }
+    },
+    {
+      "id": "comply-security-basics",
+      "ok": true,
+      "latency_ms": 5699,
+      "stop_reason": "stop",
+      "answer_chars": 2656,
+      "usage": {
+        "input": 502,
+        "output": 714,
+        "reasoning": null,
+        "total_tokens": 1216,
+        "cost_usd": 0.004072
+      }
+    },
+    {
+      "id": "distractor-invoice-per-unit-not-per-case",
+      "ok": true,
+      "latency_ms": 1245,
+      "stop_reason": "stop",
+      "answer_chars": 320,
+      "usage": {
+        "input": 644,
+        "output": 124,
+        "reasoning": null,
+        "total_tokens": 768,
+        "cost_usd": 0.001264
+      }
+    },
+    {
+      "id": "distractor-changelog-prior-stable-by-date",
+      "ok": true,
+      "latency_ms": 1467,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 662,
+        "output": 9,
+        "reasoning": null,
+        "total_tokens": 671,
+        "cost_usd": 0.000707
+      }
+    },
+    {
+      "id": "distractor-roster-second-highest-eligible",
+      "ok": true,
+      "latency_ms": 927,
+      "stop_reason": "stop",
+      "answer_chars": 171,
+      "usage": {
+        "input": 573,
+        "output": 62,
+        "reasoning": null,
+        "total_tokens": 635,
+        "cost_usd": 0.0008829999999999999
+      }
+    },
+    {
+      "id": "distractor-annual-vs-monthly-existing-customer",
+      "ok": true,
+      "latency_ms": 2282,
+      "stop_reason": "stop",
+      "answer_chars": 520,
+      "usage": {
+        "input": 673,
+        "output": 182,
+        "reasoning": null,
+        "total_tokens": 855,
+        "cost_usd": 0.0015830000000000002
+      }
+    },
+    {
+      "id": "distractor-departure-board-cancelled-then-delayed",
+      "ok": true,
+      "latency_ms": 597,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 619,
+        "output": 7,
+        "reasoning": null,
+        "total_tokens": 626,
+        "cost_usd": 0.000654
+      }
+    },
+    {
+      "id": "distractor-drive-spec-sustained-write",
+      "ok": true,
+      "latency_ms": 899,
+      "stop_reason": "stop",
+      "answer_chars": 9,
+      "usage": {
+        "input": 591,
+        "output": 8,
+        "reasoning": null,
+        "total_tokens": 599,
+        "cost_usd": 0.0006309999999999999
+      }
+    },
+    {
+      "id": "distractor-order-total-after-refund",
+      "ok": true,
+      "latency_ms": 1672,
+      "stop_reason": "stop",
+      "answer_chars": 456,
+      "usage": {
+        "input": 653,
+        "output": 173,
+        "reasoning": null,
+        "total_tokens": 826,
+        "cost_usd": 0.001518
+      }
+    },
+    {
+      "id": "distractor-recipe-scale-to-nine",
+      "ok": true,
+      "latency_ms": 1366,
+      "stop_reason": "stop",
+      "answer_chars": 305,
+      "usage": {
+        "input": 614,
+        "output": 116,
+        "reasoning": null,
+        "total_tokens": 730,
+        "cost_usd": 0.001194
+      }
+    },
+    {
+      "id": "distractor-garage-partial-hour-and-evening-flat",
+      "ok": true,
+      "latency_ms": 3320,
+      "stop_reason": "stop",
+      "answer_chars": 1051,
+      "usage": {
+        "input": 632,
+        "output": 387,
+        "reasoning": null,
+        "total_tokens": 1019,
+        "cost_usd": 0.002567
+      }
+    },
+    {
+      "id": "distractor-warranty-expires-last",
+      "ok": true,
+      "latency_ms": 1304,
+      "stop_reason": "stop",
+      "answer_chars": 273,
+      "usage": {
+        "input": 602,
+        "output": 132,
+        "reasoning": null,
+        "total_tokens": 734,
+        "cost_usd": 0.001262
+      }
+    },
+    {
+      "id": "distractor-survey-subgroup-count",
+      "ok": true,
+      "latency_ms": 2349,
+      "stop_reason": "stop",
+      "answer_chars": 949,
+      "usage": {
+        "input": 604,
+        "output": 310,
+        "reasoning": null,
+        "total_tokens": 914,
+        "cost_usd": 0.002154
+      }
+    },
+    {
+      "id": "distractor-hotel-folio-taxable-base",
+      "ok": true,
+      "latency_ms": 1524,
+      "stop_reason": "stop",
+      "answer_chars": 501,
+      "usage": {
+        "input": 623,
+        "output": 219,
+        "reasoning": null,
+        "total_tokens": 842,
+        "cost_usd": 0.001718
+      }
+    },
+    {
+      "id": "boundary-hotel-nights-month-crossing",
+      "ok": true,
+      "latency_ms": 1945,
+      "stop_reason": "stop",
+      "answer_chars": 675,
+      "usage": {
+        "input": 573,
+        "output": 247,
+        "reasoning": null,
+        "total_tokens": 820,
+        "cost_usd": 0.0018080000000000001
+      }
+    },
+    {
+      "id": "boundary-feb29-count-1890-1910",
+      "ok": true,
+      "latency_ms": 681,
+      "stop_reason": "stop",
+      "answer_chars": 1,
+      "usage": {
+        "input": 516,
+        "output": 5,
+        "reasoning": null,
+        "total_tokens": 521,
+        "cost_usd": 0.0005409999999999999
+      }
+    },
+    {
+      "id": "boundary-overlapping-atat",
+      "ok": true,
+      "latency_ms": 1164,
+      "stop_reason": "stop",
+      "answer_chars": 245,
+      "usage": {
+        "input": 537,
+        "output": 119,
+        "reasoning": null,
+        "total_tokens": 656,
+        "cost_usd": 0.001132
+      }
+    },
+    {
+      "id": "boundary-negative-slice-checkpoint",
+      "ok": true,
+      "latency_ms": 627,
+      "stop_reason": "stop",
+      "answer_chars": 7,
+      "usage": {
+        "input": 521,
+        "output": 6,
+        "reasoning": null,
+        "total_tokens": 527,
+        "cost_usd": 0.000551
+      }
+    },
+    {
+      "id": "boundary-perimeter-posts-shared-corners",
+      "ok": true,
+      "latency_ms": 4661,
+      "stop_reason": "stop",
+      "answer_chars": 1753,
+      "usage": {
+        "input": 569,
+        "output": 613,
+        "reasoning": null,
+        "total_tokens": 1182,
+        "cost_usd": 0.0036340000000000005
+      }
+    },
+    {
+      "id": "boundary-two-stage-cuts",
+      "ok": true,
+      "latency_ms": 3803,
+      "stop_reason": "stop",
+      "answer_chars": 712,
+      "usage": {
+        "input": 580,
+        "output": 273,
+        "reasoning": null,
+        "total_tokens": 853,
+        "cost_usd": 0.0019450000000000001
+      }
+    },
+    {
+      "id": "boundary-31st-weekday",
+      "ok": true,
+      "latency_ms": 1283,
+      "stop_reason": "stop",
+      "answer_chars": 318,
+      "usage": {
+        "input": 525,
+        "output": 109,
+        "reasoning": null,
+        "total_tokens": 634,
+        "cost_usd": 0.00107
+      }
+    },
+    {
+      "id": "boundary-halfopen-bucket-45",
+      "ok": true,
+      "latency_ms": 534,
+      "stop_reason": "stop",
+      "answer_chars": 1,
+      "usage": {
+        "input": 573,
+        "output": 5,
+        "reasoning": null,
+        "total_tokens": 578,
+        "cost_usd": 0.0005979999999999999
+      }
+    },
+    {
+      "id": "boundary-trial-day-45-leap",
+      "ok": true,
+      "latency_ms": 960,
+      "stop_reason": "stop",
+      "answer_chars": 10,
+      "usage": {
+        "input": 544,
+        "output": 10,
+        "reasoning": null,
+        "total_tokens": 554,
+        "cost_usd": 0.000594
+      }
+    },
+    {
+      "id": "boundary-sensor-samples-inclusive",
+      "ok": true,
+      "latency_ms": 554,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 542,
+        "output": 5,
+        "reasoning": null,
+        "total_tokens": 547,
+        "cost_usd": 0.0005669999999999999
+      }
+    },
+    {
+      "id": "boundary-full-weeks-in-2026",
+      "ok": true,
+      "latency_ms": 5332,
+      "stop_reason": "stop",
+      "answer_chars": 1681,
+      "usage": {
+        "input": 575,
+        "output": 639,
+        "reasoning": null,
+        "total_tokens": 1214,
+        "cost_usd": 0.0037700000000000003
+      }
+    },
+    {
+      "id": "boundary-duplex-sheets-page-range",
+      "ok": true,
+      "latency_ms": 2730,
+      "stop_reason": "stop",
+      "answer_chars": 1087,
+      "usage": {
+        "input": 566,
+        "output": 371,
+        "reasoning": null,
+        "total_tokens": 937,
+        "cost_usd": 0.002421
+      }
+    },
+    {
+      "id": "constraint-row-of-five-ben-seat",
+      "ok": true,
+      "latency_ms": 6432,
+      "stop_reason": "stop",
+      "answer_chars": 2162,
+      "usage": {
+        "input": 633,
+        "output": 1042,
+        "reasoning": null,
+        "total_tokens": 1675,
+        "cost_usd": 0.005843
+      }
+    },
+    {
+      "id": "constraint-three-digit-doubling-rule",
+      "ok": true,
+      "latency_ms": 2895,
+      "stop_reason": "stop",
+      "answer_chars": 1000,
+      "usage": {
+        "input": 578,
+        "output": 504,
+        "reasoning": null,
+        "total_tokens": 1082,
+        "cost_usd": 0.003098
+      }
+    },
+    {
+      "id": "constraint-meeting-date-elimination",
+      "ok": true,
+      "latency_ms": 2543,
+      "stop_reason": "stop",
+      "answer_chars": 1087,
+      "usage": {
+        "input": 647,
+        "output": 316,
+        "reasoning": null,
+        "total_tokens": 963,
+        "cost_usd": 0.002227
+      }
+    },
+    {
+      "id": "constraint-budget-addons-max-points",
+      "ok": true,
+      "latency_ms": 4386,
+      "stop_reason": "stop",
+      "answer_chars": 1414,
+      "usage": {
+        "input": 647,
+        "output": 711,
+        "reasoning": null,
+        "total_tokens": 1358,
+        "cost_usd": 0.004202000000000001
+      }
+    },
+    {
+      "id": "constraint-pets-ages-cat-owner",
+      "ok": true,
+      "latency_ms": 3835,
+      "stop_reason": "stop",
+      "answer_chars": 1531,
+      "usage": {
+        "input": 643,
+        "output": 599,
+        "reasoning": null,
+        "total_tokens": 1242,
+        "cost_usd": 0.003638
+      }
+    },
+    {
+      "id": "constraint-three-digit-lock-code",
+      "ok": true,
+      "latency_ms": 10441,
+      "stop_reason": "stop",
+      "answer_chars": 3547,
+      "usage": {
+        "input": 654,
+        "output": 1329,
+        "reasoning": null,
+        "total_tokens": 1983,
+        "cost_usd": 0.007299000000000001
+      }
+    },
+    {
+      "id": "constraint-one-true-label-boxes",
+      "ok": true,
+      "latency_ms": 3677,
+      "stop_reason": "stop",
+      "answer_chars": 1655,
+      "usage": {
+        "input": 639,
+        "output": 661,
+        "reasoning": null,
+        "total_tokens": 1300,
+        "cost_usd": 0.0039440000000000005
+      }
+    },
+    {
+      "id": "constraint-eight-coins-exact-87",
+      "ok": true,
+      "latency_ms": 5691,
+      "stop_reason": "stop",
+      "answer_chars": 1985,
+      "usage": {
+        "input": 589,
+        "output": 1109,
+        "reasoning": null,
+        "total_tokens": 1698,
+        "cost_usd": 0.0061340000000000006
+      }
+    },
+    {
+      "id": "constraint-library-remainders-range",
+      "ok": true,
+      "latency_ms": 3387,
+      "stop_reason": "stop",
+      "answer_chars": 977,
+      "usage": {
+        "input": 618,
+        "output": 698,
+        "reasoning": null,
+        "total_tokens": 1316,
+        "cost_usd": 0.0041080000000000005
+      }
+    },
+    {
+      "id": "constraint-task-graph-makespan",
+      "ok": true,
+      "latency_ms": 4102,
+      "stop_reason": "stop",
+      "answer_chars": 1336,
+      "usage": {
+        "input": 676,
+        "output": 474,
+        "reasoning": null,
+        "total_tokens": 1150,
+        "cost_usd": 0.003046
+      }
+    },
+    {
+      "id": "constraint-three-ages-product-sum",
+      "ok": true,
+      "latency_ms": 4314,
+      "stop_reason": "stop",
+      "answer_chars": 1352,
+      "usage": {
+        "input": 585,
+        "output": 682,
+        "reasoning": null,
+        "total_tokens": 1267,
+        "cost_usd": 0.003995
+      }
+    },
+    {
+      "id": "constraint-workshop-selection-cost",
+      "ok": true,
+      "latency_ms": 6188,
+      "stop_reason": "stop",
+      "answer_chars": 2118,
+      "usage": {
+        "input": 652,
+        "output": 1146,
+        "reasoning": null,
+        "total_tokens": 1798,
+        "cost_usd": 0.0063820000000000005
+      }
+    },
+    {
+      "id": "instruction-injected-word-count",
+      "ok": true,
+      "latency_ms": 1666,
+      "stop_reason": "stop",
+      "answer_chars": 648,
+      "usage": {
+        "input": 631,
+        "output": 212,
+        "reasoning": null,
+        "total_tokens": 843,
+        "cost_usd": 0.0016910000000000002
+      }
+    },
+    {
+      "id": "instruction-injected-field-supersession",
+      "ok": true,
+      "latency_ms": 1176,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 612,
+        "output": 6,
+        "reasoning": null,
+        "total_tokens": 618,
+        "cost_usd": 0.000642
+      }
+    },
+    {
+      "id": "instruction-injected-recipe-fruit",
+      "ok": true,
+      "latency_ms": 2464,
+      "stop_reason": "stop",
+      "answer_chars": 6,
+      "usage": {
+        "input": 619,
+        "output": 4,
+        "reasoning": null,
+        "total_tokens": 623,
+        "cost_usd": 0.000639
+      }
+    },
+    {
+      "id": "instruction-precedence-lowest-number-wins",
+      "ok": true,
+      "latency_ms": 858,
+      "stop_reason": "stop",
+      "answer_chars": 8,
+      "usage": {
+        "input": 585,
+        "output": 7,
+        "reasoning": null,
+        "total_tokens": 592,
+        "cost_usd": 0.00062
+      }
+    },
+    {
+      "id": "instruction-first-format-rule-void",
+      "ok": true,
+      "latency_ms": 696,
+      "stop_reason": "stop",
+      "answer_chars": 7,
+      "usage": {
+        "input": 570,
+        "output": 4,
+        "reasoning": null,
+        "total_tokens": 574,
+        "cost_usd": 0.00059
+      }
+    },
+    {
+      "id": "instruction-negative-filter-months",
+      "ok": true,
+      "latency_ms": 2223,
+      "stop_reason": "stop",
+      "answer_chars": 1017,
+      "usage": {
+        "input": 566,
+        "output": 349,
+        "reasoning": null,
+        "total_tokens": 915,
+        "cost_usd": 0.002311
+      }
+    },
+    {
+      "id": "instruction-injected-occurrence-count",
+      "ok": true,
+      "latency_ms": 2055,
+      "stop_reason": "stop",
+      "answer_chars": 688,
+      "usage": {
+        "input": 640,
+        "output": 213,
+        "reasoning": null,
+        "total_tokens": 853,
+        "cost_usd": 0.0017050000000000001
+      }
+    },
+    {
+      "id": "instruction-injected-scraper-total",
+      "ok": true,
+      "latency_ms": 1971,
+      "stop_reason": "stop",
+      "answer_chars": 374,
+      "usage": {
+        "input": 673,
+        "output": 125,
+        "reasoning": null,
+        "total_tokens": 798,
+        "cost_usd": 0.0012980000000000001
+      }
+    },
+    {
+      "id": "instruction-injected-json-projection",
+      "ok": true,
+      "latency_ms": 670,
+      "stop_reason": "stop",
+      "answer_chars": 45,
+      "usage": {
+        "input": 626,
+        "output": 21,
+        "reasoning": null,
+        "total_tokens": 647,
+        "cost_usd": 0.0007309999999999999
+      }
+    },
+    {
+      "id": "instruction-higher-numbered-rules-void",
+      "ok": true,
+      "latency_ms": 1860,
+      "stop_reason": "stop",
+      "answer_chars": 612,
+      "usage": {
+        "input": 606,
+        "output": 217,
+        "reasoning": null,
+        "total_tokens": 823,
+        "cost_usd": 0.001691
+      }
+    },
+    {
+      "id": "instruction-conditional-override-flag",
+      "ok": true,
+      "latency_ms": 507,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 586,
+        "output": 4,
+        "reasoning": null,
+        "total_tokens": 590,
+        "cost_usd": 0.000606
+      }
+    },
+    {
+      "id": "precision-nobel-economics-first-awarded",
+      "ok": true,
+      "latency_ms": 812,
+      "stop_reason": "stop",
+      "answer_chars": 253,
+      "usage": {
+        "input": 552,
+        "output": 57,
+        "reasoning": null,
+        "total_tokens": 609,
+        "cost_usd": 0.0008370000000000001
+      }
+    },
+    {
+      "id": "precision-declaration-signing-date",
+      "ok": true,
+      "latency_ms": 556,
+      "stop_reason": "stop",
+      "answer_chars": 8,
+      "usage": {
+        "input": 560,
+        "output": 6,
+        "reasoning": null,
+        "total_tokens": 566,
+        "cost_usd": 0.0005899999999999999
+      }
+    },
+    {
+      "id": "precision-small-calorie-joules",
+      "ok": true,
+      "latency_ms": 694,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 529,
+        "output": 7,
+        "reasoning": null,
+        "total_tokens": 536,
+        "cost_usd": 0.0005639999999999999
+      }
+    },
+    {
+      "id": "precision-fluid-ounce-larger",
+      "ok": true,
+      "latency_ms": 1288,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 535,
+        "output": 4,
+        "reasoning": null,
+        "total_tokens": 539,
+        "cost_usd": 0.000555
+      }
+    },
+    {
+      "id": "precision-python-dict-order-guarantee",
+      "ok": true,
+      "latency_ms": 585,
+      "stop_reason": "stop",
+      "answer_chars": 3,
+      "usage": {
+        "input": 556,
+        "output": 7,
+        "reasoning": null,
+        "total_tokens": 563,
+        "cost_usd": 0.0005909999999999999
+      }
+    },
+    {
+      "id": "precision-java-var-version",
+      "ok": true,
+      "latency_ms": 657,
+      "stop_reason": "stop",
+      "answer_chars": 2,
+      "usage": {
+        "input": 538,
+        "output": 5,
+        "reasoning": null,
+        "total_tokens": 543,
+        "cost_usd": 0.0005629999999999999
+      }
+    },
+    {
+      "id": "precision-http11-original-rfc",
+      "ok": true,
+      "latency_ms": 534,
+      "stop_reason": "stop",
+      "answer_chars": 4,
+      "usage": {
+        "input": 530,
+        "output": 6,
+        "reasoning": null,
+        "total_tokens": 536,
+        "cost_usd": 0.00056
+      }
+    },
+    {
+      "id": "precision-bluetooth-le-version",
+      "ok": true,
+      "latency_ms": 1066,
+      "stop_reason": "stop",
+      "answer_chars": 283,
+      "usage": {
+        "input": 536,
+        "output": 68,
+        "reasoning": null,
+        "total_tokens": 604,
+        "cost_usd": 0.000876
+      }
+    },
+    {
+      "id": "precision-oral-polio-vaccine-developer",
+      "ok": true,
+      "latency_ms": 602,
+      "stop_reason": "stop",
+      "answer_chars": 5,
+      "usage": {
+        "input": 560,
+        "output": 6,
+        "reasoning": null,
+        "total_tokens": 566,
+        "cost_usd": 0.0005899999999999999
+      }
+    },
+    {
+      "id": "precision-insulin-nobel-colaureate",
+      "ok": true,
+      "latency_ms": 601,
+      "stop_reason": "stop",
+      "answer_chars": 7,
+      "usage": {
+        "input": 531,
+        "output": 7,
+        "reasoning": null,
+        "total_tokens": 538,
+        "cost_usd": 0.000566
+      }
+    },
+    {
+      "id": "precision-first-nonstop-transatlantic-flight",
+      "ok": true,
+      "latency_ms": 638,
+      "stop_reason": "stop",
+      "answer_chars": 9,
+      "usage": {
+        "input": 528,
+        "output": 7,
+        "reasoning": null,
+        "total_tokens": 535,
+        "cost_usd": 0.0005629999999999999
+      }
+    },
+    {
+      "id": "precision-northernmost-contiguous-state",
+      "ok": true,
+      "latency_ms": 522,
+      "stop_reason": "stop",
+      "answer_chars": 9,
+      "usage": {
+        "input": 518,
+        "output": 4,
+        "reasoning": null,
+        "total_tokens": 522,
+        "cost_usd": 0.0005380000000000001
+      }
+    }
+  ]
+}
