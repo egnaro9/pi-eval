@@ -86,12 +86,12 @@ Returns per-task verdicts plus `n`, `passed`, `failed`, a mean `score`, and a
 
 | grader | fields | passes when |
 |---|---|---|
-| `exact` | `expected` | matches, case-insensitive, trimmed |
+| `exact` | `expected`, `scope` | matches, case-insensitive, trimmed |
 | `exact_cs` | `expected` | matches exactly, case-sensitive |
 | `contains` | `needles[]` | every needle appears |
 | `regex` | `pattern` | the pattern matches |
-| `one_of` | `allowed[]` | equals one of them |
-| `number` | `expected`, `tol`, `which` | a number within tolerance is present |
+| `one_of` | `allowed[]`, `scope` | equals one of them |
+| `number` | `expected`, `tol`, `which`, `scope` | a number within tolerance is present |
 | `must_refuse` | — | the text refuses |
 | `must_comply` | — | the text does not refuse |
 | `must_abstain` | — | the text declines to guess |
@@ -103,6 +103,53 @@ Returns per-task verdicts plus `n`, `passed`, `failed`, a mean `score`, and a
 
 Add `"fail_severity"` (`low` / `med` / `high` / `critical`) to any of them to say how
 much a failure matters.
+
+### `scope` — grade the answer, not the narration
+
+`exact`, `one_of` and `number` take `"scope": "last_line"`, which grades the final
+non-empty line instead of the whole reply. Default is `"full"`.
+
+Use it whenever the task asks about an **answer**. A model that shows its work and
+then states the answer got the answer right and the format wrong, and grading the
+whole reply calls that a wrong answer.
+
+This matters more than it sounds. Verbosity is not random across configs — turning
+thinking off makes a model narrate — so a config change that alters verbosity moves
+every position-sensitive grader the same way at once. It does not look like noise,
+it looks like a finding. In a measured `thinking=high` vs `thinking=off` run, two of
+eight apparent wins were the model marked wrong for answers it had stated correctly
+on its last line.
+
+Keep `"full"` for tasks that are genuinely about output shape. Those exist and are
+worth having — just not as a silent tax on every other task.
+
+```json
+{"grader": "exact",  "expected": "Friday", "scope": "last_line"}
+{"grader": "number", "expected": 4, "tol": 0, "scope": "last_line"}
+```
+
+For `number`, `scope` narrows *where* to look and `which` picks within it.
+`scope: "last_line"` is the more robust of the two: `which: "last"` over a whole
+reply is defeated by a trailing "...which leaves 220 extra widgets".
+
+## Comparing two configs
+
+```bash
+./scripts/gradecli.py compare A.json B.json \
+  --rep-a A2.json A3.json --rep-b B2.json B3.json \
+  --meta-a A*.meta.json --meta-b B*.meta.json
+```
+
+Exit `0` a verdict was reached · `1` the suite could not decide · `2` refused.
+
+With repetitions on **both** sides it uses repeated measures and discards any task
+a config is not self-consistent on — such a task carries no direction, exactly like
+a tie. Repetitions on only one side fall back to a single-run comparison, because
+assuming the unrepeated config is stable is the assumption the mode removes.
+
+`--meta-*` takes `tools/sweep.mjs` sidecars and puts spend beside the verdict, so
+"did it help" and "did it just cost more" are answered together. Unmeasured cost
+reports `null`, never `$0.00`.
 
 ## What `suite_hash` is for
 
