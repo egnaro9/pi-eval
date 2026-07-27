@@ -3,9 +3,17 @@
 Raw artifacts, kept on purpose. A tool whose argument is *verify claims against
 data* should ship its data; otherwise the reader is trusting a summary again.
 
-Every number quoted in the top-level README maps to files here and to a command
-that regenerates it. If a command below disagrees with the README, the README is
+The headline numbers in the top-level README map to files here and to a command
+that regenerates them. If a command below disagrees with the README, the README is
 wrong.
+
+Coverage is **partial and named as such**: the commands below cover the thinking
+comparison and the 159-task model comparison. `noise/`, `pool/`, `cfg/` and
+`mined/` are the intermediate experiments those were built from — the first
+noise-floor measurement, the pool authored to be hard, the 100-task stage, and the
+mined pool. Their numbers appear in the README narrative without a command here.
+Saying "every number" would have been the same overclaim this tool exists to
+catch.
 
 ## Directories
 

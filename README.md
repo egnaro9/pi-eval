@@ -189,7 +189,14 @@ unrepeated config is stable is precisely the assumption the mode removes.
 
 ## What running it actually found
 
-Three suites, three repetitions per config, `claude-haiku-4-5` vs `claude-sonnet-4-6`:
+> **This section is the first experiment, on 100 tasks, scored on the full reply.**
+> A later, larger run supersedes its verdict — see
+> [*"Cannot decide" and "indistinguishable"*](#cannot-decide-and-indistinguishable-are-different-findings)
+> below. It is kept because the progression is the point: the same instrument said
+> "I cannot answer this" before it said anything else.
+
+Three repetitions per config, `claude-haiku-4-5` vs `claude-sonnet-4-6`,
+`suites/combined-100.json`:
 
 ```
 haiku   98 98 98 /100     noise floor 2.00
@@ -201,10 +208,10 @@ informative 4 · min_p 0.125 · VERDICT: this suite cannot decide
 
 Two results worth the electricity:
 
-**The suite cannot separate two models a leaderboard would happily rank.** 92 of 100
-tasks tie. Six informative tasks are needed at α=0.05 and there are four, so no split
-of this data could reach significance — which the tool says out loud instead of
-reporting a tie.
+**At this size the suite could not separate two models a leaderboard would happily
+rank.** 92 of 100 tasks tie. Six informative tasks are needed at α=0.05 and there are
+four, so no split of this data could reach significance — which the tool says out loud
+instead of reporting a tie.
 
 **Haiku beats Sonnet here, 3 wins to 1.** Not a bug. All three keys were re-derived
 by hand: 1900 is not a leap year (Sonnet counts it); a warranty starting later with a
