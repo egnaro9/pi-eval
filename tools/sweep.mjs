@@ -353,11 +353,12 @@ async function main(argv) {
 	// Resolve the model against ~/.pi/agent/auth.json. Offline: create() does not
 	// refresh catalogs over the network unless explicitly allowed.
 	const modelRuntime = await ModelRuntime.create();
-	const resolved = resolveCliModel({
-		cliModel: modelRef,
-		cliThinking: flags.thinking,
-		modelRuntime,
-	});
+	// resolveCliModel takes the thinking level from a "model:level" PATTERN, not
+	// from a separate argument. Passing it as cliThinking silently did nothing:
+	// resolved.thinkingLevel came back undefined for every level, the session fell
+	// back to the settings default, and a --thinking off run recorded medium. That
+	// produced a config comparison of one config against itself.
+	const resolved = resolveCliModel({ cliModel: modelRef, modelRuntime });
 	if (resolved.error || !resolved.model) {
 		throw new UsageError(resolved.error ?? `could not resolve model ${modelRef}`);
 	}
@@ -389,7 +390,9 @@ async function main(argv) {
 		if (!info?.isDirectory()) throw new UsageError(`--cwd ${cwd} is not a directory`);
 	}
 
-	const ctx = { cwd, model, modelRuntime, thinkingLevel: resolved.thinkingLevel, timeoutMs };
+	// An explicit --thinking wins over anything the pattern carried.
+	const requestedThinking = flags.thinking ?? resolved.thinkingLevel;
+	const ctx = { cwd, model, modelRuntime, thinkingLevel: requestedThinking, timeoutMs };
 
 	// Preflight: build one throwaway session and prove tools really are off before
 	// spending money on the suite. No network call is made here.
@@ -400,7 +403,7 @@ async function main(argv) {
 			cwd,
 			model,
 			modelRuntime,
-			thinkingLevel: resolved.thinkingLevel,
+			thinkingLevel: requestedThinking,
 			noTools: "all",
 			sessionManager: SessionManager.inMemory(cwd),
 		});
@@ -411,6 +414,17 @@ async function main(argv) {
 			}
 			effectiveThinking = probe.session.thinkingLevel;
 			observedTools = active;
+			// The guard that would have caught the bug above. A thinking level that
+			// silently differs from the one asked for turns a config comparison into
+			// a config compared with itself, and the result LOOKS like a real finding
+			// ("no difference") instead of an error. Fail before spending money.
+			if (requestedThinking !== undefined && effectiveThinking !== requestedThinking) {
+				throw new UsageError(
+					`preflight: asked for thinking=${requestedThinking} but the session `
+					+ `resolved to ${effectiveThinking}. Refusing to run — a run labelled `
+					+ `with a config it did not use is worse than no run.`,
+				);
+			}
 		} finally {
 			probe.session.dispose();
 		}
