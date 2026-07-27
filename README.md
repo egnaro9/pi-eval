@@ -1,5 +1,7 @@
 # pi-eval
 
+[![ci](https://github.com/egnaro9/pi-eval/actions/workflows/ci.yml/badge.svg)](https://github.com/egnaro9/pi-eval/actions/workflows/ci.yml)
+
 **Deterministic grading for [pi](https://pi.dev). Fixed predicates, no LLM judge — so
 a score change means the output moved, not the judge.**
 
@@ -172,7 +174,7 @@ rule: **a task where a config disagrees with itself carries no direction, and is
 discarded exactly like a tie.**
 
 That rule is not theoretical. Running claude-haiku-4-5 three times against the same
-100 tasks and comparing those runs *to each other* yields 2.0 "informative" tasks
+100 tasks and comparing those runs *to each other* yields 2.67 "informative" tasks
 from within-model variance alone. Any real finding has to clear that. The output
 reports both configs' noise floors next to the verdict so a reader can see the bar.
 
@@ -215,7 +217,7 @@ thinking=high  won 6, lost 0, 84 tied, 10 unstable    p=0.031
                364,287 tokens (142,727 reasoning)     $1.107
 thinking=off                                          $0.445
                                        COST RATIO     2.49x
-noise floor    high 2.0        off 5.33
+noise floor    high 2.67       off 4.00
 ```
 
 **This is the same suite that cannot separate Haiku 4.5 from Sonnet 4.6.** It was
@@ -251,12 +253,17 @@ answered 5. On the warranty table it computed 2023-09-10 plus 36 months as
 2025-09-10 and picked the wrong item.
 
 The stability number deserves as much attention as the win count: `thinking=off`
-has a noise floor of **5.33 against high's 2.0**, and this comparison threw out 10
-unstable tasks where the model-vs-model one threw out 4. Turning thinking off does
+has a noise floor of **4.00 against high's 2.67**, and this comparison threw out 10
+unstable tasks where the model-vs-model one threw out 5. Turning thinking off does
 not just cost accuracy — it makes the same config answer the same question
 differently run to run.
 
-So: **+6 tasks per 100 and less than half the variance, for 2.5x the money.** That
+(Under full-reply scoring those floors read 5.33 and 2.00. Both numbers are real;
+they are not interchangeable, and quoting one beside a verdict computed under the
+other is how a report starts drifting from its own data.)
+
+So: **+6 tasks per 100 and about a third less run-to-run variance, for 2.5x the
+money.** That
 is a decision someone can actually make. A score without the cost beside it is not.
 
 ## The gate that admits a task, and the one it cannot replace
