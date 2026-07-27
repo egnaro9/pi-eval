@@ -8,6 +8,11 @@
  *
  * Optional: --limit N   run only the first N tasks (cheap smoke test)
  *           --concurrency N   parallel tasks (default 1)
+ *           --reps N          repeat the whole sweep N times (default 1), writing
+ *                             <out>-r1.json .. <out>-rN.json. Comparing configs
+ *                             needs >=2 per side; making that a shell loop the
+ *                             user has to know to write is how single-run
+ *                             comparisons get published.
  *           --thinking LEVEL  thinking level passed to model resolution
  *           --cwd DIR         session discovery root (default: a fresh temp dir)
  *           --timeout MS      per-task wall clock; 0 = off (default)
@@ -58,8 +63,10 @@ import {
 } from "@earendil-works/pi-coding-agent";
 
 const SWEEP_VERSION = 1;
+/** Path shown in the printed next-step commands, relative to the repo root. */
+const GRADECLI_HINT = "skills/grade/scripts/gradecli.py";
 const USAGE = `usage: node tools/sweep.mjs --suite <suite.json> --model <provider/id> --out <answers.json>
-              [--limit N] [--concurrency N] [--thinking LEVEL] [--cwd DIR] [--timeout MS]`;
+              [--limit N] [--concurrency N] [--reps N] [--thinking LEVEL] [--cwd DIR] [--timeout MS]`;
 
 const log = (line) => process.stderr.write(`${line}\n`);
 
@@ -81,6 +88,7 @@ const KNOWN_FLAGS = new Set([
 	"out",
 	"limit",
 	"concurrency",
+	"reps",
 	"thinking",
 	"cwd",
 	"timeout",
@@ -382,6 +390,18 @@ async function main(argv) {
 	);
 	log(`sweep: suite ${suitePath}`);
 
+	const reps = positiveInt(flags, "reps", 1);
+	const written = [];
+	let anyFailed = false;
+
+	for (let rep = 1; rep <= reps; rep++) {
+	const [stem, ext] = reps > 1
+		? [outPath.replace(/\.json$/, ""), ".json"]
+		: [outPath, ""];
+	const thisOut = reps > 1 ? `${stem}-r${rep}${ext}` : outPath;
+	const thisMeta = `${thisOut}.meta.json`;
+	if (reps > 1) log(`sweep: --- repetition ${rep}/${reps} ---`);
+
 	const startedAt = new Date();
 	const records = new Array(tasks.length);
 	let cursor = 0;
@@ -483,13 +503,14 @@ async function main(argv) {
 		tasks: taskMeta,
 	};
 
-	await mkdir(dirname(outPath), { recursive: true });
+	await mkdir(dirname(thisOut), { recursive: true });
 	// The primary file stays a flat id -> answer map. Nothing else goes in it.
-	await writeFile(outPath, `${JSON.stringify(answers, null, 2)}\n`, "utf8");
-	await writeFile(metaPath, `${JSON.stringify(meta, null, 2)}\n`, "utf8");
+	await writeFile(thisOut, `${JSON.stringify(answers, null, 2)}\n`, "utf8");
+	await writeFile(thisMeta, `${JSON.stringify(meta, null, 2)}\n`, "utf8");
+	written.push(thisOut);
 
-	log(`sweep: wrote ${outPath} (${Object.keys(answers).length} answers)`);
-	log(`sweep: wrote ${metaPath}`);
+	log(`sweep: wrote ${thisOut} (${Object.keys(answers).length} answers)`);
+	log(`sweep: wrote ${thisMeta}`);
 	if (limit < allTasks.length) {
 		log(
 			`sweep: NOTE --limit ${limit} of ${allTasks.length}; gradecli run will reject this answers file ` +
@@ -498,10 +519,32 @@ async function main(argv) {
 	}
 	if (failedIds.length > 0) {
 		log(`sweep: FAILED ${failedIds.length}/${tasks.length}: ${failedIds.join(", ")}`);
-		return 1;
+		anyFailed = true;
+	} else {
+		log(`sweep: OK ${tasks.length}/${tasks.length} answered in ${meta.wall_ms}ms`);
 	}
-	log(`sweep: OK ${tasks.length}/${tasks.length} answered in ${meta.wall_ms}ms`);
-	return 0;
+	}  // end repetition loop
+
+	if (reps > 1) {
+		// Print the exact grading and comparison commands. A user who has just paid
+		// for N repetitions should not then have to discover that --rep-a/--rep-b
+		// exist; a single-run comparison of a repeated sweep silently throws the
+		// repetitions away and cannot tell a real difference from a config
+		// disagreeing with itself.
+		const graded = written.map((f) => f.replace(/\.json$/, ".graded.json"));
+		log("");
+		log(`sweep: ${written.length} repetitions written. Grade each:`);
+		for (const [i, f] of written.entries()) {
+			log(`  python3 ${GRADECLI_HINT} run ${suitePath} --answers ${f} > ${graded[i]}`);
+		}
+		log("sweep: then compare against the other config's runs:");
+		log(
+			`  python3 ${GRADECLI_HINT} compare ${graded[0]} <B1> \\\n` +
+			`      --rep-a ${graded.slice(1).join(" ")} --rep-b <B2> <B3> \\\n` +
+			`      --meta-a ${written.map((f) => `${f}.meta.json`).join(" ")} --meta-b <B.meta.json...>`,
+		);
+	}
+	return anyFailed ? 1 : 0;
 }
 
 async function runCli() {

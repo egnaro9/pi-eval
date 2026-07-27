@@ -142,10 +142,16 @@ them means nothing. There is a test for exactly this.
 ## Headless sweeps
 
 ```bash
-node tools/sweep.mjs --suite suites/combined-100.json \
+node tools/sweep.mjs --suite suites/combined-159.json \
                      --model anthropic/claude-haiku-4-5 \
+                     --reps 3 \
                      --out runs/haiku.json
 ```
+
+`--reps` exists because comparing two configs needs at least two runs per side,
+and leaving that as a shell loop the user has to know to write is how single-run
+comparisons get published. It prints the exact grade and compare commands when
+it finishes, `--rep-a`/`--rep-b` already filled in.
 
 Fresh in-memory session per task, so task N-1 cannot contaminate task N. Tools are
 disabled and the assertion is checked at runtime with `getActiveToolNames()`, not
