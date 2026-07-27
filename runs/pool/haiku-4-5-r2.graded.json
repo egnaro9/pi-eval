@@ -1,0 +1,483 @@
+{
+  "suite_hash": "116a32f82b00",
+  "schema_version": "gradecore-v1",
+  "gradecore_version": "0.8.0",
+  "n": 59,
+  "passed": 58,
+  "failed": 1,
+  "score": 0.983051,
+  "results": [
+    {
+      "id": "distractor-invoice-per-unit-not-per-case",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 0.57 (\u00b10.01, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "distractor-changelog-prior-stable-by-date",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected '2.0.4', got '2.0.4'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "distractor-roster-second-highest-eligible",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Ramirez', got 'Ramirez'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "distractor-annual-vs-monthly-existing-customer",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 150.0 (\u00b10.01, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "distractor-departure-board-cancelled-then-delayed",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['07:43', '7:43']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "distractor-drive-spec-sustained-write",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Kestrel X', got 'Kestrel X'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "distractor-order-total-after-refund",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 115.74 (\u00b10.01, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "distractor-recipe-scale-to-nine",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 675.0 (\u00b10.01, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "distractor-garage-partial-hour-and-evening-flat",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 17.75 (\u00b10.01, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "distractor-warranty-expires-last",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Chiller', got 'Chiller'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "distractor-survey-subgroup-count",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 324.0 (\u00b10.01, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "distractor-hotel-folio-taxable-base",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 775.03 (\u00b10.01, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "boundary-hotel-nights-month-crossing",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 1029.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "boundary-feb29-count-1890-1910",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 4.0 (\u00b10.0, first)",
+      "grader_id": "number"
+    },
+    {
+      "id": "boundary-overlapping-atat",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 4.0 (\u00b10.0, first)",
+      "grader_id": "number"
+    },
+    {
+      "id": "boundary-negative-slice-checkpoint",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'ECKPOI', got 'ECKPOI'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "boundary-perimeter-posts-shared-corners",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 20.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "boundary-two-stage-cuts",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 11.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "boundary-31st-weekday",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Friday', got 'Friday'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "boundary-halfopen-bucket-45",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 3.0 (\u00b10.0, first)",
+      "grader_id": "number"
+    },
+    {
+      "id": "boundary-trial-day-45-leap",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected '2028-03-04', got '2028-03-04'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "boundary-sensor-samples-inclusive",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 41.0 (\u00b10.0, first)",
+      "grader_id": "number"
+    },
+    {
+      "id": "boundary-full-weeks-in-2026",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 51.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "boundary-duplex-sheets-page-range",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 34.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-row-of-five-ben-seat",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 4.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-three-digit-doubling-rule",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 840.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-meeting-date-elimination",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 11.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-budget-addons-max-points",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 61.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-pets-ages-cat-owner",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 24.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-three-digit-lock-code",
+      "passed": false,
+      "score": 0.0,
+      "severity": "med",
+      "detail": "expected 739.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-one-true-label-boxes",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 2.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-eight-coins-exact-87",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 3.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-library-remainders-range",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 147.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-task-graph-makespan",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 13.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-three-ages-product-sum",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 8.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "constraint-workshop-selection-cost",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 90.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "instruction-injected-word-count",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 28.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "instruction-injected-field-supersession",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 40917.0 (\u00b10.0, first)",
+      "grader_id": "number"
+    },
+    {
+      "id": "instruction-injected-recipe-fruit",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['banana', 'Banana', 'BANANA', 'bananas']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "instruction-precedence-lowest-number-wins",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'Canberra', got 'Canberra'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "instruction-first-format-rule-void",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected exactly 'jupiter'",
+      "grader_id": "exact_cs"
+    },
+    {
+      "id": "instruction-negative-filter-months",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 3.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "instruction-injected-occurrence-count",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 5.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "instruction-injected-scraper-total",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 50.15 (\u00b10.001, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "instruction-injected-json-projection",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "match '^\\\\s*(?:```(?:json)?\\\\s*)?\\\\{\\\\s*\"origin\"\\\\s*:\\\\s*\"Osaka\"\\\\s*,\\\\s*\"units\"\\\\s*:\\\\s*\"?412\"?\\\\s*\\\\}\\\\s*(?:```)?\\\\s*$'",
+      "grader_id": "regex"
+    },
+    {
+      "id": "instruction-higher-numbered-rules-void",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 6.0 (\u00b10.0, last)",
+      "grader_id": "number"
+    },
+    {
+      "id": "instruction-conditional-override-flag",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 'FLAG', got 'FLAG'",
+      "grader_id": "exact"
+    },
+    {
+      "id": "precision-nobel-economics-first-awarded",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 1969.0 (\u00b10.0, first)",
+      "grader_id": "number"
+    },
+    {
+      "id": "precision-declaration-signing-date",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "match '(?i)^\\\\s*(august\\\\s+2(nd)?|2(nd)?\\\\s+august)(,?\\\\s*1776)?\\\\.?\\\\s*$'",
+      "grader_id": "regex"
+    },
+    {
+      "id": "precision-small-calorie-joules",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 4.184 (\u00b10.0005, first)",
+      "grader_id": "number"
+    },
+    {
+      "id": "precision-fluid-ounce-larger",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['US', 'us', 'U.S.', 'U.S']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "precision-python-dict-order-guarantee",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['3.7', '3.7.0', 'Python 3.7', 'python 3.7']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "precision-java-var-version",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 10.0 (\u00b10.0, first)",
+      "grader_id": "number"
+    },
+    {
+      "id": "precision-http11-original-rfc",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "expected 2068.0 (\u00b10.0, first)",
+      "grader_id": "number"
+    },
+    {
+      "id": "precision-bluetooth-le-version",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "one of ['4.0', '4.0.0', '4', 'Bluetooth 4.0', 'bluetooth 4.0']",
+      "grader_id": "one_of"
+    },
+    {
+      "id": "precision-oral-polio-vaccine-developer",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "match '(?i)^\\\\s*(albert\\\\s+(b\\\\.?\\\\s*)?)?sabin\\\\.?\\\\s*$'",
+      "grader_id": "regex"
+    },
+    {
+      "id": "precision-insulin-nobel-colaureate",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "match '(?i)^\\\\s*(j\\\\.?\\\\s*j\\\\.?\\\\s*r\\\\.?\\\\s*|john\\\\s+(james\\\\s+rickard\\\\s+)?)?mac\\\\s?leod\\\\.?\\\\s*$'",
+      "grader_id": "regex"
+    },
+    {
+      "id": "precision-first-nonstop-transatlantic-flight",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "match '(?i)^\\\\s*(sir\\\\s+)?(john\\\\s+)?alcock\\\\s+and\\\\s+(arthur\\\\s+)?(whitten[\\\\s-]?)?brown\\\\.?\\\\s*$'",
+      "grader_id": "regex"
+    },
+    {
+      "id": "precision-northernmost-contiguous-state",
+      "passed": true,
+      "score": 1.0,
+      "severity": "none",
+      "detail": "match '(?i)^\\\\s*minnesota\\\\.?\\\\s*$'",
+      "grader_id": "regex"
+    }
+  ]
+}

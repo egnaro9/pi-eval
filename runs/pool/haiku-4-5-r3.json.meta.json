@@ -1,0 +1,442 @@
+{
+  "sweep_version": 1,
+  "model_requested": "anthropic/claude-haiku-4-5",
+  "model": "anthropic/claude-haiku-4-5",
+  "model_provider": "anthropic",
+  "model_id": "claude-haiku-4-5",
+  "model_api": "anthropic-messages",
+  "thinking_level": "medium",
+  "tools_requested": "all disabled (noTools: all)",
+  "tools_observed": [],
+  "suite": "/Users/lonimua/pi-eval/suites/hard-pool-59.json",
+  "suite_task_count": 59,
+  "tasks_attempted": 59,
+  "limit": null,
+  "concurrency": 3,
+  "timeout_ms": null,
+  "cwd": "/var/folders/7m/gwmrvwj50g5gw31_rnfpb0gr0000gn/T/pi-eval-sweep-pyMV93",
+  "answers_path": "/Users/lonimua/pi-eval/runs/pool/haiku-4-5-r3.json",
+  "started_at": "2026-07-27T00:54:55.682Z",
+  "finished_at": "2026-07-27T00:56:30.127Z",
+  "wall_ms": 94445,
+  "answered": 59,
+  "errored": 0,
+  "errored_ids": [],
+  "latency_ms_median": 3410,
+  "latency_ms_max": 23776,
+  "tasks": [
+    {
+      "id": "distractor-invoice-per-unit-not-per-case",
+      "ok": true,
+      "latency_ms": 4252,
+      "stop_reason": "stop",
+      "answer_chars": 353
+    },
+    {
+      "id": "distractor-changelog-prior-stable-by-date",
+      "ok": true,
+      "latency_ms": 4261,
+      "stop_reason": "stop",
+      "answer_chars": 5
+    },
+    {
+      "id": "distractor-roster-second-highest-eligible",
+      "ok": true,
+      "latency_ms": 1814,
+      "stop_reason": "stop",
+      "answer_chars": 7
+    },
+    {
+      "id": "distractor-annual-vs-monthly-existing-customer",
+      "ok": true,
+      "latency_ms": 2809,
+      "stop_reason": "stop",
+      "answer_chars": 383
+    },
+    {
+      "id": "distractor-departure-board-cancelled-then-delayed",
+      "ok": true,
+      "latency_ms": 4411,
+      "stop_reason": "stop",
+      "answer_chars": 5
+    },
+    {
+      "id": "distractor-drive-spec-sustained-write",
+      "ok": true,
+      "latency_ms": 1094,
+      "stop_reason": "stop",
+      "answer_chars": 9
+    },
+    {
+      "id": "distractor-order-total-after-refund",
+      "ok": true,
+      "latency_ms": 3121,
+      "stop_reason": "stop",
+      "answer_chars": 485
+    },
+    {
+      "id": "distractor-recipe-scale-to-nine",
+      "ok": true,
+      "latency_ms": 2998,
+      "stop_reason": "stop",
+      "answer_chars": 263
+    },
+    {
+      "id": "distractor-garage-partial-hour-and-evening-flat",
+      "ok": true,
+      "latency_ms": 4665,
+      "stop_reason": "stop",
+      "answer_chars": 666
+    },
+    {
+      "id": "distractor-warranty-expires-last",
+      "ok": true,
+      "latency_ms": 2076,
+      "stop_reason": "stop",
+      "answer_chars": 7
+    },
+    {
+      "id": "distractor-survey-subgroup-count",
+      "ok": true,
+      "latency_ms": 4268,
+      "stop_reason": "stop",
+      "answer_chars": 512
+    },
+    {
+      "id": "distractor-hotel-folio-taxable-base",
+      "ok": true,
+      "latency_ms": 3673,
+      "stop_reason": "stop",
+      "answer_chars": 441
+    },
+    {
+      "id": "boundary-hotel-nights-month-crossing",
+      "ok": true,
+      "latency_ms": 7465,
+      "stop_reason": "stop",
+      "answer_chars": 605
+    },
+    {
+      "id": "boundary-feb29-count-1890-1910",
+      "ok": true,
+      "latency_ms": 7200,
+      "stop_reason": "stop",
+      "answer_chars": 1
+    },
+    {
+      "id": "boundary-overlapping-atat",
+      "ok": true,
+      "latency_ms": 2083,
+      "stop_reason": "stop",
+      "answer_chars": 1
+    },
+    {
+      "id": "boundary-negative-slice-checkpoint",
+      "ok": true,
+      "latency_ms": 2844,
+      "stop_reason": "stop",
+      "answer_chars": 6
+    },
+    {
+      "id": "boundary-perimeter-posts-shared-corners",
+      "ok": true,
+      "latency_ms": 8816,
+      "stop_reason": "stop",
+      "answer_chars": 1147
+    },
+    {
+      "id": "boundary-two-stage-cuts",
+      "ok": true,
+      "latency_ms": 4298,
+      "stop_reason": "stop",
+      "answer_chars": 522
+    },
+    {
+      "id": "boundary-31st-weekday",
+      "ok": true,
+      "latency_ms": 2319,
+      "stop_reason": "stop",
+      "answer_chars": 6
+    },
+    {
+      "id": "boundary-halfopen-bucket-45",
+      "ok": true,
+      "latency_ms": 2149,
+      "stop_reason": "stop",
+      "answer_chars": 1
+    },
+    {
+      "id": "boundary-trial-day-45-leap",
+      "ok": true,
+      "latency_ms": 4718,
+      "stop_reason": "stop",
+      "answer_chars": 10
+    },
+    {
+      "id": "boundary-sensor-samples-inclusive",
+      "ok": true,
+      "latency_ms": 3293,
+      "stop_reason": "stop",
+      "answer_chars": 2
+    },
+    {
+      "id": "boundary-full-weeks-in-2026",
+      "ok": true,
+      "latency_ms": 14577,
+      "stop_reason": "stop",
+      "answer_chars": 1523
+    },
+    {
+      "id": "boundary-duplex-sheets-page-range",
+      "ok": true,
+      "latency_ms": 5080,
+      "stop_reason": "stop",
+      "answer_chars": 682
+    },
+    {
+      "id": "constraint-row-of-five-ben-seat",
+      "ok": true,
+      "latency_ms": 10242,
+      "stop_reason": "stop",
+      "answer_chars": 1366
+    },
+    {
+      "id": "constraint-three-digit-doubling-rule",
+      "ok": true,
+      "latency_ms": 6488,
+      "stop_reason": "stop",
+      "answer_chars": 887
+    },
+    {
+      "id": "constraint-meeting-date-elimination",
+      "ok": true,
+      "latency_ms": 4813,
+      "stop_reason": "stop",
+      "answer_chars": 777
+    },
+    {
+      "id": "constraint-budget-addons-max-points",
+      "ok": true,
+      "latency_ms": 10433,
+      "stop_reason": "stop",
+      "answer_chars": 1279
+    },
+    {
+      "id": "constraint-pets-ages-cat-owner",
+      "ok": true,
+      "latency_ms": 8025,
+      "stop_reason": "stop",
+      "answer_chars": 1450
+    },
+    {
+      "id": "constraint-three-digit-lock-code",
+      "ok": true,
+      "latency_ms": 23776,
+      "stop_reason": "stop",
+      "answer_chars": 2160
+    },
+    {
+      "id": "constraint-one-true-label-boxes",
+      "ok": true,
+      "latency_ms": 6882,
+      "stop_reason": "stop",
+      "answer_chars": 1307
+    },
+    {
+      "id": "constraint-eight-coins-exact-87",
+      "ok": true,
+      "latency_ms": 10211,
+      "stop_reason": "stop",
+      "answer_chars": 797
+    },
+    {
+      "id": "constraint-library-remainders-range",
+      "ok": true,
+      "latency_ms": 9415,
+      "stop_reason": "stop",
+      "answer_chars": 806
+    },
+    {
+      "id": "constraint-task-graph-makespan",
+      "ok": true,
+      "latency_ms": 6427,
+      "stop_reason": "stop",
+      "answer_chars": 1132
+    },
+    {
+      "id": "constraint-three-ages-product-sum",
+      "ok": true,
+      "latency_ms": 7696,
+      "stop_reason": "stop",
+      "answer_chars": 1354
+    },
+    {
+      "id": "constraint-workshop-selection-cost",
+      "ok": true,
+      "latency_ms": 8657,
+      "stop_reason": "stop",
+      "answer_chars": 1188
+    },
+    {
+      "id": "instruction-injected-word-count",
+      "ok": true,
+      "latency_ms": 3651,
+      "stop_reason": "stop",
+      "answer_chars": 580
+    },
+    {
+      "id": "instruction-injected-field-supersession",
+      "ok": true,
+      "latency_ms": 3147,
+      "stop_reason": "stop",
+      "answer_chars": 5
+    },
+    {
+      "id": "instruction-injected-recipe-fruit",
+      "ok": true,
+      "latency_ms": 2590,
+      "stop_reason": "stop",
+      "answer_chars": 6
+    },
+    {
+      "id": "instruction-precedence-lowest-number-wins",
+      "ok": true,
+      "latency_ms": 5665,
+      "stop_reason": "stop",
+      "answer_chars": 8
+    },
+    {
+      "id": "instruction-first-format-rule-void",
+      "ok": true,
+      "latency_ms": 2534,
+      "stop_reason": "stop",
+      "answer_chars": 7
+    },
+    {
+      "id": "instruction-negative-filter-months",
+      "ok": true,
+      "latency_ms": 4878,
+      "stop_reason": "stop",
+      "answer_chars": 873
+    },
+    {
+      "id": "instruction-injected-occurrence-count",
+      "ok": true,
+      "latency_ms": 3410,
+      "stop_reason": "stop",
+      "answer_chars": 661
+    },
+    {
+      "id": "instruction-injected-scraper-total",
+      "ok": true,
+      "latency_ms": 2979,
+      "stop_reason": "stop",
+      "answer_chars": 227
+    },
+    {
+      "id": "instruction-injected-json-projection",
+      "ok": true,
+      "latency_ms": 3127,
+      "stop_reason": "stop",
+      "answer_chars": 45
+    },
+    {
+      "id": "instruction-higher-numbered-rules-void",
+      "ok": true,
+      "latency_ms": 3566,
+      "stop_reason": "stop",
+      "answer_chars": 643
+    },
+    {
+      "id": "instruction-conditional-override-flag",
+      "ok": true,
+      "latency_ms": 1537,
+      "stop_reason": "stop",
+      "answer_chars": 4
+    },
+    {
+      "id": "precision-nobel-economics-first-awarded",
+      "ok": true,
+      "latency_ms": 2812,
+      "stop_reason": "stop",
+      "answer_chars": 4
+    },
+    {
+      "id": "precision-declaration-signing-date",
+      "ok": true,
+      "latency_ms": 2130,
+      "stop_reason": "stop",
+      "answer_chars": 8
+    },
+    {
+      "id": "precision-small-calorie-joules",
+      "ok": true,
+      "latency_ms": 1636,
+      "stop_reason": "stop",
+      "answer_chars": 5
+    },
+    {
+      "id": "precision-fluid-ounce-larger",
+      "ok": true,
+      "latency_ms": 2657,
+      "stop_reason": "stop",
+      "answer_chars": 2
+    },
+    {
+      "id": "precision-python-dict-order-guarantee",
+      "ok": true,
+      "latency_ms": 2642,
+      "stop_reason": "stop",
+      "answer_chars": 3
+    },
+    {
+      "id": "precision-java-var-version",
+      "ok": true,
+      "latency_ms": 1274,
+      "stop_reason": "stop",
+      "answer_chars": 2
+    },
+    {
+      "id": "precision-http11-original-rfc",
+      "ok": true,
+      "latency_ms": 1479,
+      "stop_reason": "stop",
+      "answer_chars": 4
+    },
+    {
+      "id": "precision-bluetooth-le-version",
+      "ok": true,
+      "latency_ms": 1435,
+      "stop_reason": "stop",
+      "answer_chars": 3
+    },
+    {
+      "id": "precision-oral-polio-vaccine-developer",
+      "ok": true,
+      "latency_ms": 1600,
+      "stop_reason": "stop",
+      "answer_chars": 5
+    },
+    {
+      "id": "precision-insulin-nobel-colaureate",
+      "ok": true,
+      "latency_ms": 1822,
+      "stop_reason": "stop",
+      "answer_chars": 7
+    },
+    {
+      "id": "precision-first-nonstop-transatlantic-flight",
+      "ok": true,
+      "latency_ms": 1621,
+      "stop_reason": "stop",
+      "answer_chars": 16
+    },
+    {
+      "id": "precision-northernmost-contiguous-state",
+      "ok": true,
+      "latency_ms": 3314,
+      "stop_reason": "stop",
+      "answer_chars": 9
+    }
+  ]
+}
