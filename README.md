@@ -53,10 +53,18 @@ pi install git:github.com/egnaro9/pi-eval
 
 Python is a real install cost and worth naming rather than engineering around.
 `gradecore` is the same grading engine behind a
-[live drift board](https://egnaro9.github.io/model-drift/) tracking 16 models and a
-[live crash test](https://crashkit.onrender.com) — porting the graders to TypeScript
-would create a second implementation that drifts from the first, and the
-byte-identical `suite_hash` between those two is the whole point.
+[live crash test](https://crashkit.onrender.com), and is wire-compatible with the
+[live drift board](https://egnaro9.github.io/model-drift/) tracking 16 models.
+Porting the graders to TypeScript would create a second implementation that drifts
+from the first, and a stable `suite_hash` is what makes that drift detectable.
+
+To be exact about what does and does not match: pi-eval and model-drift compute
+*different* suite hashes by construction, and cannot match. model-drift hashes
+`id:prompt` (`suite.py:208-214`); pi-eval folds the grader and expected value into
+the identity (`gradecli.py:118-125`), because for this tool a changed grader is a
+changed suite. The identity that does hold is gradecore's over model-drift's suite
+(`e76f17b6c56e` from both sides). An earlier version of this paragraph claimed a
+"byte-identical `suite_hash` between those two", which the code cannot produce.
 
 ## Use
 
