@@ -339,3 +339,69 @@ def test_ratio_is_withheld_when_only_one_side_is_measured(tmp_path):
     d = json.loads(out)
     assert d["spend_a"]["cost_usd"] == 0.3
     assert d["cost_ratio_a_over_b"] is None      # a ratio against nothing is not a comparison
+
+
+# ---------------------------------------------------------------------------
+# Parameters that are BUILT and then ignored.
+#
+# test_every_grader_is_reachable_from_json asserts `code in (0, 1)`: it accepts a pass and a
+# failure equally, so it proves a grader RUNS and never that it grades. A mutation audit used
+# that gap to hardwire two documented parameters of the `number` builder with the suite green:
+#
+#   tol   -> float(s.get("tolerance", 1e-6))   a key no caller supplies, so every numeric
+#            grade tightens to 1e-6. Every `number` task in the shipped suites carries tol
+#            (48/48, 81/81, 33/33), so this silently re-grades 162 published tasks.
+#   scope -> "full"                            scope=last_line appears on 68/100, 127/159 and
+#            59/59 tasks in the shipped suites.
+#
+# These assert the VERDICT on inputs where the parameter is the only thing that decides it.
+
+def _verdict(spec, text):
+    code, out, err = run("check", "--grader", spec["grader"], "--text", text,
+                         "--spec", json.dumps(spec))
+    assert code in (0, 1), err
+    return json.loads(out)["passed"]
+
+
+def test_tol_decides_a_numeric_grade():
+    """SKILL.md's own example. 3.141 is inside +/-0.01 of 3.14 and outside +/-0.0001."""
+    inside = {"grader": "number", "expected": 3.14, "tol": 0.01}
+    tight = {"grader": "number", "expected": 3.14, "tol": 0.0001}
+    assert _verdict(inside, "3.141") is True, "a value inside the declared tolerance must pass"
+    assert _verdict(tight, "3.141") is False, (
+        "a value outside the declared tolerance must fail; if this passes, tol is being "
+        "ignored and every numeric task is graded at some other tolerance")
+
+
+def test_tol_is_read_from_the_key_the_callers_actually_use():
+    """The mutation read `tolerance`, a key nothing supplies, falling back to 1e-6. A wide
+    tolerance that behaves like 1e-6 is the signature."""
+    wide = {"grader": "number", "expected": 100.0, "tol": 5.0}
+    assert _verdict(wide, "102") is True, (
+        "tol=5.0 must admit 102; a failure here means tol was not read from 'tol'")
+
+
+def test_scope_decides_which_number_is_graded():
+    """last_line and full disagree on this text: the full text's first number is 99."""
+    text = "I think it is 99.\n42"
+    assert _verdict({"grader": "number", "expected": 42, "tol": 0.01,
+                     "scope": "last_line"}, text) is True
+    assert _verdict({"grader": "number", "expected": 42, "tol": 0.01,
+                     "scope": "full"}, text) is False, (
+        "scope=full must grade the first number in the whole text; if this passes, scope is "
+        "being ignored and every last_line task is graded against the wrong span")
+
+
+def test_which_decides_between_several_numbers():
+    """The third parameter of the same builder, pinned on the same principle."""
+    text = "first 7 then 9"
+    assert _verdict({"grader": "number", "expected": 7, "tol": 0.01, "which": "first"}, text) is True
+    assert _verdict({"grader": "number", "expected": 9, "tol": 0.01, "which": "last"}, text) is True
+    assert _verdict({"grader": "number", "expected": 9, "tol": 0.01, "which": "first"}, text) is False
+
+
+def test_one_of_scope_is_not_ignored_either():
+    """`one_of` takes the same scope parameter from the same spec dict."""
+    text = "maybe yes\nno"
+    assert _verdict({"grader": "one_of", "allowed": ["no"], "scope": "last_line"}, text) is True
+    assert _verdict({"grader": "one_of", "allowed": ["zzz"], "scope": "last_line"}, text) is False
