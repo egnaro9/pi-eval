@@ -28,9 +28,12 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version: "24"
       - run: npm install --omit=dev
-      # Node 22 strips the types; no build step, which is also how Pi loads it.
+      # Node strips the types; no build step, which is also how Pi loads it.
+      # Unflagged since 22.18 and the default in 24, so the pin can move without a
+      # build step appearing. The package declares no `engines`, so this pin is the
+      # only thing stating which runtime the tests actually prove.
       - run: node --test tests/*.test.mjs
       - run: node --check tools/sweep.mjs
 
