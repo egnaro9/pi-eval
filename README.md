@@ -54,7 +54,7 @@ pi install git:github.com/egnaro9/pi-eval
 Python is a real install cost and worth naming rather than engineering around.
 `gradecore` is the same grading engine behind a
 [live crash test](https://crashkit.erikhill.dev), and is wire-compatible with the
-[live drift board](https://egnaro9.github.io/model-drift/) tracking 16 models.
+[live drift board](https://egnaro9.github.io/model-drift/) tracking 17 LLMs from five labs, daily.
 Porting the graders to TypeScript would create a second implementation that drifts
 from the first, and a stable `suite_hash` is what makes that drift detectable.
 
